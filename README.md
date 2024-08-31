@@ -24,3 +24,8 @@ which runs the hot-reloading dev server at http://localhost:5173
 - [ ] Visualize or create a diagram for how gradient is backpropped  
 - [ ] Add Vector Quantized version of everything before
 - [ ] Add a vanilla autoencoder to show quality differences/comparison (if I have time)
+
+## References
+
+- https://www.ibm.com/think/topics/variational-autoencoder#:~:text=Variational%20autoencoders%20(VAEs)%20are%20generative,other%20autoencoders%2C%20such%20as%20denoising.
+- 
