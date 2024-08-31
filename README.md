@@ -28,4 +28,5 @@ which runs the hot-reloading dev server at http://localhost:5173
 ## References
 
 - https://www.ibm.com/think/topics/variational-autoencoder#:~:text=Variational%20autoencoders%20(VAEs)%20are%20generative,other%20autoencoders%2C%20such%20as%20denoising.
-- 
+- https://www.youtube.com/watch?v=9zKuYvjFFS8
+- https://arxiv.org/abs/1312.6114 (original VAE paper)
