@@ -16,7 +16,7 @@ which runs the hot-reloading dev server at http://localhost:5173
 - [x] Learn how VAEs work
 - [x] Pick data to reconstruct
 - [x] Use or train my own VAE (simplify so no other complications)
-- [ ] Train a cooler VAE example
+- [ ] Train a cooler VAE example with keras and tf (for tfjs conversion later on)
 - [ ] Visualize forward pass in the browser with cool example in an educational way (like [ CNN Explainer ](https://poloclub.github.io/cnn-explainer/))
 	- [ ] Data input examples (and custom upload)
 	- [ ] Autoencoder bottleneck
