@@ -1,6 +1,6 @@
 # VAE Explainer
 
-Learn how Variational Autoencoders (VQ-VAE) work by visualizing one running in your browser.
+Learn how Variational Autoencoders (VAE) work by visualizing one running in your browser.
 
 ## Development
 
