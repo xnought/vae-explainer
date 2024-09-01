@@ -16,7 +16,10 @@ which runs the hot-reloading dev server at http://localhost:5173
 - [x] Learn how VAEs work
 - [x] Pick data to reconstruct
 - [x] Use or train my own VAE (simplify so no other complications)
-- [ ] Train a cooler VAE example with keras and tf (for tfjs conversion later on)
+- [ ] reproduce results with keras and MNIST
+	- [ ] vanilla ae
+	- [ ] VAE
+- [ ] Train a cooler VAE example with keras and tf (for tfjs conversion later on) (like on LAION art dataset)
 - [ ] Visualize forward pass in the browser with cool example in an educational way (like [ CNN Explainer ](https://poloclub.github.io/cnn-explainer/))
 	- [ ] Data input examples (and custom upload)
 	- [ ] Autoencoder bottleneck
@@ -33,3 +36,5 @@ Visualing how VQ-VAEs work would be very insteresting especually since they are 
 - https://www.youtube.com/watch?v=9zKuYvjFFS8
 - https://arxiv.org/abs/1312.6114 (original VAE paper)
 - https://www.youtube.com/watch?v=afNuE5z2CQ8
+- https://keras.io/examples/generative/vae/
+- https://keras.io/examples/keras_recipes/trainer_pattern/
