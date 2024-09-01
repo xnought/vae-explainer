@@ -1,6 +1,6 @@
-# VQ VAE Explainer
+# VAE Explainer
 
-Learn how Vector Quantized Variational Autoencoders (VQ-VAE) work by visualizing one running in your browser.
+Learn how Variational Autoencoders (VQ-VAE) work by visualizing one running in your browser.
 
 ## Development
 
@@ -16,15 +16,16 @@ which runs the hot-reloading dev server at http://localhost:5173
 - [x] Learn how VAEs work
 - [x] Pick data to reconstruct
 - [x] Use or train my own VAE (simplify so no other complications)
-- [ ] Lean how vector quantizing works
-- [ ] Train a cool example with quantized
+- [ ] Train a cooler VAE example
 - [ ] Visualize forward pass in the browser with cool example in an educational way (like [ CNN Explainer ](https://poloclub.github.io/cnn-explainer/))
 	- [ ] Data input examples (and custom upload)
 	- [ ] Autoencoder bottleneck
 	- [ ] Latent neurons and Gaussians
 	- [ ] Output and how good the reconstruction is
-- [ ] Visualize or create a diagram for how gradient is backpropped  
-- [ ] Add a vanilla autoencoder to show quality differences/comparison (if I have time)
+
+## Future Work
+
+Visualing how VQ-VAEs work would be very insteresting especually since they are used so often within image generation models (stable diffusion and other).
 
 ## References
 
