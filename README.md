@@ -17,7 +17,7 @@ which runs the hot-reloading dev server at http://localhost:5173
 - [x] Pick data to reconstruct
 - [x] Use or train my own VAE (simplify so no other complications)
 - [ ] reproduce results with keras and MNIST
-	- [ ] vanilla ae
+	- [x] vanilla ae
 	- [ ] VAE
 - [ ] Train a cooler VAE example with keras and tf (for tfjs conversion later on) (like on LAION art dataset)
 - [ ] Visualize forward pass in the browser with cool example in an educational way (like [ CNN Explainer ](https://poloclub.github.io/cnn-explainer/))
