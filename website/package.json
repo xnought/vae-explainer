@@ -12,5 +12,8 @@
     "@sveltejs/vite-plugin-svelte": "^3.1.1",
     "svelte": "^4.2.18",
     "vite": "^5.4.1"
+  },
+  "dependencies": {
+    "@tensorflow/tfjs": "^4.20.0"
   }
 }
