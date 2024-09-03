@@ -4,6 +4,7 @@
 	import * as tf from "@tensorflow/tfjs";
 	import MnistDigit from "./lib/digit/MnistDigit.svelte";
 	import NormalCurve from "./lib/NormalCurve.svelte";
+	import LatentScatter from "./lib/LatentScatter.svelte";
 
 	function toGrey(d) {
 		const result = new Uint8ClampedArray(d.length / 4);
@@ -17,12 +18,13 @@
 		console.table(tf.memory());
 	}
 
+	const latentDims = 2;
 	let canvas;
 	let inDisp = Array(784).fill(0);
 	let outDisp = Array(784).fill(0);
-	let stddevs = Array(8).fill(1);
-	let means = Array(8).fill(0);
-	let zs = Array(8).fill(0);
+	let stddevs = Array(latentDims).fill(1);
+	let means = Array(latentDims).fill(0);
+	let zs = Array(latentDims).fill(0);
 	onMount(async () => {
 		const [enc, dec] = await loadModels();
 		const img = await loadImage("/images/5.png");
@@ -64,4 +66,6 @@
 		</div>
 	{/each}
 	<MnistDigit data={outDisp} square={250} maxVal={1} />
+
+	<LatentScatter />
 </main>
