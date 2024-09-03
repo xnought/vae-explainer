@@ -32,7 +32,7 @@
 		return d;
 	}
 
-	const inputOutputCanvasSize = 350;
+	const inputOutputCanvasSize = 300;
 	const images = [1, 2, 3, 4, 5, 7].map((d) => `images/${d}.png`);
 	let selectedImage = "images/1.png";
 	const latentDims = 2;
@@ -68,7 +68,7 @@
 		[enc, dec] = await loadModels();
 	});
 	onDestroy(() => {
-		enc.dispose();
+		nc.dispose();
 		dec.dispose();
 	});
 </script>
@@ -80,12 +80,10 @@
 	</div>
 	<div id="tool">
 		<div id="input">
-			<MnistDigit data={inDisp} square={inputOutputCanvasSize} maxVal={1}
-			></MnistDigit>
+			<MnistDigit data={inDisp} square={inputOutputCanvasSize} maxVal={1}></MnistDigit>
 		</div>
 		<div id="output">
-			<MnistDigit data={outDisp} square={inputOutputCanvasSize} maxVal={1}
-			></MnistDigit>
+			<MnistDigit data={outDisp} square={inputOutputCanvasSize} maxVal={1}></MnistDigit>
 		</div>
 	</div>
 	<!-- {#each means as mean, i}
