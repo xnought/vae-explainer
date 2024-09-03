@@ -17,15 +17,15 @@
 				size="xs"
 				href="https://github.com/xnought/vae-explainer"
 				color="dark"
-				>Paper
-				<FilePdfSolid size="md" class="ml-1" />
+				>Code
+				<GithubSolid size="md" class="ml-1" />
 			</Button>
 			<Button
 				size="xs"
 				href="https://github.com/xnought/vae-explainer"
 				color="dark"
-				>Code
-				<GithubSolid size="md" class="ml-1" />
+				>Paper
+				<FilePdfSolid size="md" class="ml-1" />
 			</Button>
 		</div>
 	</div>
