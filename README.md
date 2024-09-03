@@ -20,11 +20,9 @@ which runs the hot-reloading dev server at http://localhost:5173
 	- [x] vanilla ae
 	- [x] VAE
 - [x] Test what the network needs to look like to work in tfjs
-- [ ] Visualize forward pass in the browser with cool example in an educational way (like [ CNN Explainer ](https://poloclub.github.io/cnn-explainer/))
-	- [ ] Data input examples (and custom upload)
-	- [ ] Autoencoder bottleneck
-	- [ ] Latent neurons and Gaussians
-	- [ ] Output and how good the reconstruction is
+- [ ] Show latent variables (2D only) 
+- [ ] Show an expanded example of the log trick
+- [ ] Show an expanded example of the reparam trick
 - [ ] Write a small help article on the different components
 - [ ] Train a cooler VAE example with keras and tf (for tfjs conversion later on) (like on LAION art dataset) (if I have time)
 ## Future Work
