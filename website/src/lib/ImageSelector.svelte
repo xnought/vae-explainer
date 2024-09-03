@@ -19,7 +19,7 @@
 
 <style>
 	.lined {
-		outline: 2px solid var(--pink);
+		outline: 2px solid var(--medium-blue);
 		opacity: 1;
 	}
 	img {

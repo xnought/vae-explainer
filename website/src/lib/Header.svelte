@@ -44,7 +44,7 @@
 	}
 	.left {
 		display: flex;
-		gap: 10px;
+		gap: 20px;
 		align-items: center;
 	}
 	.right {
@@ -54,7 +54,7 @@
 	}
 	#title-desc {
 		color: ivory;
-		font-size: 17px;
+		font-size: 20px;
 		font-weight: 250;
 	}
 	b {

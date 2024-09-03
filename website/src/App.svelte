@@ -32,6 +32,7 @@
 		return d;
 	}
 
+	const inputOutputCanvasSize = 350;
 	const images = [1, 2, 3, 4, 5, 7].map((d) => `images/${d}.png`);
 	let selectedImage = "images/1.png";
 	const latentDims = 2;
@@ -77,7 +78,16 @@
 	<div class="mb-2">
 		<ImageSelector imageUrls={images} bind:selectedUrl={selectedImage} />
 	</div>
-	<MnistDigit data={inDisp} square={250} maxVal={1}></MnistDigit>
+	<div id="tool">
+		<div id="input">
+			<MnistDigit data={inDisp} square={inputOutputCanvasSize} maxVal={1}
+			></MnistDigit>
+		</div>
+		<div id="output">
+			<MnistDigit data={outDisp} square={inputOutputCanvasSize} maxVal={1}
+			></MnistDigit>
+		</div>
+	</div>
 	<!-- {#each means as mean, i}
 		{@const stddev = stddevs[i]}
 		{@const z = zs[i]}
@@ -86,12 +96,20 @@
 		</div>
 	{/each} -->
 	<!-- <LatentScatter></LatentScatter> -->
-	<MnistDigit data={outDisp} square={250} maxVal={1}></MnistDigit>
-	<Button on:click={() => showMemory()}>tf.memory()</Button>
 </main>
+
+<div style="position: absolute; bottom: 5px; right: 5px;">
+	<Button color="alternative" on:click={() => showMemory()}
+		>debug mode: tf.memory()</Button
+	>
+</div>
 
 <style>
 	main {
 		padding: 10px;
+	}
+	#tool {
+		display: flex;
+		gap: 5px;
 	}
 </style>
