@@ -3,6 +3,7 @@
 	import { loadImage, loadModels, sample } from "./lib/load";
 	import * as tf from "@tensorflow/tfjs";
 	import MnistDigit from "./lib/digit/MnistDigit.svelte";
+	import NormalCurve from "./lib/NormalCurve.svelte";
 
 	function toGrey(d) {
 		const result = new Uint8ClampedArray(d.length / 4);
@@ -19,6 +20,9 @@
 	let canvas;
 	let inDisp = Array(784).fill(0);
 	let outDisp = Array(784).fill(0);
+	let stddevs = Array(8).fill(1);
+	let means = Array(8).fill(0);
+	let zs = Array(8).fill(0);
 	onMount(async () => {
 		const [enc, dec] = await loadModels();
 		const img = await loadImage("/images/5.png");
@@ -31,7 +35,12 @@
 			inDisp = x.arraySync()[0];
 
 			const code = enc.predict(x);
+
 			const [z, logvar, mean] = sample(code);
+			stddevs = tf.exp(logvar.mul(0.5)).arraySync()[0];
+			means = mean.arraySync()[0];
+			zs = z.arraySync()[0];
+
 			const xHat = dec.predict(z);
 			outDisp = xHat.arraySync()[0];
 		});
@@ -47,5 +56,12 @@
 	<canvas bind:this={canvas} width={28} height={28}> </canvas>
 
 	<MnistDigit data={inDisp} square={250} maxVal={1} />
+	{#each means as mean, i}
+		{@const stddev = stddevs[i]}
+		{@const z = zs[i]}
+		<div>
+			<NormalCurve x={z} {mean} {stddev} />
+		</div>
+	{/each}
 	<MnistDigit data={outDisp} square={250} maxVal={1} />
 </main>
