@@ -5,6 +5,7 @@
 	export let filename = "latents.json";
 	export let width = 200;
 	export let height = 200;
+	export let sampled = [0, 0];
 
 	function minAndMax(points) {
 		let _max = [-Infinity, -Infinity];
@@ -54,7 +55,19 @@
 	}
 </script>
 
-<canvas bind:this={canvas} {width} {height} />
+<div style="position: relative;">
+	{#if scaleX && scaleY}
+		<svg {width} {height} style="position: absolute; left: 0; top: 0;">
+			<circle
+				cx={scaleX(sampled[0])}
+				cy={scaleY(sampled[1])}
+				r={5}
+				fill="red"
+			/>
+		</svg>
+	{/if}
+	<canvas bind:this={canvas} {width} {height} />
+</div>
 
 <style>
 	/*  put stuff here */
