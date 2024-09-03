@@ -6,6 +6,8 @@
 	export let width = 200;
 	export let height = 200;
 	export let sampled = [0, 0];
+	export let onChange = (z) => {};
+	let sampledCopy;
 
 	function minAndMax(points) {
 		let _max = [-Infinity, -Infinity];
@@ -31,6 +33,7 @@
 		};
 	}
 
+	let mousePos = [0, 0];
 	let canvas;
 	let scaleX, scaleY;
 	onMount(async () => {
@@ -55,14 +58,33 @@
 	}
 </script>
 
+[{mousePos[0]}, {mousePos[1]}]
 <div style="position: relative;">
 	{#if scaleX && scaleY}
-		<svg {width} {height} style="position: absolute; left: 0; top: 0;">
+		<svg
+			{width}
+			{height}
+			style="position: absolute; left: 0; top: 0;"
+			on:mousemove={(d) => {
+				mousePos = [d.offsetX, d.offsetY];
+				sampled[0] = scaleX.invert(mousePos[0]);
+				sampled[1] = scaleY.invert(mousePos[1]);
+				onChange(sampled);
+			}}
+			on:mouseenter={() => {
+				sampledCopy = [...sampled];
+			}}
+			on:mouseleave={() => {
+				sampled = sampledCopy;
+				sampledCopy = undefined;
+				onChange(sampled);
+			}}
+		>
 			<circle
 				cx={scaleX(sampled[0])}
 				cy={scaleY(sampled[1])}
-				r={5}
-				fill="red"
+				r={4}
+				stroke="black"
 			/>
 		</svg>
 	{/if}
@@ -70,5 +92,8 @@
 </div>
 
 <style>
-	/*  put stuff here */
+	div {
+		outline: 1px solid grey;
+		cursor: default;
+	}
 </style>

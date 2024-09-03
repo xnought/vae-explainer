@@ -68,7 +68,7 @@
 		[enc, dec] = await loadModels();
 	});
 	onDestroy(() => {
-		nc.dispose();
+		enc.dispose();
 		dec.dispose();
 	});
 </script>
@@ -80,10 +80,25 @@
 	</div>
 	<div id="tool">
 		<div id="input">
-			<MnistDigit data={inDisp} square={inputOutputCanvasSize} maxVal={1}></MnistDigit>
+			<MnistDigit data={inDisp} square={inputOutputCanvasSize} maxVal={1}
+			></MnistDigit>
+		</div>
+		<div id="innards">
+			<LatentScatter
+				width={300}
+				height={300}
+				sampled={zs}
+				onChange={(z) => {
+					tf.tidy(() => {
+						const xHat = dec.predict(tf.tensor(z, [1, latentDims]));
+						outDisp = xHat.arraySync()[0];
+					});
+				}}
+			></LatentScatter>
 		</div>
 		<div id="output">
-			<MnistDigit data={outDisp} square={inputOutputCanvasSize} maxVal={1}></MnistDigit>
+			<MnistDigit data={outDisp} square={inputOutputCanvasSize} maxVal={1}
+			></MnistDigit>
 		</div>
 	</div>
 	<!-- {#each means as mean, i}
@@ -93,7 +108,6 @@
 			<NormalCurve x={z} {mean} {stddev}></NormalCurve>
 		</div>
 	{/each} -->
-	<!-- <LatentScatter></LatentScatter> -->
 </main>
 
 <div style="position: absolute; bottom: 5px; right: 5px;">

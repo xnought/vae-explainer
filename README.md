@@ -20,7 +20,8 @@ which runs the hot-reloading dev server at http://localhost:5173
 	- [x] vanilla ae
 	- [x] VAE
 - [x] Test what the network needs to look like to work in tfjs
-- [ ] Show latent variables (2D only) 
+- [x] Show latent variables (2D only) 
+- [ ] Design encoder and decoder blocks
 - [ ] Show an expanded example of the log trick
 - [ ] Show an expanded example of the reparam trick
 - [ ] Write a small help article on the different components
