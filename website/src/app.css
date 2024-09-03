@@ -1,3 +1,7 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 :root {
 	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 	line-height: 1.5;
@@ -6,6 +10,12 @@
 	text-rendering: optimizeLegibility;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+
+	--pink: #e44084;
+	--purple: #6821b0;
+	--dark-blue: #331a9d;
+	--medium-blue: #4765e6;
+	--light-blue: #6fc7ec;
 }
 
 body {

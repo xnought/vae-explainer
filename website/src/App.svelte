@@ -5,6 +5,7 @@
 	import MnistDigit from "./lib/digit/MnistDigit.svelte";
 	import NormalCurve from "./lib/NormalCurve.svelte";
 	import LatentScatter from "./lib/LatentScatter.svelte";
+	import Header from "./lib/Header.svelte";
 
 	function toGrey(d) {
 		const result = new Uint8ClampedArray(d.length / 4);
@@ -54,18 +55,25 @@
 	});
 </script>
 
+<Header></Header>
 <main>
 	<canvas bind:this={canvas} width={28} height={28}> </canvas>
 
-	<MnistDigit data={inDisp} square={250} maxVal={1} />
+	<MnistDigit data={inDisp} square={250} maxVal={1}></MnistDigit>
 	{#each means as mean, i}
 		{@const stddev = stddevs[i]}
 		{@const z = zs[i]}
 		<div>
-			<NormalCurve x={z} {mean} {stddev} />
+			<NormalCurve x={z} {mean} {stddev}></NormalCurve>
 		</div>
 	{/each}
-	<MnistDigit data={outDisp} square={250} maxVal={1} />
+	<MnistDigit data={outDisp} square={250} maxVal={1}></MnistDigit>
 
-	<LatentScatter />
+	<LatentScatter></LatentScatter>
 </main>
+
+<style>
+	main {
+		padding: 10px;
+	}
+</style>
