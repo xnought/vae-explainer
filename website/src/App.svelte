@@ -8,7 +8,8 @@
 	import LatentScatter from "./lib/LatentScatter.svelte";
 	import Header from "./lib/Header.svelte";
 	import ImageSelector from "./lib/ImageSelector.svelte";
-	import Trapezoid from "./Trapezoid.svelte";
+	import Trapezoid from "./lib/Trapezoid.svelte";
+	import Popover from "./lib/Popover.svelte";
 
 	function toGrey(d) {
 		const result = new Uint8ClampedArray(d.length / 4);
@@ -92,6 +93,7 @@
 </script>
 
 <Header></Header>
+{#if false}
 <main>
 	<div class="mb-2">
 		<ImageSelector imageUrls={images} bind:selectedUrl={selectedImage} />
@@ -185,6 +187,9 @@
 		}}>Clear Canvas</Button
 	>
 </main>
+{/if}
+
+<Popover />
 
 <div style="position: absolute; bottom: 5px; right: 5px;">
 	<Button color="alternative" on:click={() => showMemory()}
