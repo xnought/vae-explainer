@@ -1,6 +1,4 @@
 <script>
-  // TODO: if a point goes out of the range on the screen, just show the point at the edge
-
   import * as d3 from "d3";
 
   export let width = 0;
@@ -12,7 +10,7 @@
 
   export let f = (x) => x;
   export let domain = [-5, 5];
-  export let range = [0, 10];
+  export let range = [-2, Math.exp(2.7)];
   export let numPoints = 50;
 
   const scaleX = d3.scaleLinear().domain(domain).range([0, width]);
@@ -31,17 +29,27 @@
   }
 
   $: points = genPoints(f, numPoints, domain);
+  function correct(f, input, domain, range) {
+    if(input > domain[1]) {
+      return {x: domain[1], y: f(domain[1])};
+    } else if(input < domain[0]) {
+      return {x: domain[0], y: f(domain[0])};
+    } else {
+      return {x: input, y: f(input)};
+    }
+  }
 </script>
 
 <svg {x} {y} {width} {height}>
   {#each points as p1, i}
     {#if i < (points.length - 1)}
       {@const p2 = points[i+1]}
-      <line x1={scaleX(p1.x)} y1={scaleY(p1.y)} x2={scaleX(p2.x)} y2={scaleY(p2.y)} stroke="grey" stroke-width={1} />
+      <line x1={scaleX(p1.x)} y1={scaleY(p1.y)} x2={scaleX(p2.x)} y2={scaleY(p2.y)} stroke="black" stroke-width={1} />
     {/if}
   {/each}
   {#if input !== null}
-    <circle cx={scaleX(input)} cy={scaleY(f(input))} r={2} fill="black"/>
+    {@const corrected = correct(f, input, domain, range)}
+    <circle cx={scaleX(corrected.x)} cy={scaleY(corrected.y)} r={3} fill="black"/>
   {/if}
-  <rect fill="none" stroke="lightgrey" {width} {height} />
+  <rect fill="none" stroke="grey" {width} {height} />
 </svg>
