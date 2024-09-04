@@ -112,7 +112,7 @@
 				<div style="position: absolute; left: 0; bottom: -45px;">
 					<Button
 						size="sm"
-						color="alternative"
+						color="light"
 						on:click={async () => {
 							tf.tidy(() => {
 								const code = tf.tensor(xs, [1, 2 * latentDims]);
@@ -126,7 +126,7 @@
 								const xHat = dec.predict(z);
 								outDisp = xHat.arraySync()[0];
 							});
-						}}>Resample</Button
+						}}>Resample 🎲</Button
 					>
 				</div>
 			</div>
