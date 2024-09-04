@@ -9,18 +9,18 @@ export default {
 	theme: {
 		extend: {
 			colors: {
-				// flowbite-svelte
 				primary: {
-					50: "#FFF5F2",
-					100: "#FFF1EE",
-					200: "#FFE4DE",
-					300: "#FFD5CC",
-					400: "#FFBCAD",
-					500: "#FE795D",
-					600: "#EF562F",
-					700: "#EB4F27",
-					800: "#CC4522",
-					900: "#A5371B",
+					50: "#f3f3ff",
+					100: "#e8e8ff",
+					200: "#d5d6ff",
+					300: "#b4b3ff",
+					400: "#8e88fd",
+					500: "#6857fb",
+					600: "#5534f3",
+					700: "#4623de",
+					800: "#3a1cbb",
+					900: "#331a9d",
+					950: "#1b0d68",
 				},
 			},
 		},

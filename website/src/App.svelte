@@ -113,7 +113,7 @@
 					<Button
 						size="sm"
 						color="alternative"
-						on:click={() => {
+						on:click={async () => {
 							tf.tidy(() => {
 								const code = tf.tensor(xs, [1, 2 * latentDims]);
 								const [z, logvar, mean] = sample(code);
@@ -142,13 +142,6 @@
 			></MnistDigit>
 		</div>
 	</div>
-	<!-- {#each means as mean, i}
-		{@const stddev = stddevs[i]}
-		{@const z = zs[i]}
-		<div>
-			<NormalCurve x={z} {mean} {stddev}></NormalCurve>
-		</div>
-	{/each} -->
 </main>
 
 <div style="position: absolute; bottom: 5px; right: 5px;">

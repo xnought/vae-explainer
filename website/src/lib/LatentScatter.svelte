@@ -94,7 +94,7 @@
 			<circle
 				cx={scaleX(sampled[0])}
 				cy={scaleY(sampled[1])}
-				r={3}
+				r={4}
 				fill="var(--light-blue)"
 				stroke="black"
 			/>
