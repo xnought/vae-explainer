@@ -95,7 +95,8 @@
 				cx={scaleX(sampled[0])}
 				cy={scaleY(sampled[1])}
 				r={3}
-				fill="var(--dark-blue)"
+				fill="var(--light-blue)"
+				stroke="black"
 			/>
 			<!-- <line
 				x1={0}

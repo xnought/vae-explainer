@@ -42,6 +42,7 @@
 	let stddevs = Array(latentDims).fill(1);
 	let means = Array(latentDims).fill(0);
 	let zs = Array(latentDims).fill(0);
+	let xs = Array(latentDims * 2).fill(0);
 
 	async function forward(url) {
 		const d = await loadImageFull(url);
@@ -50,6 +51,7 @@
 			inDisp = x.arraySync()[0];
 
 			const code = enc.predict(x);
+			xs = code.arraySync()[0];
 
 			const [z, logvar, mean] = sample(code);
 			stddevs = tf.exp(logvar.mul(0.5)).arraySync()[0];
@@ -91,19 +93,43 @@
 				trapHeights={[inputOutputCanvasSize, 250]}
 				fill="var(--pink)"
 			/>
-			<LatentScatter
-				{stddevs}
-				{means}
-				width={250}
-				height={250}
-				sampled={zs}
-				onChange={(z) => {
-					tf.tidy(() => {
-						const xHat = dec.predict(tf.tensor(z, [1, latentDims]));
-						outDisp = xHat.arraySync()[0];
-					});
-				}}
-			></LatentScatter>
+			<div style="position: relative;">
+				<LatentScatter
+					{stddevs}
+					{means}
+					width={250}
+					height={250}
+					sampled={zs}
+					onChange={(z) => {
+						tf.tidy(() => {
+							const xHat = dec.predict(
+								tf.tensor(z, [1, latentDims])
+							);
+							outDisp = xHat.arraySync()[0];
+						});
+					}}
+				></LatentScatter>
+				<div style="position: absolute; left: 0; bottom: -45px;">
+					<Button
+						size="sm"
+						color="alternative"
+						on:click={() => {
+							tf.tidy(() => {
+								const code = tf.tensor(xs, [1, 2 * latentDims]);
+								const [z, logvar, mean] = sample(code);
+								stddevs = tf
+									.exp(logvar.mul(0.5))
+									.arraySync()[0];
+								means = mean.arraySync()[0];
+								zs = z.arraySync()[0];
+
+								const xHat = dec.predict(z);
+								outDisp = xHat.arraySync()[0];
+							});
+						}}>Resample</Button
+					>
+				</div>
+			</div>
 			<Trapezoid
 				width={150}
 				height={inputOutputCanvasSize}

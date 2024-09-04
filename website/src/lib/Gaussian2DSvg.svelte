@@ -14,7 +14,7 @@
 		rx={exageration * 2 * stddevs[0] * (numberOfDeviations - i)}
 		ry={exageration * 2 * stddevs[1] * (numberOfDeviations - i)}
 		fill="var(--pink)"
-		opacity={0.2}
+		opacity={0.1 * i}
 		stroke-width={1}
 		stroke="black"
 	/>
