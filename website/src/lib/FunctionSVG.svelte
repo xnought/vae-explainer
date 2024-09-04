@@ -44,12 +44,12 @@
   {#each points as p1, i}
     {#if i < (points.length - 1)}
       {@const p2 = points[i+1]}
-      <line x1={scaleX(p1.x)} y1={scaleY(p1.y)} x2={scaleX(p2.x)} y2={scaleY(p2.y)} stroke="black" stroke-width={1} />
+      <line x1={scaleX(p1.x)} y1={scaleY(p1.y)} x2={scaleX(p2.x)} y2={scaleY(p2.y)} stroke="lightgrey" stroke-width={1} />
     {/if}
   {/each}
   {#if input !== null}
     {@const corrected = correct(f, input, domain, range)}
-    <circle cx={scaleX(corrected.x)} cy={scaleY(corrected.y)} r={3} fill="black"/>
+    <circle cx={scaleX(corrected.x)} cy={scaleY(corrected.y)} r={2} fill="grey"/>
   {/if}
-  <rect fill="none" stroke="grey" {width} {height} />
+  <rect fill="none" stroke="grey" {width} {height} stroke-width={3}/>
 </svg>
