@@ -55,7 +55,7 @@
 			const y = scaleY(points[i][1]);
 
 			const c = d3.color(d3.schemeTableau10[labels[i]]);
-			c.opacity = 0.2;
+			c.opacity = 0.15;
 			ctx.fillStyle = c.rgb();
 			ctx.fillRect(x, y, 2, 2);
 		}

@@ -35,6 +35,7 @@
 
 	const inputOutputCanvasSize = 400;
 	const images = [1, 2, 3, 4, 5, 7].map((d) => `images/${d}.png`);
+	let rawImages;
 	let selectedImage = "images/1.png";
 	const latentDims = 2;
 	let inDisp = Array(784).fill(0);
@@ -44,10 +45,21 @@
 	let zs = Array(latentDims).fill(0);
 	let xs = Array(latentDims * 2).fill(0);
 
-	async function forward(url) {
-		const d = await loadImageFull(url);
+	async function fetchAllImages(urls) {
+		let result = {};
+		for (let i = 0; i < urls.length; i++) {
+			const url = urls[i];
+			const d = await loadImageFull(url);
+			const g = toGrey(d);
+			const f32 = new Float32Array(g.length).map((_, i) => g[i] / 255);
+			result[url] = f32;
+		}
+		return result;
+	}
+
+	function forward(img) {
 		tf.tidy(() => {
-			const x = tf.tensor(toGrey(d), [1, 784]).div(255.0);
+			const x = tf.tensor(img, [1, 784]);
 			inDisp = x.arraySync()[0];
 
 			const code = enc.predict(x);
@@ -64,11 +76,13 @@
 	}
 
 	$: modelsExist = enc && dec;
-	$: if (modelsExist) forward(selectedImage);
+	$: if (modelsExist && rawImages) forward(rawImages[selectedImage]);
 
 	let enc, dec;
 	onMount(async () => {
 		[enc, dec] = await loadModels();
+		rawImages = await fetchAllImages(images);
+		rawImages["clear"] = new Float32Array(784).fill(0);
 	});
 	onDestroy(() => {
 		enc.dispose();
@@ -83,7 +97,13 @@
 	</div>
 	<div id="tool">
 		<div id="input">
-			<MnistDigit data={inDisp} square={inputOutputCanvasSize} maxVal={1}
+			<MnistDigit
+				data={inDisp}
+				square={inputOutputCanvasSize}
+				maxVal={1}
+				onChange={(d) => {
+					forward(d);
+				}}
 			></MnistDigit>
 		</div>
 		<div id="innards">
@@ -109,24 +129,35 @@
 						});
 					}}
 				></LatentScatter>
-				<div style="position: absolute; left: 0; bottom: -45px;">
+				<div style="position: absolute; right: 0; bottom: -40px;">
 					<Button
-						size="sm"
+						size="xs"
 						color="light"
 						on:click={async () => {
-							tf.tidy(() => {
-								const code = tf.tensor(xs, [1, 2 * latentDims]);
-								const [z, logvar, mean] = sample(code);
-								stddevs = tf
-									.exp(logvar.mul(0.5))
-									.arraySync()[0];
-								means = mean.arraySync()[0];
-								zs = z.arraySync()[0];
+							for (let i = 0; i < 10; i++) {
+								tf.tidy(() => {
+									const code = tf.tensor(xs, [
+										1,
+										2 * latentDims,
+									]);
+									const [z, logvar, mean] = sample(code);
+									stddevs = tf
+										.exp(logvar.mul(0.5))
+										.arraySync()[0];
+									means = mean.arraySync()[0];
+									zs = z.arraySync()[0];
 
-								const xHat = dec.predict(z);
-								outDisp = xHat.arraySync()[0];
-							});
-						}}>Resample 🎲</Button
+									const xHat = dec.predict(z);
+									outDisp = xHat.arraySync()[0];
+								});
+								await new Promise((r, rej) =>
+									setTimeout(r, 50)
+								);
+							}
+						}}
+						><span style="color: var(--light-blue);"
+							>Resample 🎲
+						</span></Button
 					>
 				</div>
 			</div>
@@ -142,6 +173,14 @@
 			></MnistDigit>
 		</div>
 	</div>
+	<Button
+		class="mt-1"
+		size="xs"
+		color="dark"
+		on:click={() => {
+			selectedImage = "clear";
+		}}>Clear Input</Button
+	>
 </main>
 
 <div style="position: absolute; bottom: 5px; right: 5px;">
