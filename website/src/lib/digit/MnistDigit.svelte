@@ -2,7 +2,7 @@
 <script>
 	import { drawPixels } from "./mnistDigit";
 	import { interpolateGreys, scaleLinear } from "d3";
-	import { afterUpdate, onMount } from "svelte";
+	import { onMount } from "svelte";
 	import * as d3 from "d3";
 
 	// take in the digit data
@@ -15,6 +15,7 @@
 		}
 		return b;
 	}
+	export let enableDrawing = false;
 	export let data;
 	let cpy;
 	$: if (data) cpy = cpyArray(data);
@@ -86,7 +87,7 @@
 			drawing = false;
 		}}
 		on:mousemove={({ offsetX, offsetY }) => {
-			if (drawing) {
+			if (drawing && enableDrawing) {
 				mousePos = [offsetX, offsetY];
 				// cover the block where the pixel is with full data white (1.0), then rerender the entire thing;
 				drawBigPixel(ctx, width, dim, mousePos);

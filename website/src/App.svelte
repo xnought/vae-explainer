@@ -76,7 +76,8 @@
 	}
 
 	$: modelsExist = enc && dec;
-	$: if (modelsExist && rawImages) forward(rawImages[selectedImage]);
+	$: if (modelsExist && rawImages && selectedImage)
+		forward(rawImages[selectedImage]);
 
 	let enc, dec;
 	onMount(async () => {
@@ -98,6 +99,7 @@
 	<div id="tool">
 		<div id="input">
 			<MnistDigit
+				enableDrawing
 				data={inDisp}
 				square={inputOutputCanvasSize}
 				maxVal={1}
@@ -176,10 +178,11 @@
 	<Button
 		class="mt-1"
 		size="xs"
-		color="dark"
+		color="light"
 		on:click={() => {
 			selectedImage = "clear";
-		}}>Clear Input</Button
+			rawImages = rawImages; // weirdly needed for UI to update;
+		}}>Clear Canvas</Button
 	>
 </main>
 
