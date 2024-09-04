@@ -21,11 +21,12 @@ which runs the hot-reloading dev server at http://localhost:5173
 	- [x] VAE
 - [x] Test what the network needs to look like to work in tfjs
 - [x] Show latent variables (2D only) 
-- [ ] Design encoder and decoder blocks
+- [x] Design encoder and decoder blocks
+- [ ] Add labels to things for help (and legend to latent)
 - [ ] Show an expanded example of the log trick
 - [ ] Show an expanded example of the reparam trick
 - [ ] Write a small help article on the different components
-- [ ] Train a cooler VAE example with keras and tf (for tfjs conversion later on) (like on LAION art dataset) (if I have time)
+- [ ] Train a better mnist VAE
 ## Future Work
 
 Visualizing how VQ-VAEs work would be very interesting especially since they are used so often within image generation models (stable diffusion and other).
