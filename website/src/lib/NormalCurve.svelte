@@ -26,6 +26,7 @@
 	export let mean = 0;
 	export let stddev = 1;
 	export let c = 5;
+	export let numPoints = 100;
 
 	function maxPoint(points) {
 		let max = -1;
@@ -37,10 +38,12 @@
 		return max;
 	}
 
-	$: domain = [mean - stddev * c, mean + stddev * c];
-	$: points = generate(domain, 50, mean, stddev);
+	$: points = generate(domain, numPoints, mean, stddev);
 	$: scaleX = d3.scaleLinear().domain(domain).range([0, width]);
-	$: scaleY = d3.scaleLinear().domain([0, 3]).range([height, 0]);
+	$: scaleY = d3
+		.scaleLinear()
+		.domain([0, maxPoint(points)])
+		.range([height, 0]);
 </script>
 
 <svg {width} {height} style="overflow: visible;">
@@ -51,19 +54,30 @@
 				y1={scaleY(p.y)}
 				x2={scaleX(points[i + 1].x)}
 				y2={scaleY(points[i + 1].y)}
-				stroke="black"
+				stroke="var(--pink)"
+				stroke-width={2}
+				opacity={0.5}
 			/>
 		{/if}
 	{/each}
-	<circle cx={scaleX(x)} cy={scaleY(0)} fill="red" r={2} />
+	<line
+		x1={scaleX(x)}
+		y1={0}
+		x2={scaleX(x)}
+		y2={height}
+		stroke="grey"
+		opacity={0.2}
+	/>
 	<circle
 		cx={scaleX(x)}
 		cy={scaleY(normal(x, mean, stddev))}
-		fill="red"
+		fill="var(--pink)"
 		r={2}
 	/>
 </svg>
 
 <style>
+	svg {
+	}
 	/*  put stuff here */
 </style>

@@ -1,12 +1,16 @@
 <script>
 	import { onMount } from "svelte";
 	import * as d3 from "d3";
+	import NormalCurve from "./NormalCurve.svelte";
+	import Gaussian2DSvg from "./Gaussian2DSvg.svelte";
 
 	export let filename = "latents.json";
 	export let width = 200;
 	export let height = 200;
 	export let sampled = [0, 0];
 	export let onChange = (z) => {};
+	export let means;
+	export let stddevs;
 	let sampledCopy;
 
 	function minAndMax(points) {
@@ -58,13 +62,12 @@
 	}
 </script>
 
-[{mousePos[0]}, {mousePos[1]}]
 <div style="position: relative;">
 	{#if scaleX && scaleY}
 		<svg
 			{width}
 			{height}
-			style="position: absolute; left: 0; top: 0;"
+			style="position: absolute; left: 0; top: 0; "
 			on:mousemove={(d) => {
 				mousePos = [d.offsetX, d.offsetY];
 				sampled[0] = scaleX.invert(mousePos[0]);
@@ -80,20 +83,43 @@
 				onChange(sampled);
 			}}
 		>
+			<Gaussian2DSvg
+				{means}
+				{stddevs}
+				{scaleX}
+				{scaleY}
+				numberOfDeviations={5}
+				exageration={35}
+			/>
 			<circle
 				cx={scaleX(sampled[0])}
 				cy={scaleY(sampled[1])}
-				r={4}
-				stroke="black"
+				r={3}
+				fill="var(--dark-blue)"
 			/>
+			<!-- <line
+				x1={0}
+				y1={scaleY(sampled[1])}
+				x2={width}
+				y2={scaleY(sampled[1])}
+				stroke="grey"
+				opacity={0.1}
+			/>
+			<line
+				x1={scaleX(sampled[0])}
+				y1={0}
+				x2={scaleX(sampled[0])}
+				y2={height}
+				stroke="grey"
+				opacity={0.1}
+			/> -->
 		</svg>
 	{/if}
 	<canvas bind:this={canvas} {width} {height} />
 </div>
 
 <style>
-	div {
-		outline: 1px solid grey;
-		cursor: default;
+	canvas {
+		outline: lightgrey 1px solid;
 	}
 </style>

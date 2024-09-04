@@ -8,6 +8,7 @@
 	import LatentScatter from "./lib/LatentScatter.svelte";
 	import Header from "./lib/Header.svelte";
 	import ImageSelector from "./lib/ImageSelector.svelte";
+	import Trapezoid from "./Trapezoid.svelte";
 
 	function toGrey(d) {
 		const result = new Uint8ClampedArray(d.length / 4);
@@ -32,7 +33,7 @@
 		return d;
 	}
 
-	const inputOutputCanvasSize = 300;
+	const inputOutputCanvasSize = 400;
 	const images = [1, 2, 3, 4, 5, 7].map((d) => `images/${d}.png`);
 	let selectedImage = "images/1.png";
 	const latentDims = 2;
@@ -84,9 +85,17 @@
 			></MnistDigit>
 		</div>
 		<div id="innards">
+			<Trapezoid
+				width={150}
+				height={inputOutputCanvasSize}
+				trapHeights={[inputOutputCanvasSize, 250]}
+				fill="var(--pink)"
+			/>
 			<LatentScatter
-				width={300}
-				height={300}
+				{stddevs}
+				{means}
+				width={250}
+				height={250}
 				sampled={zs}
 				onChange={(z) => {
 					tf.tidy(() => {
@@ -95,6 +104,12 @@
 					});
 				}}
 			></LatentScatter>
+			<Trapezoid
+				width={150}
+				height={inputOutputCanvasSize}
+				trapHeights={[250, inputOutputCanvasSize]}
+				fill="var(--light-blue)"
+			/>
 		</div>
 		<div id="output">
 			<MnistDigit data={outDisp} square={inputOutputCanvasSize} maxVal={1}
@@ -123,5 +138,10 @@
 	#tool {
 		display: flex;
 		gap: 5px;
+	}
+	#innards {
+		display: flex;
+		gap: 5px;
+		align-items: center;
 	}
 </style>
