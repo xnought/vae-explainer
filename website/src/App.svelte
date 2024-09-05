@@ -38,6 +38,7 @@
   const compGraph = true;
 	const inputOutputCanvasSize = 300;
   const scatterSquare = 200;
+  const trapWidth = 100;
 	const images = [1, 2, 3, 4, 5, 7].map((d) => `images/${d}.png`);
 	let rawImages;
 	let selectedImage = "images/1.png";
@@ -94,15 +95,31 @@
 		enc.dispose();
 		dec.dispose();
 	});
+
+  const width = 1200;
+  const height = 500;
+
+  const expansion = 20;
+  const xDigit1 = 0;
+  const padding = 100;
+  const trapPadding = 10;
+  const xLatent = xDigit1 + inputOutputCanvasSize + padding + expansion;
+  const yLatent = inputOutputCanvasSize / 2 - scatterSquare/2;
+  const xDigit2 = xLatent + scatterSquare + padding + expansion;
+  const xTrap1 = xDigit1 + inputOutputCanvasSize + trapPadding;
+  const xTrap2 = xDigit2 - trapWidth - trapPadding;
 </script>
 
 <Header></Header>
 <main>
-	<div class="mb-2">
+	<div class="mb-2 flex gap-2 items-center">
 		<ImageSelector imageUrls={images} bind:selectedUrl={selectedImage} />
 	</div>
-	<div id="tool">
-		<div id="input">
+
+  <svg {width} {height}> 
+    <rect {width} {height} stroke="black" fill="none"/>
+
+    <foreignObject x={xDigit1} y={0} width={inputOutputCanvasSize} height={inputOutputCanvasSize} style="overflow: visible;">
 			<MnistDigit
 				enableDrawing
 				data={inDisp}
@@ -112,15 +129,23 @@
 					forward(d);
 				}}
 			></MnistDigit>
-		</div>
-		<div id="innards">
-			<Trapezoid
-				width={150}
-				height={inputOutputCanvasSize}
-				trapHeights={[inputOutputCanvasSize, scatterSquare]}
-				fill="var(--pink)"
-			/>
-			<div style="position: relative;">
+      <Button
+        class="mt-1"
+        size="xs"
+        color="light"
+        on:click={() => {
+          selectedImage = "clear";
+          rawImages = rawImages; // weirdly needed for UI to update;
+        }}>Clear Canvas</Button
+      >
+    </foreignObject>
+
+    <Trapezoid x={xTrap1} y={0} width={trapWidth} height={inputOutputCanvasSize} trapHeights={[inputOutputCanvasSize, scatterSquare]}/>
+
+    <Trapezoid x={xTrap2} y={0} width={trapWidth} height={inputOutputCanvasSize} trapHeights={[scatterSquare, inputOutputCanvasSize]} fill="var(--light-blue)"/>
+
+    <foreignObject x={xLatent} y={yLatent} width={scatterSquare} height={scatterSquare} style="overflow: visible;">
+      <div style="position: relative;">
 				<LatentScatter
 					stddevs={$stddevs}
 					means={$means}
@@ -169,27 +194,14 @@
 					>
 				</div>
 			</div>
-			<Trapezoid
-				width={150}
-				height={inputOutputCanvasSize}
-				trapHeights={[scatterSquare, inputOutputCanvasSize]}
-				fill="var(--light-blue)"
-			/>
-		</div>
-		<div id="output">
+    </foreignObject>
+
+    <foreignObject x={xDigit2} y={0} width={inputOutputCanvasSize} height={inputOutputCanvasSize} style="overflow: visible;">
 			<MnistDigit data={outDisp} square={inputOutputCanvasSize} maxVal={1}
 			></MnistDigit>
-		</div>
-	</div>
-	<Button
-		class="mt-1"
-		size="xs"
-		color="light"
-		on:click={() => {
-			selectedImage = "clear";
-			rawImages = rawImages; // weirdly needed for UI to update;
-		}}>Clear Canvas</Button
-	>
+    </foreignObject>
+  </svg>
+
 </main>
 
 <Popover />
