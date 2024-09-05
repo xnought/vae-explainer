@@ -1,5 +1,5 @@
 <script>
-  import LogVarTrick from "./LogVarTrick.svelte";
+  import Sampler from "./Sampler.svelte";
   export let width = 800;
   export let height = 500;
 
@@ -7,7 +7,7 @@
 
 <div>
   <svg {width} {height}>
-    <LogVarTrick />
+    <Sampler />
   </svg>
 </div>
 
