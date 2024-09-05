@@ -2,6 +2,12 @@
 
 Learn how Variational Autoencoders (VAE) work by visualizing one running in your browser.
 
+
+
+https://github.com/user-attachments/assets/72166db4-8374-4daf-9e4d-771342f173ee
+
+
+
 ## Development
 
 ```bash
