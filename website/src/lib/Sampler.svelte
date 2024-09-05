@@ -25,7 +25,7 @@
 
   const nodeX = 0;
   const vectorX = nodeX + 60;
-  $randomSample = sample();
+  //$randomSample = sample();
   const connectStyle = {stroke: "grey", "stroke-width": 2};
   const width = vectorX+30;
   $sampleWidth = width;
@@ -35,9 +35,11 @@
 <svg {x} {y} {width} {height} style="overflow: visible;">
   <!-- <rect {width} {height} stroke="black" fill="none" />  -->
   <TwoFunc x={nodeX} inputs={$randomSample} f={standardNormal} lineInput color="slateblue"/>
+  <!--
   <foreignObject class="node" x={-5} y={105} width={200} style="overflow: visible;">
     <Button on:click={() => $randomSample = sample()} size="xs" color="light">Resample 🎲</Button>
   </foreignObject>
+  -->
   <VectorShape x={vectorX} y={0} values={$randomSample} stroke="slateblue"/>
   <line x1={nodeX + 40} y1={$node1MidY} x2={vectorX} y2={$node1MidY} {...connectStyle}/>
   <line x1={nodeX + 40} y1={$node2MidY} x2={vectorX} y2={$node2MidY} {...connectStyle}/>

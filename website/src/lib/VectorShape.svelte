@@ -20,14 +20,14 @@
 
 <svg {width} {height} {x} {y}>
   <rect x={0} y={0} {height} {width} {stroke} stroke-width={strokeWidth} fill={fill.toString()}/>
-  <text text-anchor="middle" x={width/2} y={n1 + 4}>{values[0].toFixed(1)}</text>
-  <text text-anchor="middle" x={width/2} y={n2 + 4}>{values[1].toFixed(1)}</text>
+  <text text-anchor="middle" x={width/2} y={n1 + 4}>{values[0].toFixed(2)}</text>
+  <text text-anchor="middle" x={width/2} y={n2 + 4}>{values[1].toFixed(2)}</text>
 </svg>
 
 
 <style>
   text {
-    font-size: 10px;
+    font-size: 8px;
     font-family: menlo;
   }
 </style>

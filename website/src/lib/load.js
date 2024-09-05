@@ -7,7 +7,7 @@ export function sample(code) {
 	const eps = tf.randomStandardNormal(zMean.shape);
 	const z = tf.add(zMean, tf.mul(eps, zStdDev)); // \mu + \sigma * \epsilon    or stddev*N(0, I) + mean
 
-	return [z, zLogVar, zMean];
+	return [z, zLogVar, zMean, eps];
 }
 
 export async function loadModels() {

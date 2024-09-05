@@ -33,7 +33,7 @@
 <svg {x} {y} {width} {height} style="overflow: visible;">
   <!-- <rect {width} {height} stroke="black" fill="none" />  -->
   <TwoFunc x={nodeX} inputs={stdNormalToNormalRandom($randomSample, $means, $stddevs)} f={customNormalA} g={customNormalB} lineInput color="#6fc7ec"/>
-  <VectorShape x={vectorX} y={0} values={$randomSample} stroke="#6fc7ec"/>
+  <VectorShape x={vectorX} y={0} values={stdNormalToNormalRandom($randomSample, $means, $stddevs)} stroke="#6fc7ec"/>
   <line x1={nodeX + 40} y1={$node1MidY} x2={vectorX} y2={$node1MidY} {...connectStyle}/>
   <line x1={nodeX + 40} y1={$node2MidY} x2={vectorX} y2={$node2MidY} {...connectStyle}/>
 </svg>

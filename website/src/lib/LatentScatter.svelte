@@ -67,7 +67,7 @@
 		<svg
 			{width}
 			{height}
-			style="position: absolute; left: 0; top: 0; "
+			style="position: absolute; left: 0; top: 0; overflow: visible;"
 			on:mousemove={(d) => {
 				mousePos = [d.offsetX, d.offsetY];
 				sampled[0] = scaleX.invert(mousePos[0]);
@@ -83,6 +83,7 @@
 				onChange(sampled);
 			}}
 		>
+      <text x={0} y={-7} style="font-size: 10px;" fill="grey" >[{sampled[0].toFixed(2)}, {sampled[1].toFixed(2)}]</text>
 			<Gaussian2DSvg
 				{means}
 				{stddevs}

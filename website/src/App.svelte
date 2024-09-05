@@ -10,7 +10,7 @@
 	import ImageSelector from "./lib/ImageSelector.svelte";
 	import Trapezoid from "./lib/Trapezoid.svelte";
 	import Popover from "./lib/Popover.svelte";
-  import { stddevs, means } from "./lib/stores";
+  import { stddevs, means, randomSample } from "./lib/stores";
 
 	function toGrey(d) {
 		const result = new Uint8ClampedArray(d.length / 4);
@@ -67,7 +67,8 @@
 			const code = enc.predict(x);
 			xs = code.arraySync()[0];
 
-			const [z, logvar, mean] = sample(code);
+			const [z, logvar, mean, eps] = sample(code);
+      $randomSample = eps.arraySync()[0];
 			$stddevs = tf.exp(logvar.mul(0.5)).arraySync()[0];
 			$means = mean.arraySync()[0];
 			zs = z.arraySync()[0];
@@ -138,13 +139,15 @@
 						size="xs"
 						color="light"
 						on:click={async () => {
-							for (let i = 0; i < 10; i++) {
+              const times = 1;
+							for (let i = 0; i < times; i++) {
 								tf.tidy(() => {
 									const code = tf.tensor(xs, [
 										1,
 										2 * latentDims,
 									]);
-									const [z, logvar, mean] = sample(code);
+									const [z, logvar, mean, eps] = sample(code);
+                  $randomSample = eps.arraySync()[0];
 									$stddevs = tf
 										.exp(logvar.mul(0.5))
 										.arraySync()[0];
@@ -159,9 +162,8 @@
 								);
 							}
 						}}
-						><span style="color: var(--light-blue);"
 							>Resample 🎲
-						</span></Button
+						</Button
 					>
 				</div>
 			</div>
