@@ -2,7 +2,7 @@
   import FunctionSVG from "./FunctionSVG.svelte";
   import VectorShape from "./VectorShape.svelte";
   import TwoFunc from "./TwoFunc.svelte";
-  import { node1MidY, node2MidY } from "./stores";
+  import { node1MidY, node2MidY, logVarWidth } from "./stores";
 
   export let x = 0; 
   export let y = 0;
@@ -23,11 +23,13 @@
 
   const outConnectStroke = {stroke: "grey", "stroke-width": 2};
 
-  const width = 150;
+  const width = vectorX+30;
   const height = 100;
+  $logVarWidth = width;
 </script>
 
 <svg {x} {y} {width} {height}>
+  <!-- <rect {width} {height} fill="none" stroke="black" /> -->
   <!--log(var) -->
   <VectorShape x={logVarVectorX}
                y={firstExpY} 

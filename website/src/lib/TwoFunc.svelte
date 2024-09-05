@@ -5,6 +5,7 @@
 
   export let symbolInstead = undefined;
   export let symbolColor = "crimson";
+  export let symbolShift = 8;
   const symbolFill = d3.color(symbolColor);
   symbolFill.opacity = 0.2;
 
@@ -35,8 +36,8 @@
     {:else}
       <rect x={nodeX} y={firstNodeY} width={nodeSquare} height={nodeSquare} fill={symbolFill.toString()} stroke={symbolColor} stroke-width={1.2}  />
       <rect x={nodeX} y={secondNodeY} width={nodeSquare} height={nodeSquare} fill={symbolFill.toString()} stroke={symbolColor} stroke-width={1.2}/>
-      <text x={nodeX + nodeSquare/2} y={firstNodeY + nodeSquare/2 + 8} text-anchor="middle" fill={symbolColor}>{symbolInstead}</text>
-      <text x={nodeX + nodeSquare/2} y={secondNodeY + nodeSquare/2 + 8} text-anchor="middle" fill={symbolColor}>{symbolInstead}</text>
+      <text x={nodeX + nodeSquare/2} y={firstNodeY + nodeSquare/2 + symbolShift} text-anchor="middle" fill={symbolColor}>{symbolInstead}</text>
+      <text x={nodeX + nodeSquare/2} y={secondNodeY + nodeSquare/2 + symbolShift} text-anchor="middle" fill={symbolColor}>{symbolInstead}</text>
   {/if}
 </svg>
 
