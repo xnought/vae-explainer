@@ -10,6 +10,9 @@ export const node1MidY = writable(0);
 export const node2MidY = writable(0);
 export const sampleWidth = writable(0);
 export const logVarWidth = writable(0);
+export const popoverWidth = writable(0);
+export const popoverEncY = writable(0);
+export const popoverEncHeight = writable(0);
 
 export const css = {
 	"--pink": "#e44084",

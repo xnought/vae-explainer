@@ -8,10 +8,11 @@
   import Sankey from "./Sankey.svelte";
 
   import * as d3 from "d3";
-  import { node1MidY, node2MidY, sampleWidth, logVarWidth, vectorHeight, means, stddevs, css} from "./stores";
+  import { node1MidY, node2MidY, sampleWidth, logVarWidth, vectorHeight, means, stddevs, css, popoverWidth, popoverEncY, popoverEncHeight} from "./stores";
 
-  export let width = 710;
   export let height = 450;
+  export let x = 0;
+  export let y = 0;
 
   
   $: leftPad = 70;
@@ -25,7 +26,7 @@
   $: logVarVector = [leftPad, meanVector[1] + 150];
   $: sampleVector = [logVarVector[0] + $logVarWidth - $sampleWidth, logVarVector[1]+150]
   $: mulVector = [logVarVector[0] + 250, logVarVector[1]];
-  $: addVector = [meanVector[0] + 400, meanVector[1]];
+  $: addVector = [meanVector[0] + 350, meanVector[1]];
   $: meanToLogVarGap = logVarVector[1] - (meanVector[1] + $vectorHeight);
   $: midBetweenMeanAndLogVar = logVarVector[1] - meanToLogVarGap/2;
   $: outputVector = [addVector[0] + 150, midBetweenMeanAndLogVar - $vectorHeight/2];
@@ -55,41 +56,39 @@
   $: inBotOut = [outputVector[0], outputVector[1] + $node2MidY];
 
   $: encodedVector = [0, midBetweenMeanAndLogVar - encodedVectorHeight/2];
+
+  // needed outside
+  $: $popoverWidth = outputVector[0] + 40 + 30 + 20;
+  $: $popoverEncY = encodedVector[1];
+  $: $popoverEncHeight = encodedVectorHeight;
 </script>
 
-<div>
-  <svg {width} {height}>
-    <rect x={encodedVector[0]} y={encodedVector[1]} width={30} height={encodedVectorHeight} stroke={encodedVectorStroke} stroke-width={1.5} fill={encodedVectorFill}/>
-    <Sankey p1={[encodedVector[0]+30, encodedVector[1]]} p1Height={$vectorHeight} p2={meanVector} p2Height={$vectorHeight}  fill="var(--green)" opacity={0.2}/>
-    <Sankey p1={[encodedVector[0]+30, encodedVector[1]+$vectorHeight]} p1Height={$vectorHeight} p2={logVarVector} p2Height={$vectorHeight} fill="orange" opacity={0.2} />
+<svg class="fade-in" width={$popoverWidth} {height} {x} {y}>
+  <rect width={$popoverWidth} {height} fill="none" stroke="lightgrey" />
+  <rect x={encodedVector[0]} y={encodedVector[1]} width={30} height={encodedVectorHeight} stroke={encodedVectorStroke} stroke-width={1.5} fill={encodedVectorFill}/>
+  <Sankey p1={[encodedVector[0]+30, encodedVector[1]]} p1Height={$vectorHeight} p2={meanVector} p2Height={$vectorHeight}  fill="var(--green)" opacity={0.2}/>
+  <Sankey p1={[encodedVector[0]+30, encodedVector[1]+$vectorHeight]} p1Height={$vectorHeight} p2={logVarVector} p2Height={$vectorHeight} fill="orange" opacity={0.2} />
 
-    <!-- <Curve source={[0, midBetweenMeanAndLogVar]} target={[width, midBetweenMeanAndLogVar]} /> -->
-    <VectorShape x={meanVector[0]} y={meanVector[1]} values={$means}/>
-    <!-- <VectorShape x={logVarVector[0]} y={logVarVector[1]} values={[0, 0]}/> -->
-    <LogVarTrick x={logVarVector[0]} y={logVarVector[1]}/>
-    <Curve source={topNodeLogVar} target={inTopMul} />
-    <Curve source={botNodeLogVar} target={inBotMul} />
+  <!-- <Curve source={[0, midBetweenMeanAndLogVar]} target={[width, midBetweenMeanAndLogVar]} /> -->
+  <VectorShape x={meanVector[0]} y={meanVector[1]} values={$means}/>
+  <!-- <VectorShape x={logVarVector[0]} y={logVarVector[1]} values={[0, 0]}/> -->
+  <LogVarTrick x={logVarVector[0]} y={logVarVector[1]}/>
+  <Curve source={topNodeLogVar} target={inTopMul} />
+  <Curve source={botNodeLogVar} target={inBotMul} />
 
-    <Sampler x={sampleVector[0]} y={sampleVector[1]}/>
-    <Curve source={topSampleVector} target={inTopMul} />
-    <Curve source={botSampleVector} target={inBotMul} />
+  <Sampler x={sampleVector[0]} y={sampleVector[1]}/>
+  <Curve source={topSampleVector} target={inTopMul} />
+  <Curve source={botSampleVector} target={inBotMul} />
 
-    <TwoFunc x={mulVector[0]} y={mulVector[1]} symbolInstead="*" symbolColor="black" symbolShift={16}/>
-    <Curve source={outTopMean} target={inTopAdd} />
-    <Curve source={outBotMean} target={inBotAdd} />
-    <Curve source={outTopMul} target={inTopAdd} />
-    <Curve source={outBotMul} target={inBotAdd} />
+  <TwoFunc x={mulVector[0]} y={mulVector[1]} symbolInstead="*" symbolColor="black" symbolShift={16}/>
+  <Curve source={outTopMean} target={inTopAdd} />
+  <Curve source={outBotMean} target={inBotAdd} />
+  <Curve source={outTopMul} target={inTopAdd} />
+  <Curve source={outBotMul} target={inBotAdd} />
 
-    <TwoFunc x={addVector[0]} y={addVector[1]} symbolInstead="+" symbolColor="black"/>
-    <Curve source={outTopAdd} target={inTopOut} />
-    <Curve source={outBotAdd} target={inBotOut} />
+  <TwoFunc x={addVector[0]} y={addVector[1]} symbolInstead="+" symbolColor="black"/>
+  <Curve source={outTopAdd} target={inTopOut} />
+  <Curve source={outBotAdd} target={inBotOut} />
 
-    <Output x={outputVector[0]} y={outputVector[1]} />
-  </svg>
-</div>
-
-<style>
-  svg {
-    outline: 1px solid red;  
-  }
-</style>
+  <Output x={outputVector[0]} y={outputVector[1]} />
+</svg>

@@ -5,6 +5,8 @@
 	import { onMount } from "svelte";
 	import * as d3 from "d3";
 
+  export let style = "";
+
 	// take in the digit data
 	// export let digit: IData;
 	// const { data, label } = digit;
@@ -75,7 +77,7 @@
 	}
 </script>
 
-<div>
+<div {style}>
 	<canvas
 		bind:this={canvasPtr}
 		{width}

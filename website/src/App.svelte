@@ -10,7 +10,11 @@
 	import ImageSelector from "./lib/ImageSelector.svelte";
 	import Trapezoid from "./lib/Trapezoid.svelte";
 	import Popover from "./lib/Popover.svelte";
-  import { stddevs, means, randomSample } from "./lib/stores";
+	import Sankey from "./lib/Sankey.svelte";
+
+	import { tweened } from 'svelte/motion';
+	import { cubicOut } from 'svelte/easing';
+  import { stddevs, means, randomSample, popoverWidth, popoverEncHeight, popoverEncY } from "./lib/stores";
 
 	function toGrey(d) {
 		const result = new Uint8ClampedArray(d.length / 4);
@@ -99,15 +103,26 @@
   const width = 1200;
   const height = 500;
 
-  const expansion = 20;
-  const xDigit1 = 0;
-  const padding = 100;
-  const trapPadding = 10;
-  const xLatent = xDigit1 + inputOutputCanvasSize + padding + expansion;
-  const yLatent = inputOutputCanvasSize / 2 - scatterSquare/2;
-  const xDigit2 = xLatent + scatterSquare + padding + expansion;
-  const xTrap1 = xDigit1 + inputOutputCanvasSize + trapPadding;
-  const xTrap2 = xDigit2 - trapWidth - trapPadding;
+  let expanded = true; 
+  const expandedSize = 300;
+  const minimizedSize = 20;
+  const cExpansion = tweened(minimizedSize, {duration: 1000, easing: cubicOut});
+  $: expansion = $cExpansion;
+  $: xDigit1 = 0;
+  $: padding = 100;
+  $: trapPadding = 10;
+  $: xLatent = xDigit1 + inputOutputCanvasSize + padding + expansion;
+  $: yLatent = inputOutputCanvasSize / 2 - scatterSquare/2;
+  $: xDigit2 = xLatent + scatterSquare + padding + expansion;
+  $: xTrap1 = xDigit1 + inputOutputCanvasSize + trapPadding;
+  $: xTrap2 = xDigit2 - trapWidth - trapPadding;
+  $: xMid = xLatent + scatterSquare/2;
+  $: popoverX = xMid - $popoverWidth/2;
+  $: popoverY = 300;
+  $: xTrap1Out = xTrap1 + trapWidth;
+  $: yTrap1Out = yLatent;
+  $: fullyExpanded = expansion == expandedSize;
+  $: fullyMinimized = expansion == minimizedSize;
 </script>
 
 <Header></Header>
@@ -116,11 +131,12 @@
 		<ImageSelector imageUrls={images} bind:selectedUrl={selectedImage} />
 	</div>
 
-  <svg {width} {height}> 
+  <svg {width} {height} style="overflow: visible;"> 
     <rect {width} {height} stroke="black" fill="none"/>
 
     <foreignObject x={xDigit1} y={0} width={inputOutputCanvasSize} height={inputOutputCanvasSize} style="overflow: visible;">
 			<MnistDigit
+        style="outline: 2px solid var(--pink);"
 				enableDrawing
 				data={inDisp}
 				square={inputOutputCanvasSize}
@@ -141,8 +157,14 @@
     </foreignObject>
 
     <Trapezoid x={xTrap1} y={0} width={trapWidth} height={inputOutputCanvasSize} trapHeights={[inputOutputCanvasSize, scatterSquare]}/>
+    {#if !expanded}
+      <g class="fade-in">
+        <Sankey p1={[xTrap1Out, yTrap1Out]} p2={[popoverX, popoverY + $popoverEncY]} p1Height={scatterSquare} p2Height={$popoverEncHeight} fill="var(--pink)" opacity={0.2}
+        />
+  </g>
+  {/if}
 
-    <Trapezoid x={xTrap2} y={0} width={trapWidth} height={inputOutputCanvasSize} trapHeights={[scatterSquare, inputOutputCanvasSize]} fill="var(--light-blue)"/>
+    <Trapezoid x={xTrap2} y={0} width={trapWidth} height={inputOutputCanvasSize} trapHeights={[scatterSquare, inputOutputCanvasSize]} fill="--light-blue"/>
 
     <foreignObject x={xLatent} y={yLatent} width={scatterSquare} height={scatterSquare} style="overflow: visible;">
       <div style="position: relative;">
@@ -197,14 +219,26 @@
     </foreignObject>
 
     <foreignObject x={xDigit2} y={0} width={inputOutputCanvasSize} height={inputOutputCanvasSize} style="overflow: visible;">
-			<MnistDigit data={outDisp} square={inputOutputCanvasSize} maxVal={1}
+			<MnistDigit data={outDisp} square={inputOutputCanvasSize} maxVal={1} 
+        style="outline: 2px solid var(--light-blue);"
 			></MnistDigit>
     </foreignObject>
+
+    {#if !expanded}
+      <Popover x={popoverX} y={popoverY}/>
+    {/if}
   </svg>
 
+  <Button on:click={() => {
+    if(expanded) {
+      $cExpansion = expandedSize;
+    } else {
+      $cExpansion= minimizedSize;
+    }
+    expanded = !expanded;
+  }}>{expanded ? "Expand" : "Minimize"}</Button>
 </main>
 
-<Popover />
 
 <div style="position: absolute; bottom: 5px; right: 5px;">
 	<Button color="alternative" on:click={() => showMemory()}
