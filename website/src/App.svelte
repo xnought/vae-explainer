@@ -35,7 +35,9 @@
 		return d;
 	}
 
-	const inputOutputCanvasSize = 400;
+  const compGraph = true;
+	const inputOutputCanvasSize = 300;
+  const scatterSquare = 200;
 	const images = [1, 2, 3, 4, 5, 7].map((d) => `images/${d}.png`);
 	let rawImages;
 	let selectedImage = "images/1.png";
@@ -115,15 +117,15 @@
 			<Trapezoid
 				width={150}
 				height={inputOutputCanvasSize}
-				trapHeights={[inputOutputCanvasSize, 250]}
+				trapHeights={[inputOutputCanvasSize, scatterSquare]}
 				fill="var(--pink)"
 			/>
 			<div style="position: relative;">
 				<LatentScatter
 					stddevs={$stddevs}
 					means={$means}
-					width={250}
-					height={250}
+					width={scatterSquare}
+					height={scatterSquare}
 					sampled={zs}
 					onChange={(z) => {
 						tf.tidy(() => {
@@ -170,7 +172,7 @@
 			<Trapezoid
 				width={150}
 				height={inputOutputCanvasSize}
-				trapHeights={[250, inputOutputCanvasSize]}
+				trapHeights={[scatterSquare, inputOutputCanvasSize]}
 				fill="var(--light-blue)"
 			/>
 		</div>

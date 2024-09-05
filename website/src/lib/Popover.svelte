@@ -5,14 +5,24 @@
   import TwoFunc from "./TwoFunc.svelte";
   import Curve from "./Curve.svelte";
   import Output from "./Output.svelte";
-  import { node1MidY, node2MidY, sampleWidth, logVarWidth, vectorHeight, means, stddevs} from "./stores";
+  import Sankey from "./Sankey.svelte";
 
-  export let width = 800;
-  export let height = 500;
+  import * as d3 from "d3";
+  import { node1MidY, node2MidY, sampleWidth, logVarWidth, vectorHeight, means, stddevs, css} from "./stores";
+
+  export let width = 710;
+  export let height = 450;
 
   
-  $: meanVector = [100, 50];
-  $: logVarVector = [100, meanVector[1] + 150];
+  $: leftPad = 70;
+  $: topPad = 50;
+  $: encodedVectorHeight = $vectorHeight*2;
+  $: encodedVectorStroke = css["--pink"];
+  $: encodedVectorFill = d3.color(encodedVectorStroke);
+  $: if(encodedVectorHeight) encodedVectorFill.opacity = 0.2;
+
+  $: meanVector = [leftPad, topPad];
+  $: logVarVector = [leftPad, meanVector[1] + 150];
   $: sampleVector = [logVarVector[0] + $logVarWidth - $sampleWidth, logVarVector[1]+150]
   $: mulVector = [logVarVector[0] + 250, logVarVector[1]];
   $: addVector = [meanVector[0] + 400, meanVector[1]];
@@ -44,10 +54,15 @@
   $: inTopOut = [outputVector[0], outputVector[1] + $node1MidY];
   $: inBotOut = [outputVector[0], outputVector[1] + $node2MidY];
 
+  $: encodedVector = [0, midBetweenMeanAndLogVar - encodedVectorHeight/2];
 </script>
 
 <div>
   <svg {width} {height}>
+    <rect x={encodedVector[0]} y={encodedVector[1]} width={30} height={encodedVectorHeight} stroke={encodedVectorStroke} stroke-width={1.5} fill={encodedVectorFill}/>
+    <Sankey p1={[encodedVector[0]+30, encodedVector[1]]} p1Height={$vectorHeight} p2={meanVector} p2Height={$vectorHeight}  fill="var(--green)" opacity={0.2}/>
+    <Sankey p1={[encodedVector[0]+30, encodedVector[1]+$vectorHeight]} p1Height={$vectorHeight} p2={logVarVector} p2Height={$vectorHeight} fill="orange" opacity={0.2} />
+
     <!-- <Curve source={[0, midBetweenMeanAndLogVar]} target={[width, midBetweenMeanAndLogVar]} /> -->
     <VectorShape x={meanVector[0]} y={meanVector[1]} values={$means}/>
     <!-- <VectorShape x={logVarVector[0]} y={logVarVector[1]} values={[0, 0]}/> -->
