@@ -1,0 +1,25 @@
+<script>
+  import FunctionSVG from "./FunctionSVG.svelte";
+
+  export let x = 0;
+  export let y = 0;
+  export let f = (x) => x;
+  export let inputs = [0, -1];
+  export let domain = [-6, 6];
+  export let range = [-0.1, 0.5];
+
+  
+  const nodeX = 0;
+  const firstNodeY = 0;
+  const secondNodeY = firstNodeY + 55;
+  const nodeSquare = 40;
+  const height = secondNodeY+nodeSquare;
+  const width = nodeSquare;
+</script>
+
+<svg {x} {y} {width} {height}>
+  <rect {width} {height} fill="none" stroke="black" />
+
+  <FunctionSVG x={nodeX} y={firstNodeY} width={nodeSquare} height={nodeSquare} {f} input={inputs[0]} {domain} {range} />
+  <FunctionSVG x={nodeX} y={secondNodeY} width={nodeSquare} height={nodeSquare} {f} input={inputs[1]} {domain} {range} />
+</svg>

@@ -1,16 +1,13 @@
 <script>
-  import FunctionSVG from "./FunctionSVG.svelte";
+  import TwoFunc from "./TwoFunc.svelte";
+  import * as tf from "@tensorflow/tfjs";
+  import { Button }from "flowbite-svelte";
+  import { randomSample } from "./stores";
 
-  export let height = 200;
-  export let width = 200;
   export let x = 0;
   export let y = 0;
-
-  
-  const nodeX = 15;
-  const firstNodeY = 15;
-  const secondNodeY = firstNodeY + 55;
-  const nodeSquare = 40;
+  export let width = 100;
+  export let height = 150;
 
   function standardNormal(x) {
     const c = 1/Math.sqrt(2*Math.PI);
@@ -18,13 +15,22 @@
     return c*Math.exp(a);
   }
 
-  const stdNormConfig = {domain: [-6, 6], range: [-0.1, 0.5]};
-  export let randomSampled = [0, -1];
+  function sample() {
+    let eps = [];
+    tf.tidy(() => {
+	      const _eps = tf.randomStandardNormal([1, 2]);
+        eps = _eps.arraySync()[0];
+    });
+    return eps;
+  }
+
+  $randomSample = sample();
 </script>
 
-<svg {x} {y} {width} {height}>
-  <rect {width} {height} fill="none" stroke="black" />
-
-  <FunctionSVG x={nodeX} y={firstNodeY} width={nodeSquare} height={nodeSquare} f={standardNormal} input={randomSampled[0]} {...stdNormConfig} />
-  <FunctionSVG x={nodeX} y={secondNodeY} width={nodeSquare} height={nodeSquare} f={standardNormal} input={randomSampled[1]} {...stdNormConfig}/>
+<svg {x} {y} {width} {height} style="overflow: visible;">
+  <TwoFunc inputs={$randomSample} f={standardNormal}/>
+  <foreignObject class="node" x={0} y={100} {width} style="overflow: visible;">
+    <Button on:click={() => $randomSample = sample()} size="xs" color="light">Resample 🎲</Button>
+  </foreignObject>
 </svg>
+
