@@ -48,6 +48,7 @@
       <line x1={scaleX(p1.x)} y1={scaleY(p1.y)} x2={scaleX(p2.x)} y2={scaleY(p2.y)} stroke="lightgrey" stroke-width={1} />
     {/if}
   {/each}
+  <rect fill="none" stroke="grey" {width} {height} stroke-width={3}/>
   {#if input !== null}
     {@const corrected = correct(f, input, domain, range)}
     {#if !lineInput}
@@ -56,5 +57,4 @@
         <line x1={scaleX(corrected.x)} y1={0} x2={scaleX(corrected.x)} y2={height} stroke="grey" stroke-dasharray={4}/>
     {/if}
   {/if}
-  <rect fill="none" stroke="grey" {width} {height} stroke-width={3}/>
 </svg>
