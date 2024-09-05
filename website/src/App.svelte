@@ -14,7 +14,7 @@
 
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
-  import { stddevs, means, randomSample, popoverWidth, popoverEncHeight, popoverEncY } from "./lib/stores";
+  import { stddevs, means, randomSample, popoverWidth, popoverEncHeight, popoverEncY, popoverDecY, popoverDecHeight, zs} from "./lib/stores";
 
 	function toGrey(d) {
 		const result = new Uint8ClampedArray(d.length / 4);
@@ -51,7 +51,6 @@
 	let outDisp = Array(784).fill(0);
 	//let stddevs = Array(latentDims).fill(1);
 	//let means = Array(latentDims).fill(0);
-	let zs = Array(latentDims).fill(0);
 	let xs = Array(latentDims * 2).fill(0);
 
 	async function fetchAllImages(urls) {
@@ -78,7 +77,7 @@
       $randomSample = eps.arraySync()[0];
 			$stddevs = tf.exp(logvar.mul(0.5)).arraySync()[0];
 			$means = mean.arraySync()[0];
-			zs = z.arraySync()[0];
+			$zs = z.arraySync()[0];
 
 			const xHat = dec.predict(z);
 			outDisp = xHat.arraySync()[0];
@@ -116,6 +115,7 @@
   $: xDigit2 = xLatent + scatterSquare + padding + expansion;
   $: xTrap1 = xDigit1 + inputOutputCanvasSize + trapPadding;
   $: xTrap2 = xDigit2 - trapWidth - trapPadding;
+  $: yTrap2 = xLatent;
   $: xMid = xLatent + scatterSquare/2;
   $: popoverX = xMid - $popoverWidth/2;
   $: popoverY = 300;
@@ -132,8 +132,6 @@
 	</div>
 
   <svg {width} {height} style="overflow: visible;"> 
-    <rect {width} {height} stroke="black" fill="none"/>
-
     <foreignObject x={xDigit1} y={0} width={inputOutputCanvasSize} height={inputOutputCanvasSize} style="overflow: visible;">
 			<MnistDigit
         style="outline: 2px solid var(--pink);"
@@ -157,6 +155,18 @@
     </foreignObject>
 
     <Trapezoid x={xTrap1} y={0} width={trapWidth} height={inputOutputCanvasSize} trapHeights={[inputOutputCanvasSize, scatterSquare]}/>
+
+    <foreignObject x={xTrap1} y={inputOutputCanvasSize + 5} width={200} height={50}>
+      <Button size="xs" color="alternative" outline on:click={() => {
+        if(expanded) {
+          $cExpansion = expandedSize;
+        } else {
+          $cExpansion= minimizedSize;
+        }
+        expanded = !expanded;
+      }}><span style="color: var(--pink)">{expanded ? "Show VAE Computation" : "Minimize"}</span></Button>
+    </foreignObject>
+
     {#if !expanded}
       <g class="fade-in">
         <Sankey p1={[xTrap1Out, yTrap1Out]} p2={[popoverX, popoverY + $popoverEncY]} p1Height={scatterSquare} p2Height={$popoverEncHeight} fill="var(--pink)" opacity={0.2}
@@ -164,6 +174,12 @@
   </g>
   {/if}
 
+    {#if !expanded}
+      <g class="fade-in">
+        <Sankey p1={[popoverX+$popoverWidth, popoverY+$popoverDecY]} p2={[xTrap2, yTrap1Out]} p1Height={$popoverDecHeight} p2Height={scatterSquare} fill="var(--light-blue)" opacity={0.2}
+        />
+  </g>
+  {/if}
     <Trapezoid x={xTrap2} y={0} width={trapWidth} height={inputOutputCanvasSize} trapHeights={[scatterSquare, inputOutputCanvasSize]} fill="--light-blue"/>
 
     <foreignObject x={xLatent} y={yLatent} width={scatterSquare} height={scatterSquare} style="overflow: visible;">
@@ -173,8 +189,9 @@
 					means={$means}
 					width={scatterSquare}
 					height={scatterSquare}
-					sampled={zs}
+					sampled={$zs}
 					onChange={(z) => {
+            $zs = z;
 						tf.tidy(() => {
 							const xHat = dec.predict(
 								tf.tensor(z, [1, latentDims])
@@ -201,7 +218,7 @@
 										.exp(logvar.mul(0.5))
 										.arraySync()[0];
 									$means = mean.arraySync()[0];
-									zs = z.arraySync()[0];
+									$zs = z.arraySync()[0];
 
 									const xHat = dec.predict(z);
 									outDisp = xHat.arraySync()[0];
@@ -229,14 +246,6 @@
     {/if}
   </svg>
 
-  <Button on:click={() => {
-    if(expanded) {
-      $cExpansion = expandedSize;
-    } else {
-      $cExpansion= minimizedSize;
-    }
-    expanded = !expanded;
-  }}>{expanded ? "Expand" : "Minimize"}</Button>
 </main>
 
 
@@ -259,4 +268,7 @@
 		gap: 5px;
 		align-items: center;
 	}
+  foreignObject {
+    overflow: visible;
+}
 </style>

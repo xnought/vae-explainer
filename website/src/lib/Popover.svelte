@@ -8,7 +8,7 @@
   import Sankey from "./Sankey.svelte";
 
   import * as d3 from "d3";
-  import { node1MidY, node2MidY, sampleWidth, logVarWidth, vectorHeight, means, stddevs, css, popoverWidth, popoverEncY, popoverEncHeight} from "./stores";
+  import { node1MidY, node2MidY, sampleWidth, logVarWidth, vectorHeight, means, stddevs, css, popoverWidth, popoverEncY, popoverEncHeight, popoverDecY, popoverDecHeight} from "./stores";
 
   export let height = 450;
   export let x = 0;
@@ -16,7 +16,7 @@
 
   
   $: leftPad = 70;
-  $: topPad = 50;
+  $: topPad = 25;
   $: encodedVectorHeight = $vectorHeight*2;
   $: encodedVectorStroke = css["--pink"];
   $: encodedVectorFill = d3.color(encodedVectorStroke);
@@ -61,10 +61,12 @@
   $: $popoverWidth = outputVector[0] + 40 + 30 + 20;
   $: $popoverEncY = encodedVector[1];
   $: $popoverEncHeight = encodedVectorHeight;
+  $: $popoverDecHeight = $vectorHeight;
+  $: $popoverDecY = outputVector[1];
 </script>
 
 <svg class="fade-in" width={$popoverWidth} {height} {x} {y}>
-  <rect width={$popoverWidth} {height} fill="none" stroke="lightgrey" />
+  <!-- <rect width={$popoverWidth} {height} fill="none" stroke="lightgrey" /> -->
   <rect x={encodedVector[0]} y={encodedVector[1]} width={30} height={encodedVectorHeight} stroke={encodedVectorStroke} stroke-width={1.5} fill={encodedVectorFill}/>
   <Sankey p1={[encodedVector[0]+30, encodedVector[1]]} p1Height={$vectorHeight} p2={meanVector} p2Height={$vectorHeight}  fill="var(--green)" opacity={0.2}/>
   <Sankey p1={[encodedVector[0]+30, encodedVector[1]+$vectorHeight]} p1Height={$vectorHeight} p2={logVarVector} p2Height={$vectorHeight} fill="orange" opacity={0.2} />
