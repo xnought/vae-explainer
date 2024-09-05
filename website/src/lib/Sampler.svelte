@@ -34,7 +34,7 @@
 
 <svg {x} {y} {width} {height} style="overflow: visible;">
   <!-- <rect {width} {height} stroke="black" fill="none" />  -->
-  <TwoFunc x={nodeX} inputs={$randomSample} f={standardNormal} lineInput/>
+  <TwoFunc x={nodeX} inputs={$randomSample} f={standardNormal} lineInput color="slateblue"/>
   <foreignObject class="node" x={-5} y={105} width={200} style="overflow: visible;">
     <Button on:click={() => $randomSample = sample()} size="xs" color="light">Resample 🎲</Button>
   </foreignObject>

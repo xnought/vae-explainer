@@ -10,6 +10,7 @@
 	import ImageSelector from "./lib/ImageSelector.svelte";
 	import Trapezoid from "./lib/Trapezoid.svelte";
 	import Popover from "./lib/Popover.svelte";
+  import { stddevs, means } from "./lib/stores";
 
 	function toGrey(d) {
 		const result = new Uint8ClampedArray(d.length / 4);
@@ -41,8 +42,8 @@
 	const latentDims = 2;
 	let inDisp = Array(784).fill(0);
 	let outDisp = Array(784).fill(0);
-	let stddevs = Array(latentDims).fill(1);
-	let means = Array(latentDims).fill(0);
+	//let stddevs = Array(latentDims).fill(1);
+	//let means = Array(latentDims).fill(0);
 	let zs = Array(latentDims).fill(0);
 	let xs = Array(latentDims * 2).fill(0);
 
@@ -67,8 +68,8 @@
 			xs = code.arraySync()[0];
 
 			const [z, logvar, mean] = sample(code);
-			stddevs = tf.exp(logvar.mul(0.5)).arraySync()[0];
-			means = mean.arraySync()[0];
+			$stddevs = tf.exp(logvar.mul(0.5)).arraySync()[0];
+			$means = mean.arraySync()[0];
 			zs = z.arraySync()[0];
 
 			const xHat = dec.predict(z);
@@ -93,7 +94,6 @@
 </script>
 
 <Header></Header>
-{#if false}
 <main>
 	<div class="mb-2">
 		<ImageSelector imageUrls={images} bind:selectedUrl={selectedImage} />
@@ -119,8 +119,8 @@
 			/>
 			<div style="position: relative;">
 				<LatentScatter
-					{stddevs}
-					{means}
+					stddevs={$stddevs}
+					means={$means}
 					width={250}
 					height={250}
 					sampled={zs}
@@ -145,10 +145,10 @@
 										2 * latentDims,
 									]);
 									const [z, logvar, mean] = sample(code);
-									stddevs = tf
+									$stddevs = tf
 										.exp(logvar.mul(0.5))
 										.arraySync()[0];
-									means = mean.arraySync()[0];
+									$means = mean.arraySync()[0];
 									zs = z.arraySync()[0];
 
 									const xHat = dec.predict(z);
@@ -187,7 +187,6 @@
 		}}>Clear Canvas</Button
 	>
 </main>
-{/if}
 
 <Popover />
 

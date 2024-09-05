@@ -13,6 +13,7 @@
   export let range = [-2, Math.exp(2.7)];
   export let numPoints = 50;
   export let lineInput = false;
+  export let color = "grey";
 
   const scaleX = d3.scaleLinear().domain(domain).range([0, width]);
   const scaleY = d3.scaleLinear().domain(range).range([height, 0]);
@@ -52,9 +53,9 @@
   {#if input !== null}
     {@const corrected = correct(f, input, domain, range)}
     {#if !lineInput}
-        <circle cx={scaleX(corrected.x)} cy={scaleY(corrected.y)} r={2} fill="grey"/>
+        <circle cx={scaleX(corrected.x)} cy={scaleY(corrected.y)} r={2} fill={color}/>
       {:else}
-        <line x1={scaleX(corrected.x)} y1={0} x2={scaleX(corrected.x)} y2={height} stroke="grey" stroke-dasharray={4}/>
+        <line x1={scaleX(corrected.x)} y1={0} x2={scaleX(corrected.x)} y2={height} stroke={color} stroke-dasharray={4} stroke-width={2}/>
     {/if}
   {/if}
 </svg>

@@ -5,7 +5,7 @@
   import TwoFunc from "./TwoFunc.svelte";
   import Curve from "./Curve.svelte";
   import Output from "./Output.svelte";
-  import { node1MidY, node2MidY, sampleWidth, logVarWidth, vectorHeight} from "./stores";
+  import { node1MidY, node2MidY, sampleWidth, logVarWidth, vectorHeight, means, stddevs} from "./stores";
 
   export let width = 800;
   export let height = 500;
@@ -48,8 +48,8 @@
 
 <div>
   <svg {width} {height}>
-    <Curve source={[0, midBetweenMeanAndLogVar]} target={[width, midBetweenMeanAndLogVar]} />
-    <VectorShape x={meanVector[0]} y={meanVector[1]} values={[0, 0]}/>
+    <!-- <Curve source={[0, midBetweenMeanAndLogVar]} target={[width, midBetweenMeanAndLogVar]} /> -->
+    <VectorShape x={meanVector[0]} y={meanVector[1]} values={$means}/>
     <!-- <VectorShape x={logVarVector[0]} y={logVarVector[1]} values={[0, 0]}/> -->
     <LogVarTrick x={logVarVector[0]} y={logVarVector[1]}/>
     <Curve source={topNodeLogVar} target={inTopMul} />
