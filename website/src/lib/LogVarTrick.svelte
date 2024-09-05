@@ -2,6 +2,7 @@
   import FunctionSVG from "./FunctionSVG.svelte";
   import VectorShape from "./VectorShape.svelte";
   import TwoFunc from "./TwoFunc.svelte";
+  import { node1MidY, node2MidY } from "./stores";
 
   export let x = 0; 
   export let y = 0;
@@ -22,9 +23,6 @@
 
   const outConnectStroke = {stroke: "grey", "stroke-width": 2};
 
-  export const middleFirstExp = firstExpY + expSquare/2;
-  export const middleSecondExp = secondExpY + expSquare/2;
-
   const width = 150;
   const height = 100;
 </script>
@@ -33,22 +31,20 @@
   <!--log(var) -->
   <VectorShape x={logVarVectorX}
                y={firstExpY} 
-               height={secondExpY - firstExpY + expSquare} 
                values={logVars.map(halfExp)}
                stroke="orange"
   />
-  <line x1={logVarVectorX + 30} y1={middleFirstExp} x2={firstExpX} y2={middleFirstExp} {...outConnectStroke}/>
-  <line x1={logVarVectorX  + 30} y1={middleSecondExp} x2={firstExpX} y2={middleSecondExp} {...outConnectStroke}/>
+  <line x1={logVarVectorX + 30} y1={$node1MidY} x2={firstExpX} y2={$node1MidY} {...outConnectStroke}/>
+  <line x1={logVarVectorX  + 30} y1={$node2MidY} x2={firstExpX} y2={$node2MidY} {...outConnectStroke}/>
 
   <!-- e^{0,5*log(var)} -->
   <TwoFunc x={firstExpX} y={firstExpY} f={halfExp} domain={[-5, 5]} range={[-0.2, Math.exp(2)]} inputs={[0, 0]}/>
 
-  <line x1={firstExpX + expSquare} y1={middleFirstExp} x2={vectorX} y2={middleFirstExp} {...outConnectStroke}/>
-  <line x1={firstExpX + expSquare} y1={middleSecondExp} x2={vectorX} y2={middleSecondExp} {...outConnectStroke}/>
+  <line x1={firstExpX + expSquare} y1={$node1MidY} x2={vectorX} y2={$node1MidY} {...outConnectStroke}/>
+  <line x1={firstExpX + expSquare} y1={$node2MidY} x2={vectorX} y2={$node2MidY} {...outConnectStroke}/>
   <!--sigma -->
   <VectorShape x={vectorX} 
                y={firstExpY} 
-               height={secondExpY - firstExpY + expSquare}
                values={logVars.map(halfExp)}
                stroke="steelblue"
   />

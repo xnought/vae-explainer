@@ -1,5 +1,6 @@
 <script>
   import FunctionSVG from "./FunctionSVG.svelte";
+  import { vectorHeight, node1MidY, node2MidY} from "./stores";
 
   export let x = 0;
   export let y = 0;
@@ -14,6 +15,10 @@
   const nodeSquare = 40;
   const height = secondNodeY+nodeSquare;
   const width = nodeSquare;
+
+  $node1MidY = firstNodeY+nodeSquare/2;
+  $node2MidY = secondNodeY+nodeSquare/2;
+  $vectorHeight = height;
 </script>
 
 <svg {x} {y} {width} {height}>

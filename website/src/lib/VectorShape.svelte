@@ -1,17 +1,18 @@
 <script>
+  import { vectorHeight, node1MidY, node2MidY } from "./stores";
   import * as d3 from "d3";
 
   export let x;
   export let y;
   export let width = 30; 
-  export let height =100;
+  $: height = $vectorHeight;
   export let stroke = "rgb(144,220,147)";
   export let fillOpacity = 0.2;
   export let strokeWidth = 3;
 
   export let values = [0, 0];
-  export const n1 = 20;
-  export const n2 = 75;
+  $: n1 = $node1MidY;
+  $: n2 = $node2MidY;
 
   $: fill = d3.color(stroke);
   $: fill.opacity = fillOpacity;

@@ -1,12 +1,13 @@
 <script>
   import TwoFunc from "./TwoFunc.svelte";
+  import VectorShape from "./VectorShape.svelte";
   import * as tf from "@tensorflow/tfjs";
   import { Button }from "flowbite-svelte";
-  import { randomSample } from "./stores";
+  import { randomSample, node1MidY, node2MidY } from "./stores";
 
   export let x = 0;
   export let y = 0;
-  export let width = 100;
+  export let width = 150;
   export let height = 150;
 
   function standardNormal(x) {
@@ -24,13 +25,21 @@
     return eps;
   }
 
+  const nodeX = 15;
+  const vectorX = nodeX + 60;
   $randomSample = sample();
+  let n1, n2;
+  const connectStyle = {stroke: "grey", "stroke-width": 2};
 </script>
 
 <svg {x} {y} {width} {height} style="overflow: visible;">
-  <TwoFunc inputs={$randomSample} f={standardNormal}/>
-  <foreignObject class="node" x={0} y={100} {width} style="overflow: visible;">
+  <rect {width} {height} stroke="black" fill="none" />
+  <TwoFunc x={nodeX} inputs={$randomSample} f={standardNormal}/>
+  <foreignObject class="node" x={0} y={110} {width} style="overflow: visible;">
     <Button on:click={() => $randomSample = sample()} size="xs" color="light">Resample 🎲</Button>
   </foreignObject>
+  <VectorShape x={vectorX} y={0} height={40*2} />
+  <line x1={nodeX + 40} y1={$node1MidY} x2={vectorX} y2={$node1MidY} {...connectStyle}/>
+  <line x1={nodeX + 40} y1={$node2MidY} x2={vectorX} y2={$node2MidY} {...connectStyle}/>
 </svg>
 
