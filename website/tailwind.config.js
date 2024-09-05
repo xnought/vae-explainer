@@ -5,10 +5,11 @@ export default {
 		"./src/**/*.{html,js,svelte,ts}",
 		"./node_modules/flowbite-svelte/**/*.{html,js,svelte,ts}",
 	],
-	darkMode: "selector",
+	darkMode: "class",
 	theme: {
 		extend: {
 			colors: {
+        pink: "#e44084",
 				primary: {
 					50: "#f3f3ff",
 					100: "#e8e8ff",

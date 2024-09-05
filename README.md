@@ -22,13 +22,14 @@ which runs the hot-reloading dev server at http://localhost:5173
 - [x] Test what the network needs to look like to work in tfjs
 - [x] Show latent variables (2D only) 
 - [x] Design encoder and decoder blocks
-- [ ] Fix plotting on latent space
+- [x] Fix plotting on latent space
 - [ ] Computational Graph
-    - [ ] Vector input
-    - [ ] Connect sample buttons (or remove one)
+    - [x] Vector input
+    - [x] Connect sample buttons (or remove one)
     - [ ] Make functions interactive
-    - [ ] Create popup/expand button
-    - [ ] Connect the encode and decoder to the encoded and decoded vector (sankey)
+    - [x] Create popup/expand button
+    - [x] Connect the encode and decoder to the encoded and decoded vector (sankey)
+- [ ] Fix drawing
 - [ ] Add labels to things for help 
 - [ ] Write a small help article on the different components
 - [ ] Train a better mnist VAE
