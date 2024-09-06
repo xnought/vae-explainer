@@ -103,7 +103,7 @@
   const width = 1200;
   const height = 500;
 
-  let expanded = false; 
+  let expanded = true; 
   const expandedSize = 300;
   const minimizedSize = 20;
   const cExpansion = tweened(expanded ? expandedSize : minimizedSize, {duration: 1000, easing: cubicOut});
@@ -145,7 +145,7 @@
         }}
       ></MnistDigit>
       <Button
-        class="mt-1"
+        class="mt-2"
         size="xs"
         color="alternative"
         on:click={() => {

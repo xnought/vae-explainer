@@ -32,8 +32,8 @@
 
 <svg {x} {y} {width} {height} style="overflow: visible;">
   <!-- <rect {width} {height} stroke="black" fill="none" />  -->
-  <TwoFunc x={nodeX} inputs={$zs} f={customNormalA} g={customNormalB} lineInput color="#6fc7ec"/>
-  <VectorShape x={vectorX} y={0} values={$zs} stroke="#6fc7ec"/>
+  <TwoFunc x={nodeX} inputs={$zs} f={customNormalA} g={customNormalB} lineInput color="#6fc7ec" tex={String.raw`N(\mu, \sigma^2)`} shiftTex={-35}/>
+  <VectorShape x={vectorX} y={0} values={$zs} stroke="#6fc7ec" tex={String.raw`z`}/>
   <line x1={nodeX + 40} y1={$node1MidY} x2={vectorX} y2={$node1MidY} {...connectStyle}/>
   <line x1={nodeX + 40} y1={$node2MidY} x2={vectorX} y2={$node2MidY} {...connectStyle}/>
 </svg>

@@ -65,14 +65,14 @@
   $: $popoverDecY = outputVector[1];
 </script>
 
-<svg class="fade-in" width={$popoverWidth} {height} {x} {y}>
+<svg class="fade-in" width={$popoverWidth} {height} {x} {y} style="overflow: visible;">
   <!-- <rect width={$popoverWidth} {height} fill="none" stroke="lightgrey" /> -->
   <rect x={encodedVector[0]} y={encodedVector[1]} width={30} height={encodedVectorHeight} stroke={encodedVectorStroke} stroke-width={1.5} fill={encodedVectorFill}/>
   <Sankey p1={[encodedVector[0]+30, encodedVector[1]]} p1Height={$vectorHeight} p2={meanVector} p2Height={$vectorHeight}  fill="orange" opacity={0.2}/>
   <Sankey p1={[encodedVector[0]+30, encodedVector[1]]} p1Height={$vectorHeight} p2={logVarVector} p2Height={$vectorHeight} fill="seagreen" opacity={0.2} />
 
   <!-- <Curve source={[0, midBetweenMeanAndLogVar]} target={[width, midBetweenMeanAndLogVar]} /> -->
-  <VectorShape x={meanVector[0]} y={meanVector[1]} values={$means} stroke="orange"/>
+  <VectorShape x={meanVector[0]} y={meanVector[1]} values={$means} stroke="orange" tex={String.raw`\mu`}/>
   <!-- <VectorShape x={logVarVector[0]} y={logVarVector[1]} values={[0, 0]}/> -->
   <LogVarTrick x={logVarVector[0]} y={logVarVector[1]}/>
   <Curve source={topNodeLogVar} target={inTopMul} />
@@ -82,13 +82,13 @@
   <Curve source={topSampleVector} target={inTopMul} />
   <Curve source={botSampleVector} target={inBotMul} />
 
-  <TwoFunc x={mulVector[0]} y={mulVector[1]} symbolInstead="*" symbolColor="black" symbolShift={16}/>
+  <TwoFunc x={mulVector[0]} y={mulVector[1]} symbolInstead="*" symbolColor="lightgrey" symbolShift={16} />
   <Curve source={outTopMean} target={inTopAdd} />
   <Curve source={outBotMean} target={inBotAdd} />
   <Curve source={outTopMul} target={inTopAdd} />
   <Curve source={outBotMul} target={inBotAdd} />
 
-  <TwoFunc x={addVector[0]} y={addVector[1]} symbolInstead="+" symbolColor="black"/>
+  <TwoFunc x={addVector[0]} y={addVector[1]} symbolInstead="+" symbolColor="lightgrey" />
   <Curve source={outTopAdd} target={inTopOut} />
   <Curve source={outBotAdd} target={inBotOut} />
 

@@ -85,7 +85,7 @@
         <text x={25} y={legendHeight/2 + 22} style="font-size: 8px; font-family: menlo;" fill="grey" >[{stddevs[0].toFixed(2)}, {stddevs[1].toFixed(2)}]</text>
       </svg>
       <svg id="right-side" x={width/2} y={0} height={legendHeight} width={width/2} >
-        <text x={15} y={legendHeight - 15} style="font-size: 10px;" fill="grey" class="geo" >Sampled</text>
+        <text x={15} y={legendHeight - 15} style="font-size: 10px;" fill="grey" class="geo" >Sampled (z)</text>
         <text x={15} y={legendHeight - 5} style="font-size: 8px; font-family: menlo;" fill="grey" >[{sampled[0].toFixed(2)}, {sampled[1].toFixed(2)}]</text>
         <circle
           cx={width/2 - 10}
