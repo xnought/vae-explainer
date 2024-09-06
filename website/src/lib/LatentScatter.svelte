@@ -65,29 +65,9 @@
 </script>
 
 <div style="position: relative;">
-	{#if scaleX && scaleY}
-		<svg
-			{width}
-			{height}
-			style="position: absolute; left: 0; top: 0; overflow: visible; cursor: none;"
-			on:mousemove={(d) => {
-				mousePos = [d.offsetX, d.offsetY];
-				sampled[0] = scaleX.invert(mousePos[0]);
-				sampled[1] = scaleY.invert(mousePos[1]);
-				onChange(sampled);
-			}}
-			on:mouseenter={() => {
-				sampledCopy = [...sampled];
-			}}
-			on:mouseleave={() => {
-				sampled = sampledCopy;
-				sampledCopy = undefined;
-				onChange(sampled);
-			}}
-		>
-      <text x={0} y={-legendHeight-8} style="font-size: 15px; font-family: Geo;" fill="grey" >Latent Space</text>
-
-      <svg id="left-side" x={0} y={-legendHeight-5} height={legendHeight} width={width/2} style="overflow: visible;">
+  <svg {width} height={legendHeight} style="position: absolute; left: 0; top: -{legendHeight + 5}px; overflow: visible;">
+      <text x={0} y={-5} style="font-size: 15px; font-family: Geo;" fill="grey" >Latent Space</text>
+      <svg id="left-side" x={0} y={0} height={legendHeight} width={width/2} style="overflow: visible;">
         <Gaussian2DSvg
           override={[10,legendHeight/2]}
           means={[0,0]}
@@ -103,7 +83,7 @@
         <text x={25} y={legendHeight/2 + 12} style="font-size: 10px;" fill="grey" class="geo">Std. Deviations</text>
         <text x={25} y={legendHeight/2 + 22} style="font-size: 8px;" fill="grey" >[{stddevs[0].toFixed(2)}, {stddevs[1].toFixed(2)}]</text>
       </svg>
-      <svg id="right-side" x={width/2} y={-legendHeight-5} height={legendHeight} width={width/2} >
+      <svg id="right-side" x={width/2} y={0} height={legendHeight} width={width/2} >
         <text x={width/2 - 20} y={legendHeight - 15} style="font-size: 10px;" fill="grey" class="geo" text-anchor="end">Sampled</text>
         <text x={width/2 - 20} y={legendHeight - 5} style="font-size: 8px;" fill="grey" text-anchor="end">[{sampled[0].toFixed(2)}, {sampled[1].toFixed(2)}]</text>
         <circle
@@ -114,6 +94,28 @@
           stroke="black"
         />
       </svg>
+  </svg>
+
+	{#if scaleX && scaleY}
+		<svg
+			{width}
+			{height}
+			style="position: absolute; left: 0; top: 0; overflow: hidden; cursor: none;"
+			on:mousemove={(d) => {
+				mousePos = [d.offsetX, d.offsetY];
+				sampled[0] = scaleX.invert(mousePos[0]);
+				sampled[1] = scaleY.invert(mousePos[1]);
+				onChange(sampled);
+			}}
+			on:mouseenter={() => {
+				sampledCopy = [...sampled];
+			}}
+			on:mouseleave={() => {
+				sampled = sampledCopy;
+				sampledCopy = undefined;
+				onChange(sampled);
+			}}
+		>
       <Gaussian2DSvg
         {means}
         {stddevs}
