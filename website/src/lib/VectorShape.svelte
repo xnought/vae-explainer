@@ -1,6 +1,7 @@
 <script>
   import { vectorHeight, node1MidY, node2MidY } from "./stores";
   import * as d3 from "d3";
+  import { color } from "./util";
 
   export let x;
   export let y;
@@ -14,12 +15,11 @@
   $: n1 = $node1MidY;
   $: n2 = $node2MidY;
 
-  $: fill = d3.color(stroke);
-  $: fill.opacity = fillOpacity;
+  $: fill = color(stroke, fillOpacity);
 </script>
 
 <svg {width} {height} {x} {y}>
-  <rect x={0} y={0} {height} {width} {stroke} stroke-width={strokeWidth} fill={fill.toString()}/>
+  <rect x={0} y={0} {height} {width} stroke={color(stroke)} stroke-width={strokeWidth} fill={fill.toString()}/>
   <text text-anchor="middle" x={width/2} y={n1 + 4}>{values[0].toFixed(2)}</text>
   <text text-anchor="middle" x={width/2} y={n2 + 4}>{values[1].toFixed(2)}</text>
 </svg>

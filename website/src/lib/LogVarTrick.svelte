@@ -32,13 +32,13 @@
   <VectorShape x={logVarVectorX}
                y={firstExpY} 
                values={logVar}
-               stroke="orange"
+               stroke="seagreen"
   />
   <line x1={logVarVectorX + 30} y1={$node1MidY} x2={firstExpX} y2={$node1MidY} {...outConnectStroke}/>
   <line x1={logVarVectorX + 30} y1={$node2MidY} x2={firstExpX} y2={$node2MidY} {...outConnectStroke}/>
 
   <!-- e^{0,5*log(var)} -->
-  <TwoFunc x={firstExpX} y={firstExpY} f={halfExp} domain={[-10, 0]} range={[-0.1, 1]} inputs={logVar} color="steelblue"/>
+  <TwoFunc x={firstExpX} y={firstExpY} f={halfExp} domain={[-10, 0]} range={[-0.1, 1]} inputs={logVar} color="lightseagreen"/>
 
   <line x1={firstExpX + expSquare} y1={$node1MidY} x2={vectorX} y2={$node1MidY} {...outConnectStroke}/>
   <line x1={firstExpX + expSquare} y1={$node2MidY} x2={vectorX} y2={$node2MidY} {...outConnectStroke}/>
@@ -46,7 +46,7 @@
   <VectorShape x={vectorX} 
                y={firstExpY} 
                values={$stddevs}
-               stroke="steelblue"
+               stroke="lightseagreen"
   />
 </svg>
 

@@ -16,22 +16,20 @@
 			}}
 		/>
 	{/each}
-  <div class="s" style="width: {width}px; height: {width}px; background: black; opacity: {selectedUrl === 'clear' ? 1 : 0.4}; {selectedUrl === 'clear' ? 'outline: 2px solid var(--medium-blue)' : ''};" on:click={() => selectedUrl = "clear"}></div>
+  <div class="s" style="width: {width}px; height: {width}px; background: black; opacity: {selectedUrl === 'clear' ? 1 : 0.4}; {selectedUrl === 'clear' ? 'outline: 2px solid var(--pink)' : ''};" on:click={() => selectedUrl = "clear"}></div>
 </div>
 
 <style>
 	.lined {
-		outline: 2px solid var(--medium-blue);
+		outline: 2px solid var(--pink);
 		opacity: 1;
 	}
   .s {
 		cursor: pointer;
-		border-radius: 3px;
   }
 
 	img {
 		cursor: pointer;
-		border-radius: 3px;
 		opacity: 0.4;
 	}
 </style>

@@ -60,6 +60,8 @@
 			ctx.fillRect(x, y, 2, 2);
 		}
 	}
+
+  const legendHeight = 50;
 </script>
 
 <div style="position: relative;">
@@ -83,15 +85,43 @@
 				onChange(sampled);
 			}}
 		>
-      <text x={0} y={-7} style="font-size: 10px;" fill="grey" >[{sampled[0].toFixed(2)}, {sampled[1].toFixed(2)}]</text>
-			<Gaussian2DSvg
-				{means}
-				{stddevs}
-				{scaleX}
-				{scaleY}
-				numberOfDeviations={5}
-				exageration={35}
-			/>
+      <text x={0} y={-legendHeight-8} style="font-size: 15px; font-family: Geo;" fill="grey" >Latent Space</text>
+
+      <svg id="left-side" x={0} y={-legendHeight-5} height={legendHeight} width={width/2} style="overflow: visible;">
+        <Gaussian2DSvg
+          override={[10,legendHeight/2]}
+          means={[0,0]}
+          {stddevs}
+          {scaleX}
+          {scaleY}
+          numberOfDeviations={6}
+          exageration={20}
+        />
+        <text x={25} y={legendHeight/2 - 10} style="font-size: 10px;" fill="grey" class="geo">Means</text>
+        <text x={25} y={legendHeight/2} style="font-size: 8px;" fill="grey" >[{means[0].toFixed(2)}, {means[1].toFixed(2)}]</text>
+
+        <text x={25} y={legendHeight/2 + 12} style="font-size: 10px;" fill="grey" class="geo">Std. Deviations</text>
+        <text x={25} y={legendHeight/2 + 22} style="font-size: 8px;" fill="grey" >[{stddevs[0].toFixed(2)}, {stddevs[1].toFixed(2)}]</text>
+      </svg>
+      <svg id="right-side" x={width/2} y={-legendHeight-5} height={legendHeight} width={width/2} >
+        <text x={width/2 - 20} y={legendHeight - 15} style="font-size: 10px;" fill="grey" class="geo" text-anchor="end">Sampled</text>
+        <text x={width/2 - 20} y={legendHeight - 5} style="font-size: 8px;" fill="grey" text-anchor="end">[{sampled[0].toFixed(2)}, {sampled[1].toFixed(2)}]</text>
+        <circle
+          cx={width/2 - 10}
+          cy={legendHeight-8}
+          r={4}
+          fill="var(--light-blue)"
+          stroke="black"
+        />
+      </svg>
+      <Gaussian2DSvg
+        {means}
+        {stddevs}
+        {scaleX}
+        {scaleY}
+        numberOfDeviations={6}
+        exageration={35}
+      />
 			<circle
 				cx={scaleX(sampled[0])}
 				cy={scaleY(sampled[1])}

@@ -1,6 +1,8 @@
 <script>
 	import { Button } from "flowbite-svelte";
 	import { GithubSolid, FilePdfSolid } from "flowbite-svelte-icons";
+
+  const color = "alternative";
 </script>
 
 <nav>
@@ -16,14 +18,16 @@
 			<Button
 				size="xs"
 				href="https://github.com/xnought/vae-explainer"
-				color="dark"
+        {color}
+        outline
 				>Code
 				<GithubSolid size="md" class="ml-1" />
 			</Button>
 			<Button
 				size="xs"
 				href="https://github.com/xnought/vae-explainer"
-				color="dark"
+        {color}
+        outline
 				>Paper
 				<FilePdfSolid size="md" class="ml-1" />
 			</Button>
@@ -33,7 +37,7 @@
 
 <style>
 	nav {
-		background-color: var(--dark-blue);
+		background-color: black;
 	}
 	#inner {
 		padding: 10px;

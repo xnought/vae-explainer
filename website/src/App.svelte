@@ -11,6 +11,7 @@
 	import Trapezoid from "./lib/Trapezoid.svelte";
 	import Popover from "./lib/Popover.svelte";
 	import Sankey from "./lib/Sankey.svelte";
+	import Katex from "./lib/Katex.svelte";
 
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
@@ -102,10 +103,10 @@
   const width = 1200;
   const height = 500;
 
-  let expanded = true; 
+  let expanded = false; 
   const expandedSize = 300;
   const minimizedSize = 20;
-  const cExpansion = tweened(minimizedSize, {duration: 1000, easing: cubicOut});
+  const cExpansion = tweened(expanded ? expandedSize : minimizedSize, {duration: 1000, easing: cubicOut});
   $: expansion = $cExpansion;
   $: xDigit1 = 0;
   $: padding = 100;
@@ -146,7 +147,7 @@
       <Button
         class="mt-1"
         size="xs"
-        color="light"
+        color="alternative"
         on:click={() => {
           selectedImage = "clear";
           rawImages = rawImages; // weirdly needed for UI to update;
@@ -154,33 +155,34 @@
       >
     </foreignObject>
 
-    <Trapezoid x={xTrap1} y={0} width={trapWidth} height={inputOutputCanvasSize} trapHeights={[inputOutputCanvasSize, scatterSquare]}/>
+    <Trapezoid label="Encoder" fill="--pink" fill2="--purple" x={xTrap1} y={0} width={trapWidth} height={inputOutputCanvasSize} trapHeights={[inputOutputCanvasSize, scatterSquare]}/>
 
-    <foreignObject x={xTrap1} y={inputOutputCanvasSize + 5} width={200} height={50}>
-      <Button size="xs" color="alternative" outline on:click={() => {
+    <foreignObject x={xLatent} y={yLatent + scatterSquare + 10} width={200} height={50}>
+      <Button size="xs" color="light" style="width: 200px;" on:click={() => {
         if(expanded) {
-          $cExpansion = expandedSize;
-        } else {
           $cExpansion= minimizedSize;
+        } else {
+          $cExpansion = expandedSize;
         }
         expanded = !expanded;
-      }}><span style="color: var(--pink)">{expanded ? "Show VAE Computation" : "Minimize"}</span></Button>
+      }}><span>{expanded ? "Close" : "Open Computational Graph"}</span></Button>
     </foreignObject>
 
-    {#if !expanded}
+    {#if expanded}
       <g class="fade-in">
-        <Sankey p1={[xTrap1Out, yTrap1Out]} p2={[popoverX, popoverY + $popoverEncY]} p1Height={scatterSquare} p2Height={$popoverEncHeight} fill="var(--pink)" opacity={0.2}
+        <Sankey p1={[xTrap1Out, yTrap1Out]} p2={[popoverX, popoverY + $popoverEncY]} p1Height={scatterSquare} p2Height={$popoverEncHeight} fill="var(--purple)" opacity={0.2}
         />
   </g>
   {/if}
 
-    {#if !expanded}
+    {#if expanded}
       <g class="fade-in">
         <Sankey p1={[popoverX+$popoverWidth, popoverY+$popoverDecY]} p2={[xTrap2, yTrap1Out]} p1Height={$popoverDecHeight} p2Height={scatterSquare} fill="var(--light-blue)" opacity={0.2}
         />
   </g>
   {/if}
-    <Trapezoid x={xTrap2} y={0} width={trapWidth} height={inputOutputCanvasSize} trapHeights={[scatterSquare, inputOutputCanvasSize]} fill="--light-blue"/>
+
+    <Trapezoid label="Decoder" fill="--light-blue" fill2="--green" x={xTrap2} y={0} width={trapWidth} height={inputOutputCanvasSize} trapHeights={[scatterSquare, inputOutputCanvasSize]} />
 
     <foreignObject x={xLatent} y={yLatent} width={scatterSquare} height={scatterSquare} style="overflow: visible;">
       <div style="position: relative;">
@@ -200,10 +202,10 @@
 						});
 					}}
 				></LatentScatter>
-				<div style="position: absolute; right: 0; bottom: -40px;">
+				<div style="position: absolute; right: 0; top: -40px; display: none;">
 					<Button
 						size="xs"
-						color="light"
+						color="alternative"
 						on:click={async () => {
               const times = 1;
 							for (let i = 0; i < times; i++) {
@@ -237,11 +239,11 @@
 
     <foreignObject x={xDigit2} y={0} width={inputOutputCanvasSize} height={inputOutputCanvasSize} style="overflow: visible;">
 			<MnistDigit data={outDisp} square={inputOutputCanvasSize} maxVal={1} 
-        style="outline: 2px solid var(--light-blue);"
+        style="outline: 2px solid var(--green);"
 			></MnistDigit>
     </foreignObject>
 
-    {#if !expanded}
+    {#if expanded}
       <Popover x={popoverX} y={popoverY}/>
     {/if}
   </svg>

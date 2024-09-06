@@ -9,6 +9,7 @@
 
   import * as d3 from "d3";
   import { node1MidY, node2MidY, sampleWidth, logVarWidth, vectorHeight, means, stddevs, css, popoverWidth, popoverEncY, popoverEncHeight, popoverDecY, popoverDecHeight} from "./stores";
+  import { color } from "./util";
 
   export let height = 450;
   export let x = 0;
@@ -18,9 +19,8 @@
   $: leftPad = 70;
   $: topPad = 25;
   $: encodedVectorHeight = $vectorHeight;
-  $: encodedVectorStroke = css["--pink"];
-  $: encodedVectorFill = d3.color(encodedVectorStroke);
-  $: if(encodedVectorHeight) encodedVectorFill.opacity = 0.2;
+  $: encodedVectorStroke = color("--purple", 1);
+  $: encodedVectorFill = color("--purple", 0.2);
 
   $: meanVector = [leftPad, topPad];
   $: logVarVector = [leftPad, meanVector[1] + 150];
@@ -68,11 +68,11 @@
 <svg class="fade-in" width={$popoverWidth} {height} {x} {y}>
   <!-- <rect width={$popoverWidth} {height} fill="none" stroke="lightgrey" /> -->
   <rect x={encodedVector[0]} y={encodedVector[1]} width={30} height={encodedVectorHeight} stroke={encodedVectorStroke} stroke-width={1.5} fill={encodedVectorFill}/>
-  <Sankey p1={[encodedVector[0]+30, encodedVector[1]]} p1Height={$vectorHeight} p2={meanVector} p2Height={$vectorHeight}  fill="var(--green)" opacity={0.2}/>
-  <Sankey p1={[encodedVector[0]+30, encodedVector[1]]} p1Height={$vectorHeight} p2={logVarVector} p2Height={$vectorHeight} fill="orange" opacity={0.2} />
+  <Sankey p1={[encodedVector[0]+30, encodedVector[1]]} p1Height={$vectorHeight} p2={meanVector} p2Height={$vectorHeight}  fill="orange" opacity={0.2}/>
+  <Sankey p1={[encodedVector[0]+30, encodedVector[1]]} p1Height={$vectorHeight} p2={logVarVector} p2Height={$vectorHeight} fill="seagreen" opacity={0.2} />
 
   <!-- <Curve source={[0, midBetweenMeanAndLogVar]} target={[width, midBetweenMeanAndLogVar]} /> -->
-  <VectorShape x={meanVector[0]} y={meanVector[1]} values={$means}/>
+  <VectorShape x={meanVector[0]} y={meanVector[1]} values={$means} stroke="orange"/>
   <!-- <VectorShape x={logVarVector[0]} y={logVarVector[1]} values={[0, 0]}/> -->
   <LogVarTrick x={logVarVector[0]} y={logVarVector[1]}/>
   <Curve source={topNodeLogVar} target={inTopMul} />
