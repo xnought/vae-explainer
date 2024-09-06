@@ -248,7 +248,6 @@
       <Popover x={popoverX} y={popoverY}/>
     {/if}
   </svg>
-
 </main>
 
 
