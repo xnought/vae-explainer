@@ -3,6 +3,7 @@
 	import * as d3 from "d3";
 	import NormalCurve from "./NormalCurve.svelte";
 	import Gaussian2DSvg from "./Gaussian2DSvg.svelte";
+	import Digits from "./Digits.svelte";
 
 	export let filename = "latents.json";
 	export let width = 200;
@@ -78,14 +79,15 @@
           exageration={20}
         />
         <text x={25} y={legendHeight/2 - 10} style="font-size: 10px;" fill="grey" class="geo">Means</text>
-        <text x={25} y={legendHeight/2} style="font-size: 8px;" fill="grey" >[{means[0].toFixed(2)}, {means[1].toFixed(2)}]</text>
+        <text x={25} y={legendHeight/2} style="font-size: 8px; font-family: menlo;" fill="grey" >[{means[0].toFixed(2)}, {means[1].toFixed(2)}]</text>
 
         <text x={25} y={legendHeight/2 + 12} style="font-size: 10px;" fill="grey" class="geo">Std. Deviations</text>
-        <text x={25} y={legendHeight/2 + 22} style="font-size: 8px;" fill="grey" >[{stddevs[0].toFixed(2)}, {stddevs[1].toFixed(2)}]</text>
+        <text x={25} y={legendHeight/2 + 22} style="font-size: 8px; font-family: menlo;" fill="grey" >[{stddevs[0].toFixed(2)}, {stddevs[1].toFixed(2)}]</text>
       </svg>
       <svg id="right-side" x={width/2} y={0} height={legendHeight} width={width/2} >
+        <Digits x={20} y={18} />
         <text x={width/2 - 20} y={legendHeight - 15} style="font-size: 10px;" fill="grey" class="geo" text-anchor="end">Sampled</text>
-        <text x={width/2 - 20} y={legendHeight - 5} style="font-size: 8px;" fill="grey" text-anchor="end">[{sampled[0].toFixed(2)}, {sampled[1].toFixed(2)}]</text>
+        <text x={width/2 - 20} y={legendHeight - 5} style="font-size: 8px; font-family: menlo;" fill="grey" text-anchor="end">[{sampled[0].toFixed(2)}, {sampled[1].toFixed(2)}]</text>
         <circle
           cx={width/2 - 10}
           cy={legendHeight-8}
