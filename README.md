@@ -29,14 +29,15 @@ which runs the hot-reloading dev server at http://localhost:5173
 - [x] Show latent variables (2D only) 
 - [x] Design encoder and decoder blocks
 - [x] Fix plotting on latent space
-- [ ] Computational Graph
+- [x] Computational Graph
     - [x] Vector input
     - [x] Connect sample buttons (or remove one)
-    - [ ] Make functions interactive
     - [x] Create popup/expand button
     - [x] Connect the encode and decoder to the encoded and decoded vector (sankey)
-- [ ] Fix drawing
+- [x] Fix drawing
 - [ ] Add labels to things for help 
+    - [ ] Add labels on top of the encoder, decode, latent space
+    - [ ] Add math labels on top of the mean, log(var), stddev, epsilon ~ N(0, I), exp(0.5x)
 - [ ] Write a small help article on the different components
 - [ ] Train a better mnist VAE
 ## Future Work

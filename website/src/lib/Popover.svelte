@@ -17,7 +17,7 @@
   
   $: leftPad = 70;
   $: topPad = 25;
-  $: encodedVectorHeight = $vectorHeight*2;
+  $: encodedVectorHeight = $vectorHeight;
   $: encodedVectorStroke = css["--pink"];
   $: encodedVectorFill = d3.color(encodedVectorStroke);
   $: if(encodedVectorHeight) encodedVectorFill.opacity = 0.2;
@@ -69,7 +69,7 @@
   <!-- <rect width={$popoverWidth} {height} fill="none" stroke="lightgrey" /> -->
   <rect x={encodedVector[0]} y={encodedVector[1]} width={30} height={encodedVectorHeight} stroke={encodedVectorStroke} stroke-width={1.5} fill={encodedVectorFill}/>
   <Sankey p1={[encodedVector[0]+30, encodedVector[1]]} p1Height={$vectorHeight} p2={meanVector} p2Height={$vectorHeight}  fill="var(--green)" opacity={0.2}/>
-  <Sankey p1={[encodedVector[0]+30, encodedVector[1]+$vectorHeight]} p1Height={$vectorHeight} p2={logVarVector} p2Height={$vectorHeight} fill="orange" opacity={0.2} />
+  <Sankey p1={[encodedVector[0]+30, encodedVector[1]]} p1Height={$vectorHeight} p2={logVarVector} p2Height={$vectorHeight} fill="orange" opacity={0.2} />
 
   <!-- <Curve source={[0, midBetweenMeanAndLogVar]} target={[width, midBetweenMeanAndLogVar]} /> -->
   <VectorShape x={meanVector[0]} y={meanVector[1]} values={$means}/>

@@ -67,7 +67,7 @@
 		<svg
 			{width}
 			{height}
-			style="position: absolute; left: 0; top: 0; overflow: visible;"
+			style="position: absolute; left: 0; top: 0; overflow: visible; cursor: none;"
 			on:mousemove={(d) => {
 				mousePos = [d.offsetX, d.offsetY];
 				sampled[0] = scaleX.invert(mousePos[0]);

@@ -53,7 +53,7 @@
 	let mousePos = [0, 0];
 
 	function drawBigPixel(ctx, width, dim, mousePos) {
-		const canvasBigPixelSize = Math.floor(width / dim);
+		const canvasBigPixelSize = width/dim;
 		// Take an x,y point and
 		for (let i = 0; i < dim; i++) {
 			for (let j = 0; j < dim; j++) {

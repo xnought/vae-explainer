@@ -133,16 +133,16 @@
 
   <svg {width} {height} style="overflow: visible;"> 
     <foreignObject x={xDigit1} y={0} width={inputOutputCanvasSize} height={inputOutputCanvasSize} style="overflow: visible;">
-			<MnistDigit
-        style="outline: 2px solid var(--pink);"
-				enableDrawing
-				data={inDisp}
-				square={inputOutputCanvasSize}
-				maxVal={1}
-				onChange={(d) => {
-					forward(d);
-				}}
-			></MnistDigit>
+      <MnistDigit
+        style="outline: 2px solid var(--pink); cursor: crosshair;"
+        enableDrawing
+        data={inDisp}
+        square={inputOutputCanvasSize}
+        maxVal={1}
+        onChange={(d) => {
+          forward(d);
+        }}
+      ></MnistDigit>
       <Button
         class="mt-1"
         size="xs"
