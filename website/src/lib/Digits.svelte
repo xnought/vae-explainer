@@ -10,5 +10,5 @@
 </script>
 
 {#each digits as d, i}
-  <text  x={x + charWidth*i} {y} style="fill: {d.color}; font-size: 11px; font-family: menlo;">{d.i}</text>
+  <text opacity={0.7} x={x + charWidth*i} {y} style="fill: {d.color}; font-size: 11px; font-family: menlo;">{d.i}</text>
 {/each}

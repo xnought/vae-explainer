@@ -157,7 +157,7 @@
 
     <Trapezoid label="Encoder" fill="--pink" fill2="--purple" x={xTrap1} y={0} width={trapWidth} height={inputOutputCanvasSize} trapHeights={[inputOutputCanvasSize, scatterSquare]}/>
 
-    <foreignObject x={xLatent} y={yLatent + scatterSquare + 10} width={200} height={50}>
+    <foreignObject x={xLatent} y={yLatent + scatterSquare + 30} width={200} height={50}>
       <Button size="xs" color="light" style="width: 200px;" on:click={() => {
         if(expanded) {
           $cExpansion= minimizedSize;
@@ -166,36 +166,6 @@
         }
         expanded = !expanded;
       }}><span>{expanded ? "Close" : "Open Computational Graph"}</span></Button>
-      <Button
-        size="xs"
-        color="alternative"
-        style="font-size: 8px;"
-        on:click={async () => {
-          const times = 1;
-          for (let i = 0; i < times; i++) {
-            tf.tidy(() => {
-              const code = tf.tensor(xs, [
-                1,
-                2 * latentDims,
-              ]);
-              const [z, logvar, mean, eps] = sample(code);
-              $randomSample = eps.arraySync()[0];
-              $stddevs = tf
-                .exp(logvar.mul(0.5))
-                .arraySync()[0];
-              $means = mean.arraySync()[0];
-              $zs = z.arraySync()[0];
-
-              const xHat = dec.predict(z);
-              outDisp = xHat.arraySync()[0];
-            });
-            await new Promise((r, rej) =>
-              setTimeout(r, 50)
-            );
-          }
-        }}
-          >Resample 🎲
-        </Button>
     </foreignObject>
 
     {#if expanded}
@@ -233,6 +203,39 @@
 					}}
 				></LatentScatter>
 			</div>
+    </foreignObject>
+
+    <foreignObject x={xLatent + scatterSquare/2} y={-20} width="200" height="50">
+      <Button
+        size="xs"
+        color="alternative"
+        on:click={async () => {
+          const times = 1;
+          for (let i = 0; i < times; i++) {
+            tf.tidy(() => {
+              const code = tf.tensor(xs, [
+                1,
+                2 * latentDims,
+              ]);
+              const [z, logvar, mean, eps] = sample(code);
+              $randomSample = eps.arraySync()[0];
+              $stddevs = tf
+                .exp(logvar.mul(0.5))
+                .arraySync()[0];
+              $means = mean.arraySync()[0];
+              $zs = z.arraySync()[0];
+
+              const xHat = dec.predict(z);
+              outDisp = xHat.arraySync()[0];
+            });
+            await new Promise((r, rej) =>
+              setTimeout(r, 50)
+            );
+          }
+        }}
+          >Resample 🎲
+        </Button
+      >
     </foreignObject>
 
     <foreignObject x={xDigit2} y={0} width={inputOutputCanvasSize} height={inputOutputCanvasSize} style="overflow: visible;">
