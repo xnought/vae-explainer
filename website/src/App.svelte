@@ -105,7 +105,7 @@
   const height = 500;
 
   let expanded = true; 
-  const expandedSize = 300;
+  const expandedSize = 275;
   const minimizedSize = 20;
   const cExpansion = tweened(expanded ? expandedSize : minimizedSize, {duration: 1000, easing: cubicOut});
   $: expansion = $cExpansion;

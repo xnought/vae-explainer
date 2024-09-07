@@ -27,8 +27,8 @@
   $: meanVector = [leftPad, topPad];
   $: logVarVector = [leftPad, meanVector[1] + 150];
   $: sampleVector = [logVarVector[0] + $logVarWidth - $sampleWidth, logVarVector[1]+150]
-  $: mulVector = [logVarVector[0] + 250, logVarVector[1]];
-  $: addVector = [meanVector[0] + 350, meanVector[1]];
+  $: mulVector = [logVarVector[0] + 225, logVarVector[1]];
+  $: addVector = [meanVector[0] + 325, meanVector[1]];
   $: meanToLogVarGap = logVarVector[1] - (meanVector[1] + $vectorHeight);
   $: midBetweenMeanAndLogVar = logVarVector[1] - meanToLogVarGap/2;
   $: outputVector = [addVector[0] + 150, midBetweenMeanAndLogVar - $vectorHeight/2];
@@ -68,7 +68,7 @@
 </script>
 
 <svg class="fade-in" width={$popoverWidth} {height} {x} {y} style="overflow: visible;">
-
+  <!-- <rect x={0} y={0} {width} {height} fill="red" /> -->
   <rect x={encodedVector[0]} y={encodedVector[1]} width={30} height={encodedVectorHeight} stroke={encodedVectorStroke} stroke-width={1.5} fill={encodedVectorFill} opacity={ho($hoveringInput)}/>
   <Sankey p1={[encodedVector[0]+30, encodedVector[1]]} p1Height={$vectorHeight} p2={meanVector} p2Height={$vectorHeight}  fill="orange" opacity={0.2}/>
   <Sankey p1={[encodedVector[0]+30, encodedVector[1]]} p1Height={$vectorHeight} p2={logVarVector} p2Height={$vectorHeight} fill="seagreen" opacity={0.2} />
@@ -106,9 +106,7 @@
   <Box bind:hovering={$hoveringlogVarTrick} x={logVarVector[0]} y={logVarVector[1]-30} width={200} height={50+$vectorHeight}/>
   <Box bind:hovering={$hoveringInput} x={encodedVector[0]-100} y={meanVector[1]-50} width={meanVector[0] + 150} height={50+ logVarVector[1] + $vectorHeight}/>
 
-  <foreignObject x={outputVector[0]-250} y={outputVector[1]+200} width={900} height={500} style="overflow: visible;">
+  <foreignObject x={mulVector[0]} y={outputVector[1]+200} width={900} height={500} style="overflow: visible;">
     <Code /> 
   <foreignObject />
-
-
 </svg>
