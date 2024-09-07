@@ -35,7 +35,7 @@
 
 <svg {x} {y} {width} {height} style="overflow: visible;">
   <!-- <rect {width} {height} stroke="black" fill="none" />  -->
-  <TwoFunc x={nodeX} inputs={$randomSample} f={standardNormal} lineInput {color} tex={String.raw`N(0, I)`} shiftTex={-25} opacity={ho($hoveringSample)}/>
+  <TwoFunc x={nodeX} inputs={$randomSample} f={standardNormal} lineInput {color} tex={String.raw`N(0, I)`} shiftTex={-25} opacity={ho($hoveringSample)} colorTex="grey" />
   <!--
   <foreignObject class="node" x={-5} y={105} width={200} style="overflow: visible;">
     <Button on:click={() => $randomSample = sample()} size="xs" color="light">Resample 🎲</Button>

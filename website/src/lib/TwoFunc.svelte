@@ -10,6 +10,7 @@
   export let color = "grey";
   const symbolFill = d3.color(symbolColor);
   symbolFill.opacity = 0.2;
+  export let colorTex = color;
 
   export let x = 0;
   export let y = 0;
@@ -38,7 +39,7 @@
 <svg {x} {y} {width} {height} style="overflow: visible;" {opacity}>
   {#if tex}
     <foreignObject x={width/2 - 5 + shiftTex} y={-30} style="overflow: visible;" width="200">
-      <Katex {tex} style="color: {color}"/>
+      <Katex {tex} style="color: {colorTex}"/>
     </foreignObject>
   {/if}
   {#if symbolInstead === undefined}

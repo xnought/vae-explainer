@@ -32,7 +32,7 @@
 
 <svg {x} {y} {width} {height} style="overflow: visible;">
   <!-- <rect {width} {height} stroke="black" fill="none" />  -->
-  <TwoFunc x={nodeX} inputs={$zs} f={customNormalA} g={customNormalB} lineInput color="#6fc7ec" tex={String.raw`N(\mu, \sigma^2)`} shiftTex={-35} opacity={ho($hoveringZ)} />
+  <TwoFunc x={nodeX} inputs={$zs} f={customNormalA} g={customNormalB} lineInput color="#6fc7ec" tex={String.raw`N({\color{orange}\mu}, {\color{lightseagreen}\sigma}^2)`} shiftTex={-35} opacity={ho($hoveringZ)} colorTex="grey"/>
   <VectorShape x={vectorX} y={0} values={$zs} stroke="#6fc7ec" tex={String.raw`z`} opacity={ho($hoveringZ)}/>
   <line x1={nodeX + 40} y1={$node1MidY} x2={vectorX} y2={$node1MidY} {...connectStyle}opacity={ho($hoveringZ)}/>
   <line x1={nodeX + 40} y1={$node2MidY} x2={vectorX} y2={$node2MidY} {...connectStyle}opacity={ho($hoveringZ)}/>
