@@ -17,6 +17,11 @@ export const popoverEncHeight = writable(0);
 export const popoverDecHeight = writable(0);
 export const popoverDecY = writable(0);
 
+export const hoveringInput = writable(false);
+export const hoveringlogVarTrick = writable(false);
+export const hoveringSample = writable(false);
+export const hoveringZ = writable(false);
+
 export const css = {
 	"--pink": "#e44084",
 	"--purple": "#6821b0",

@@ -16,6 +16,7 @@
 	import { tweened } from 'svelte/motion';
 	import { cubicOut } from 'svelte/easing';
   import { stddevs, means, randomSample, popoverWidth, popoverEncHeight, popoverEncY, popoverDecY, popoverDecHeight, zs} from "./lib/stores";
+  import Code from "./lib/Code.svelte";
 
 	function toGrey(d) {
 		const result = new Uint8ClampedArray(d.length / 4);
@@ -127,6 +128,9 @@
 </script>
 
 <Header></Header>
+
+
+
 <main>
 	<div class="mb-2 flex gap-2 items-center">
 		<ImageSelector imageUrls={images} bind:selectedUrl={selectedImage} />
