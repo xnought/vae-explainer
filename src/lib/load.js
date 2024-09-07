@@ -1,6 +1,6 @@
 import * as tf from "@tensorflow/tfjs";
 
-const filepath = "/tfjs";
+const filepath = "tfjs";
 
 export function sample(code) {
 	const [zLogVar, zMean] = tf.split(code, 2, -1); // since the dense(2*latent) gives x[start:half] as log vars and x[half:end] as means
