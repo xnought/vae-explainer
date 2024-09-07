@@ -1,7 +1,7 @@
 <script>
 	import { onDestroy, onMount } from "svelte";
 	import { loadImage, loadModels, sample } from "./lib/load";
-	import { Button } from "flowbite-svelte";
+	import { Button, Spinner } from "flowbite-svelte";
 	import * as tf from "@tensorflow/tfjs";
 	import MnistDigit from "./lib/digit/MnistDigit.svelte";
 	import NormalCurve from "./lib/NormalCurve.svelte";
@@ -69,8 +69,8 @@
 
 	function forward(img) {
 		tf.tidy(() => {
-			const x = tf.tensor(img, [1, 784]);
-			inDisp = x.arraySync()[0];
+			const x = tf.tensor(img, [1, 28, 28, 1]);
+			inDisp = img;
 
 			const code = enc.predict(x);
 			xs = code.arraySync()[0];
@@ -81,7 +81,7 @@
 			$means = mean.arraySync()[0];
 			$zs = z.arraySync()[0];
 
-			const xHat = dec.predict(z);
+			const xHat = dec.predict(z).reshape([-1, 784]);
 			outDisp = xHat.arraySync()[0];
 		});
 	}
@@ -104,7 +104,7 @@
   const width = 1200;
   const height = 500;
 
-  let expanded = true; 
+  let expanded = false; 
   const expandedSize = 275;
   const minimizedSize = 20;
   const cExpansion = tweened(expanded ? expandedSize : minimizedSize, {duration: 1000, easing: cubicOut});
@@ -128,8 +128,6 @@
 </script>
 
 <Header></Header>
-
-
 
 <main>
 	<div class="mb-2 flex gap-2 items-center">
@@ -189,6 +187,7 @@
     <Trapezoid label="Decoder" fill="--light-blue" fill2="--green" x={xTrap2} y={0} width={trapWidth} height={inputOutputCanvasSize} trapHeights={[scatterSquare, inputOutputCanvasSize]} />
 
     <foreignObject x={xLatent} y={yLatent} width={scatterSquare} height={scatterSquare} style="overflow: visible;">
+    {#if $stddevs && $means}
       <div style="position: relative;">
 				<LatentScatter
 					stddevs={$stddevs}
@@ -201,12 +200,15 @@
 						tf.tidy(() => {
 							const xHat = dec.predict(
 								tf.tensor(z, [1, latentDims])
-							);
+							).reshape([-1, 784]);
 							outDisp = xHat.arraySync()[0];
 						});
 					}}
 				></LatentScatter>
 			</div>
+      {:else}
+      Fetching Model and Computing <Spinner />
+    {/if}
     </foreignObject>
 
     <foreignObject x={xLatent + scatterSquare/2} y={-20} width="200" height="50">
@@ -229,7 +231,7 @@
               $means = mean.arraySync()[0];
               $zs = z.arraySync()[0];
 
-              const xHat = dec.predict(z);
+              const xHat = dec.predict(z).reshape([-1, 784]);
               outDisp = xHat.arraySync()[0];
             });
             await new Promise((r, rej) =>
@@ -254,12 +256,13 @@
   </svg>
 </main>
 
-
+<!--
 <div style="position: absolute; bottom: 5px; right: 5px;">
 	<Button color="alternative" on:click={() => showMemory()}
 		>debug mode: tf.memory()</Button
 	>
 </div>
+-->
 
 <style>
 	main {

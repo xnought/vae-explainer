@@ -4,8 +4,8 @@
 	import NormalCurve from "./NormalCurve.svelte";
 	import Gaussian2DSvg from "./Gaussian2DSvg.svelte";
 	import Digits from "./Digits.svelte";
+  import { loadLatents } from "./load";
 
-	export let filename = "latents.json";
 	export let width = 200;
 	export let height = 200;
 	export let sampled = [0, 0];
@@ -42,7 +42,7 @@
 	let canvas;
 	let scaleX, scaleY;
 	onMount(async () => {
-		const d = await (await fetch(`/models/tfjs/${filename}`)).json();
+		const d = await loadLatents();
 		const extents = minAndMax(d.points);
 		scaleX = d3.scaleLinear().domain(extents.x).range([0, width]);
 		scaleY = d3.scaleLinear().domain(extents.y).range([height, 0]);
