@@ -66,14 +66,18 @@
   .tab {
     margin-left: 40px; 
   }
+  .code::before {content: "Python"; font-size: 12px; color: rgb(255,255,255,0.15); margin-left:2px;}
   .code {
     font-family: menlo;
+    background: rgb(255,255,255,0.01);
+    padding: 10px;
+    border-left: 5px solid rgb(255,255,255,0.1);;
   }
   .comment {
     font-style: italic;
     color: grey;
   }
   .line {
-    opacity: 0.3;
+    opacity: 0.5;
 }
 </style>

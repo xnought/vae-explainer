@@ -106,7 +106,7 @@
   <Box bind:hovering={$hoveringlogVarTrick} x={logVarVector[0]} y={logVarVector[1]-30} width={200} height={50+$vectorHeight}/>
   <Box bind:hovering={$hoveringInput} x={encodedVector[0]-100} y={meanVector[1]-50} width={meanVector[0] + 150} height={50+ logVarVector[1] + $vectorHeight}/>
 
-  <foreignObject x={outputVector[0]-200} y={outputVector[1]+200} width={850} height={500} style="overflow: visible;">
+  <foreignObject x={outputVector[0]-250} y={outputVector[1]+200} width={900} height={500} style="overflow: visible;">
     <Code /> 
   <foreignObject />
 
