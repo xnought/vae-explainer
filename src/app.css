@@ -1,0 +1,53 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+:root {
+	font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+	line-height: 1.5;
+	font-weight: 400;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+
+	--pink: #e44084;
+	--purple: #6821b0;
+	--dark-blue: #331a9d;
+	--medium-blue: #4765e6;
+	--light-blue: #6fc7ec;
+  --green: rgb(144,220,147);
+}
+
+body {
+	margin: 0;
+  background: hsl(235, 28%, 9%);
+  color: white;
+}
+text {
+  fill: white;
+}
+
+/* https://stackoverflow.com/questions/11660710/css-transition-fade-in */
+.fade-in {
+	opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 500ms;
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.geo {
+  font-family: "Geo", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
