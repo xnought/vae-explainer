@@ -22,6 +22,10 @@ export const hoveringlogVarTrick = writable(false);
 export const hoveringSample = writable(false);
 export const hoveringZ = writable(false);
 
+export function ho(hovering) {
+  return hovering ? 1 : 0.6;
+}
+
 export const css = {
 	"--pink": "#e44084",
 	"--purple": "#6821b0",
@@ -30,3 +34,4 @@ export const css = {
 	"--light-blue": "#6fc7ec",
   "--green": "rgb(144,220,147)"
 };
+

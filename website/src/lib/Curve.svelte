@@ -3,6 +3,7 @@
 
   export let source;
   export let target;
+  export let opacity = 0.4;
 
   const link = d3
     .linkHorizontal()
@@ -11,4 +12,4 @@
   const curve = (p1, p2) => link({source: {x: p1[0], y: p1[1]}, target: {x: p2[0], y: p2[1]}});
 </script>
 
-<path d={curve(source, target)} stroke="grey" fill="none" stroke-width={2}/>
+<path d={curve(source, target)} stroke="grey" fill="none" stroke-width={2} {opacity}/>

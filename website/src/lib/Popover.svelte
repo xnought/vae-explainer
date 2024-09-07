@@ -10,7 +10,7 @@
   import Box from "./Box.svelte";
 
   import * as d3 from "d3";
-  import { node1MidY, node2MidY, sampleWidth, logVarWidth, vectorHeight, means, stddevs, css, popoverWidth, popoverEncY, popoverEncHeight, popoverDecY, popoverDecHeight, hoveringInput, hoveringlogVarTrick, hoveringSample, hoveringZ} from "./stores";
+  import { node1MidY, node2MidY, sampleWidth, logVarWidth, vectorHeight, means, stddevs, css, popoverWidth, popoverEncY, popoverEncHeight, popoverDecY, popoverDecHeight, hoveringInput, hoveringlogVarTrick, hoveringSample, hoveringZ, ho} from "./stores";
   import { color } from "./util";
 
   export let height = 450;
@@ -69,42 +69,42 @@
 
 <svg class="fade-in" width={$popoverWidth} {height} {x} {y} style="overflow: visible;">
 
-  <rect x={encodedVector[0]} y={encodedVector[1]} width={30} height={encodedVectorHeight} stroke={encodedVectorStroke} stroke-width={1.5} fill={encodedVectorFill}/>
+  <rect x={encodedVector[0]} y={encodedVector[1]} width={30} height={encodedVectorHeight} stroke={encodedVectorStroke} stroke-width={1.5} fill={encodedVectorFill} opacity={ho($hoveringInput)}/>
   <Sankey p1={[encodedVector[0]+30, encodedVector[1]]} p1Height={$vectorHeight} p2={meanVector} p2Height={$vectorHeight}  fill="orange" opacity={0.2}/>
   <Sankey p1={[encodedVector[0]+30, encodedVector[1]]} p1Height={$vectorHeight} p2={logVarVector} p2Height={$vectorHeight} fill="seagreen" opacity={0.2} />
 
   <!-- <Curve source={[0, midBetweenMeanAndLogVar]} target={[width, midBetweenMeanAndLogVar]} /> -->
-  <VectorShape x={meanVector[0]} y={meanVector[1]} values={$means} stroke="orange" tex={String.raw`\mu`}/>
+  <VectorShape x={meanVector[0]} y={meanVector[1]} values={$means} stroke="orange" tex={String.raw`\mu`} opacity={ho($hoveringInput)}/>
   <!-- <VectorShape x={logVarVector[0]} y={logVarVector[1]} values={[0, 0]}/> -->
 
 
 
   <LogVarTrick x={logVarVector[0]} y={logVarVector[1]}/>
-  <Curve source={topNodeLogVar} target={inTopMul} />
-  <Curve source={botNodeLogVar} target={inBotMul} />
+  <Curve source={topNodeLogVar} target={inTopMul} opacity={ho($hoveringZ)}/>
+  <Curve source={botNodeLogVar} target={inBotMul} opacity={ho($hoveringZ)}/>
 
 
   <Sampler x={sampleVector[0]} y={sampleVector[1]}/>
-  <Curve source={topSampleVector} target={inTopMul} />
-  <Curve source={botSampleVector} target={inBotMul} />
+  <Curve source={topSampleVector} target={inTopMul} opacity={ho($hoveringZ)}/>
+  <Curve source={botSampleVector} target={inBotMul} opacity={ho($hoveringZ)}/>
 
-  <TwoFunc x={mulVector[0]} y={mulVector[1]} symbolInstead="*" symbolColor="lightgrey" symbolShift={16} />
-  <Curve source={outTopMean} target={inTopAdd} />
-  <Curve source={outBotMean} target={inBotAdd} />
-  <Curve source={outTopMul} target={inTopAdd} />
-  <Curve source={outBotMul} target={inBotAdd} />
+  <TwoFunc x={mulVector[0]} y={mulVector[1]} symbolInstead="*" symbolColor="lightgrey" symbolShift={16} opacity={ho($hoveringZ)}/>
+  <Curve source={outTopMean} target={inTopAdd} opacity={ho($hoveringZ)} />
+  <Curve source={outBotMean} target={inBotAdd} opacity={ho($hoveringZ)} />
+  <Curve source={outTopMul} target={inTopAdd} opacity={ho($hoveringZ)} />
+  <Curve source={outBotMul} target={inBotAdd} opacity={ho($hoveringZ)} />
 
-  <TwoFunc x={addVector[0]} y={addVector[1]} symbolInstead="+" symbolColor="lightgrey" />
-  <Curve source={outTopAdd} target={inTopOut} />
-  <Curve source={outBotAdd} target={inBotOut} />
+  <TwoFunc x={addVector[0]} y={addVector[1]} symbolInstead="+" symbolColor="lightgrey" opacity={ho($hoveringZ)}/>
+  <Curve source={outTopAdd} target={inTopOut} opacity={ho($hoveringZ)}/>
+  <Curve source={outBotAdd} target={inBotOut} opacity={ho($hoveringZ)}/>
 
   <Output x={outputVector[0]} y={outputVector[1]} />
 
   <!-- hovering boxes -->
-  <Box bind:hovering={$hoveringInput} x={encodedVector[0]-100} y={meanVector[1]-50} width={meanVector[0] + 150} height={50+ logVarVector[1] + $vectorHeight}/>
-  <Box bind:hovering={$hoveringlogVarTrick} x={logVarVector[0]} y={logVarVector[1]-30} width={200} height={50+$vectorHeight}/>
+  <Box bind:hovering={$hoveringZ} x={mulVector[0]-200} y={20} width={600} height={280}/>
   <Box bind:hovering={$hoveringSample} x={sampleVector[0]} y={sampleVector[1]-30} width={100} height={50+$vectorHeight}/>
-  <Box bind:hovering={$hoveringZ} x={mulVector[0]} y={0} width={400} height={height}/>
+  <Box bind:hovering={$hoveringlogVarTrick} x={logVarVector[0]} y={logVarVector[1]-30} width={200} height={50+$vectorHeight}/>
+  <Box bind:hovering={$hoveringInput} x={encodedVector[0]-100} y={meanVector[1]-50} width={meanVector[0] + 150} height={50+ logVarVector[1] + $vectorHeight}/>
 
   <foreignObject x={outputVector[0]-200} y={outputVector[1]+200} width={850} height={500} style="overflow: visible;">
     <Code /> 

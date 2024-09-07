@@ -3,7 +3,7 @@
   import VectorShape from "./VectorShape.svelte";
   import * as tf from "@tensorflow/tfjs";
   import { Button }from "flowbite-svelte";
-  import { randomSample, node1MidY, node2MidY, sampleWidth, means, stddevs, zs} from "./stores";
+  import { randomSample, node1MidY, node2MidY, sampleWidth, means, stddevs, zs, hoveringZ, ho} from "./stores";
 
   export let x = 0;
   export let y = 0;
@@ -32,9 +32,9 @@
 
 <svg {x} {y} {width} {height} style="overflow: visible;">
   <!-- <rect {width} {height} stroke="black" fill="none" />  -->
-  <TwoFunc x={nodeX} inputs={$zs} f={customNormalA} g={customNormalB} lineInput color="#6fc7ec" tex={String.raw`N(\mu, \sigma^2)`} shiftTex={-35}/>
-  <VectorShape x={vectorX} y={0} values={$zs} stroke="#6fc7ec" tex={String.raw`z`}/>
-  <line x1={nodeX + 40} y1={$node1MidY} x2={vectorX} y2={$node1MidY} {...connectStyle}/>
-  <line x1={nodeX + 40} y1={$node2MidY} x2={vectorX} y2={$node2MidY} {...connectStyle}/>
+  <TwoFunc x={nodeX} inputs={$zs} f={customNormalA} g={customNormalB} lineInput color="#6fc7ec" tex={String.raw`N(\mu, \sigma^2)`} shiftTex={-35} opacity={ho($hoveringZ)} />
+  <VectorShape x={vectorX} y={0} values={$zs} stroke="#6fc7ec" tex={String.raw`z`} opacity={ho($hoveringZ)}/>
+  <line x1={nodeX + 40} y1={$node1MidY} x2={vectorX} y2={$node1MidY} {...connectStyle}opacity={ho($hoveringZ)}/>
+  <line x1={nodeX + 40} y1={$node2MidY} x2={vectorX} y2={$node2MidY} {...connectStyle}opacity={ho($hoveringZ)}/>
 </svg>
 

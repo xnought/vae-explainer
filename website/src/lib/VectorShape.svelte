@@ -13,6 +13,7 @@
   export let strokeWidth = 1.5;
   export let tex = undefined;
   export let shiftTex = 0;
+  export let opacity = 0.5;
 
   export let values = [0, 0];
   $: n1 = $node1MidY;
@@ -21,7 +22,7 @@
   $: fill = color(stroke, fillOpacity);
 </script>
 
-<svg {width} {height} {x} {y} style="overflow: visible;">
+<svg {width} {height} {x} {y} style="overflow: visible;" {opacity}>
   {#if tex}
     <foreignObject x={width/2 - 5 + shiftTex} y={-30} style="overflow: visible;">
       <Katex {tex} style="color: {stroke}"/>
@@ -38,5 +39,8 @@
   text {
     font-size: 8px;
     font-family: menlo;
+  }
+  svg {
+    transition: fade-in 500ms ease-out;
   }
 </style>

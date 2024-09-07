@@ -55,7 +55,7 @@
 <style>
   .line.hover,
   .line:hover {
-    outline: 2px dashed rgb(255,255,255,0.5);
+    outline: 2px dashed rgb(255,255,255,0.1);
     background: rgb(255,255,255,0.1);
     border-radius: 3px;
     opacity: 1;

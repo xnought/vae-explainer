@@ -21,6 +21,7 @@
   export let lineInput = false;
   export let tex = undefined;
   export let shiftTex = 0;
+  export let opacity = 0.4;
   
   const nodeX = 0;
   const firstNodeY = 0;
@@ -34,7 +35,7 @@
   $vectorHeight = height;
 </script>
 
-<svg {x} {y} {width} {height} style="overflow: visible;">
+<svg {x} {y} {width} {height} style="overflow: visible;" {opacity}>
   {#if tex}
     <foreignObject x={width/2 - 5 + shiftTex} y={-30} style="overflow: visible;" width="200">
       <Katex {tex} style="color: {color}"/>
