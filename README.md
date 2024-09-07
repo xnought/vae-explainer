@@ -35,10 +35,10 @@ which runs the hot-reloading dev server at http://localhost:5173
 - [x] Add labels to things for help 
     - [x] Add labels on top of the encoder, decode, latent space
     - [x] Add math labels on top of the mean, log(var), stddev, epsilon ~ N(0, I), exp(0.5x)
-- [ ] Embed the pytorch code for the sampler 
-- [ ] Show the full trick using math 
-- [ ] Show the full tack with the code
-- [ ] Connect the article with the computational graph
+- [x] Embed the pytorch code for the sampler 
+- [x] Show the full trick using math 
+- [x] Show the full tack with the code
+- [x] Connect the article with the computational graph
 - [ ] Train a better mnist VAE
 
 ## Future Work
