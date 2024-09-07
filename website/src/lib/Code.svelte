@@ -16,7 +16,10 @@
 </script>
 
 
-<div class="code">
+<div class="code" style="position: relative;">
+  <a target="_blank" href="https://colab.research.google.com/github/xnought/vae-explainer/blob/main/notebooks/vae_training_torch.ipynb" style="position: absolute; right: 10px; top: 10px;">
+    <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
+  </a>
 
   <div class="line" class:hover={$hoveringInput} on:mouseenter={() => $hoveringInput = true} on:mouseleave={() => $hoveringInput = false}>
     <div>import torch</div>
@@ -79,5 +82,9 @@
   }
   .line {
     opacity: 0.5;
-}
+  }
+  a { opacity: 0.5; }
+  a:hover {
+    opacity: 1;
+  }
 </style>
