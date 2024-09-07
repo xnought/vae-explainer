@@ -1,6 +1,6 @@
 import * as tf from "@tensorflow/tfjs";
 
-const filepath = "/tfjs";
+const filepath = "tfjs";
 
 export function sample(code) {
 	const [zLogVar, zMean] = tf.split(code, 2, -1); // since the dense(2*latent) gives x[start:half] as log vars and x[half:end] as means
@@ -13,14 +13,18 @@ export function sample(code) {
 }
 
 export async function loadModels() {
-	const encoder = await tf.loadGraphModel(`${filepath}/encoder-big/model.json`);
-	const decoder = await tf.loadGraphModel(`${filepath}/decoder-big/model.json`);
+	const encoder = await tf.loadGraphModel(
+		`${filepath}/encoder-big/model.json`
+	);
+	const decoder = await tf.loadGraphModel(
+		`${filepath}/decoder-big/model.json`
+	);
 	return [encoder, decoder];
 }
 
 export async function loadLatents() {
-  const d = await (await fetch(`${filepath}/latents-big.json`)).json();
-  return d;
+	const d = await (await fetch(`${filepath}/latents-big.json`)).json();
+	return d;
 }
 
 export function loadImage(url) {
