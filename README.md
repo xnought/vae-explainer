@@ -1,6 +1,8 @@
-# VAE Explainer
+<img src="public/logo.svg"  width="400"/>
 
-Learn how Variational Autoencoders (VAE) work by visualizing one running in your browser.
+Learn how Variational Autoencoders (VAE) work by visualizing one running in your browser. 
+
+Can operate as an interactive supplement to [@fchollet](https://x.com/fchollet)'s [Variational Autoencoder Keras Example](https://keras.io/examples/generative/vae/) docs.
 
 
 
