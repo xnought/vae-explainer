@@ -70,8 +70,8 @@
 </script>
 
 <svg class="fade-in" width={$popoverWidth} {height} {x} {y} style="overflow: visible;">
-  <foreignObject x={encodedVector[0] - 400} y={encodedVector[1]} width={390} height={200} class="label" style="outline: 1px solid transparent;" opacity={hto($hoveringInput)} >
-    <div class="flex gap-2 items-center" style="font-family: Geo; font-size: 22px;" >
+  <foreignObject x={encodedVector[0] - 410} y={encodedVector[1]+25} width={390} height={200} class="label" style="outline: 1px solid transparent;" opacity={hto($hoveringInput)} >
+    <div class="flex gap-1 items-center" style="font-family: Geo; font-size: 22px;" >
       <b>1. VAEs Encode a Probability Distribution</b> <ArrowRightOutline size="lg"/>
     </div>
     <div style="font-weight: 300; font-size: smaller;">
@@ -104,7 +104,7 @@
       <ArrowRightOutline size="lg" style="transform: rotate(-90deg)"/>
     </div>
     <div style="font-weight: 300; font-size: smaller;">
-      VAEs sample from the encoded probability distribution. But gradients can't pass through <Katex tex={String.raw`\sim N({\color{orange}\mu}, {\color{lightseagreen}\sigma}^2)`}/>, so we first compute <Katex tex={String.raw`{\color{salmon}\epsilon} \sim N(0, I)`}/>.
+      VAEs sample from the encoded probability distribution. But gradients can't pass through <Katex tex={String.raw`\sim N({\color{orange}\mu}, {\color{lightseagreen}\sigma}^2)`}/>, so we first compute <Katex tex={String.raw`{\color{salmon}\epsilon} \sim N(0, I)`}/> which is not dependent on any learnable parameters.
     </div>
   </foreignObject>  
 
@@ -122,11 +122,11 @@
 
   <foreignObject x={outputVector[0]-100} y={outputVector[1] + 100} width={375} height={100} class="label" style="outline: 1px solid transparent;" opacity={hto($hoveringZ)}>
   <div class="flex gap-1 items-center" style="font-family: Geo; font-size: 22px;" >
-    <ArrowRightOutline size="lg" style="transform: rotate(-110deg)"/>
+    <ArrowRightOutline size="lg" style="transform: rotate(-135deg)"/>
     <b>3. VAEs reparameterize</b> 
   </div>
   <div style="font-weight: 300; font-size: smaller;">
-      VAEs map the random sample to the target distribution. The outut is then decoded by the decoder. Gradients can flow backwards to the encoder with this reparameterization trick.
+      VAEs map the random sample to the target distribution. Here as <Katex tex={String.raw`{\color{${color('--light-blue').hex()}}z} = {\color{orange} \mu} + {\color{lightseagreen}\sigma}\cdot {\color{salmon}\epsilon}`} /> so the gradients can flow backwards and still map to <Katex tex={String.raw`N({\color{orange}\mu}, {\color{lightseagreen}\sigma}^2)`}/>.
   </div>
   </foreignObject>  
 

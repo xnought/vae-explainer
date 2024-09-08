@@ -87,8 +87,7 @@
         <div>
           <span style="color: {colors.z};">z</span> = <span style="color: {colors.mean};">mean</span> + <span style="color: {colors.sigma};">std_dev</span>*<span style="color: {colors.eps};">eps</span>
           <span class="comment">
-            #reparameterization trick <Katex {...k("z")} tex={String.raw`z`} /> 
-            = <Katex {...k("mean")} tex={String.raw`\mu`} /> + <Katex {...k("sigma")} tex={String.raw`\sigma`} />*<Katex {...k("eps")} tex={String.raw`\epsilon`} />  such that <Katex tex={String.raw`{\color{${colors.z}}z} \sim N({\color{${colors.mean}}\mu}, {\color{${colors.sigma}}\sigma}^2)`} />
+            #reparameterization trick <Katex tex={String.raw`{\color{${colors.z}}z} = {\color{${colors.mean}}\mu} + {\color{${colors.sigma}}\sigma} \cdot {\color{${colors.eps}}\epsilon}`} /> maps to <Katex tex={String.raw`N({\color{${colors.mean}}\mu}, {\color{${colors.sigma}}\sigma}^2)`} />
           </span>
         </div>
         <div>
