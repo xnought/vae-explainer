@@ -2,7 +2,7 @@
   import FunctionSVG from "./FunctionSVG.svelte";
   import VectorShape from "./VectorShape.svelte";
   import TwoFunc from "./TwoFunc.svelte";
-  import { node1MidY, node2MidY, logVarWidth, stddevs, hoveringInput, hoveringlogVarTrick, ho} from "./stores";
+  import { node1MidY, node2MidY, logVarWidth, stddevs, hoveringInput, hoveringlogVarTrick, ho, hoveringZ} from "./stores";
 
   export let x = 0; 
   export let y = 0;
@@ -36,7 +36,7 @@
                stroke="seagreen"
                tex={String.raw`\log(\sigma^2)`}
                shiftTex={-25}
-               opacity={ho($hoveringInput)}
+               opacity={ho($hoveringInput || $hoveringlogVarTrick)}
   />
   <line x1={logVarVectorX + 30} y1={$node1MidY} x2={firstExpX} y2={$node1MidY} {...outConnectStroke} opacity={ho($hoveringlogVarTrick)}/>
   <line x1={logVarVectorX + 30} y1={$node2MidY} x2={firstExpX} y2={$node2MidY} {...outConnectStroke} opacity={ho($hoveringlogVarTrick)}/>
@@ -52,7 +52,7 @@
                values={$stddevs}
                stroke="lightseagreen"
                tex={String.raw`\sigma`}
-               opacity={ho($hoveringlogVarTrick)}
+               opacity={ho($hoveringlogVarTrick  || $hoveringZ)}
   />
 </svg>
 

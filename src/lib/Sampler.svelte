@@ -3,7 +3,7 @@
   import VectorShape from "./VectorShape.svelte";
   import * as tf from "@tensorflow/tfjs";
   import { Button }from "flowbite-svelte";
-  import { randomSample, node1MidY, node2MidY, sampleWidth, hoveringSample, ho } from "./stores";
+  import { randomSample, node1MidY, node2MidY, sampleWidth, hoveringSample, ho, hoveringZ } from "./stores";
 
   export let x = 0;
   export let y = 0;
@@ -41,7 +41,7 @@
     <Button on:click={() => $randomSample = sample()} size="xs" color="light">Resample 🎲</Button>
   </foreignObject>
   -->
-  <VectorShape x={vectorX} y={0} values={$randomSample} stroke={color} tex={String.raw`\epsilon`} opacity={ho($hoveringSample)}/>
+  <VectorShape x={vectorX} y={0} values={$randomSample} stroke={color} tex={String.raw`\epsilon`} opacity={ho($hoveringSample || $hoveringZ)}/>
   <line x1={nodeX + 40} y1={$node1MidY} x2={vectorX} y2={$node1MidY} {...connectStyle} opacity={ho($hoveringSample)}/>
   <line x1={nodeX + 40} y1={$node2MidY} x2={vectorX} y2={$node2MidY} {...connectStyle} opacity={ho($hoveringSample)}/>
 </svg>
