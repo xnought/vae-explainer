@@ -12,9 +12,13 @@ https://github.com/user-attachments/assets/3569bd6a-ad1a-4d09-9d17-618723ce70e9
 ## TODO
 
 - [x] Make the drawing better
-- [ ] Final revisions on monday
-- [ ] Write mini paper
-- [ ] Create poster from mini paper contents
+- [ ] Write small pargraph below on the tool
+    - [ ] What is a VAE?
+        - [ ] Input, latent, output
+        - [ ] Exact computations that make up forward pass
+    - [ ] Learning towards a distribution (loss function)
+    - [ ] References
+- [ ] Create poster from article contents
 - [ ] Print poster to hang up at lab
 
 ## Development
