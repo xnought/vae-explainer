@@ -28,7 +28,7 @@ export function ho(hovering) {
 
 // text version
 export function hto(hovering) {
-  return hovering ? 1 : 0.3;
+  return hovering ? 1 : 0.5;
 }
 
 export const css = {

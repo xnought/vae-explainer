@@ -10,7 +10,7 @@
 		<div class="left">
 			<img src="logo.svg" alt="logo" />
 			<span id="title-desc">
-				Interactively run a <b>V</b>ariational <b>A</b>uto<b>e</b>ncoder
+				Interact with a <b>V</b>ariational <b>A</b>uto<b>e</b>ncoder
 				(<b>VAE</b>) in your browser!
 			</span>
 		</div>

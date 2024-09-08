@@ -173,7 +173,7 @@
         {#if expanded}
             <MinimizeOutline class="mr-1" size="sm"/> Minimize Details
           {:else}
-            <ExpandOutline class="mr-1" size="sm"/> Show VAE Details
+            <ExpandOutline class="mr-1" size="sm"/> Explain VAE Details
         {/if}
       </Button>
     </foreignObject>
