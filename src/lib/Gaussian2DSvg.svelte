@@ -6,6 +6,7 @@
 	export let numberOfDeviations = 1;
 	export let exageration = 1;
   export let override = undefined;
+  export let opacity = 1;
 </script>
 
 {#if means && stddevs}
@@ -16,7 +17,7 @@
       rx={exageration * stddevs[0] * (numberOfDeviations - i)}
       ry={exageration * stddevs[1] * (numberOfDeviations - i)}
       fill="var(--purple)"
-      opacity={0.15 * i}
+      opacity={opacity * 0.15 * i}
       stroke-width={1}
       stroke="black"
     />

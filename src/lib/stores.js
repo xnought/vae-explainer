@@ -26,6 +26,11 @@ export function ho(hovering) {
   return hovering ? 1 : 0.6;
 }
 
+// text version
+export function hto(hovering) {
+  return hovering ? 1 : 0.3;
+}
+
 export const css = {
 	"--pink": "#e44084",
 	"--purple": "#6821b0",

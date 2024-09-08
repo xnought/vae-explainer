@@ -8,10 +8,11 @@
   import Output from "./Output.svelte";
   import Sankey from "./Sankey.svelte";
   import Box from "./Box.svelte";
+  import Katex from "./Katex.svelte";
   import { ArrowRightOutline } from "flowbite-svelte-icons";
 
   import * as d3 from "d3";
-  import { node1MidY, node2MidY, sampleWidth, logVarWidth, vectorHeight, means, stddevs, css, popoverWidth, popoverEncY, popoverEncHeight, popoverDecY, popoverDecHeight, hoveringInput, hoveringlogVarTrick, hoveringSample, hoveringZ, ho} from "./stores";
+  import { node1MidY, node2MidY, sampleWidth, logVarWidth, vectorHeight, means, stddevs, css, popoverWidth, popoverEncY, popoverEncHeight, popoverDecY, popoverDecHeight, hoveringInput, hoveringlogVarTrick, hoveringSample, hoveringZ, ho, hto} from "./stores";
   import { color } from "./util";
 
   export let height = 450;
@@ -69,12 +70,12 @@
 </script>
 
 <svg class="fade-in" width={$popoverWidth} {height} {x} {y} style="overflow: visible;">
-  <foreignObject x={encodedVector[0] - 400} y={encodedVector[1]} width={390} height={100} class="label" style="outline: 1px solid transparent;" opacity={ho($hoveringInput)} >
+  <foreignObject x={encodedVector[0] - 400} y={encodedVector[1]} width={390} height={200} class="label" style="outline: 1px solid transparent;" opacity={hto($hoveringInput)} >
     <div class="flex gap-2 items-center" style="font-family: Geo; font-size: 22px;" >
       <b>1. VAEs Encode a Probability Distribution</b> <ArrowRightOutline size="lg"/>
     </div>
     <div style="font-weight: 300; font-size: smaller;">
-      Instead of directly reconstructing the encoded vector, the encoding describes an nD continuous probability distribution (in this case 2D).
+      Instead of directly reconstructing the encoded vector, the encoding describes an nD continuous probability distribution (in this case 2D Isotropic Guassian defined by <Katex tex={String.raw`{\color{orange}\mu}`} /> and <Katex tex={String.raw`{\color{lightseagreen}\sigma}`} /> vectors).
     </div>
   </foreignObject>  
 
@@ -97,13 +98,13 @@
   <Sampler x={sampleVector[0]} y={sampleVector[1]}/>
   <Curve source={topSampleVector} target={inTopMul} opacity={ho($hoveringZ)}/>
   <Curve source={botSampleVector} target={inBotMul} opacity={ho($hoveringZ)}/>
-  <foreignObject x={sampleVector[0]-215} y={sampleVector[1] + 110} width={300} height={200} class="label" style="outline: 1px solid transparent;" opacity={ho($hoveringSample)}>
+  <foreignObject x={sampleVector[0]-215} y={sampleVector[1] + 110} width={300} height={200} class="label" style="outline: 1px solid transparent;" opacity={hto($hoveringSample)}>
     <div class="flex gap-2 items-center" style="font-family: Geo; font-size: 22px;" >
       <b>2. VAEs randomly sample</b> 
       <ArrowRightOutline size="lg" style="transform: rotate(-90deg)"/>
     </div>
     <div style="font-weight: 300; font-size: smaller;">
-      They sample from the encoded probability distirbutions. Here we decouple the random sample step since gradient can't flow backwards here.
+      VAEs sample from the encoded probability distribution. But gradients can't pass through <Katex tex={String.raw`\sim N({\color{orange}\mu}, {\color{lightseagreen}\sigma}^2)`}/>, so we first compute <Katex tex={String.raw`{\color{salmon}\epsilon} \sim N(0, I)`}/>.
     </div>
   </foreignObject>  
 
@@ -119,13 +120,13 @@
 
   <Output x={outputVector[0]} y={outputVector[1]} />
 
-  <foreignObject x={outputVector[0]-100} y={outputVector[1] + 100} width={375} height={100} class="label" style="outline: 1px solid transparent;" opacity={ho($hoveringZ)}>
+  <foreignObject x={outputVector[0]-100} y={outputVector[1] + 100} width={375} height={100} class="label" style="outline: 1px solid transparent;" opacity={hto($hoveringZ)}>
   <div class="flex gap-1 items-center" style="font-family: Geo; font-size: 22px;" >
     <ArrowRightOutline size="lg" style="transform: rotate(-110deg)"/>
     <b>3. VAEs reparameterize</b> 
   </div>
   <div style="font-weight: 300; font-size: smaller;">
-      They map the random sample to the encoded distribution. Gradients can flow backwards to the encoder with the reparameterization trick.
+      VAEs map the random sample to the target distribution. The outut is then decoded by the decoder. Gradients can flow backwards to the encoder with this reparameterization trick.
   </div>
   </foreignObject>  
 

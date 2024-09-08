@@ -4,6 +4,7 @@
   import * as tf from "@tensorflow/tfjs";
   import { Button }from "flowbite-svelte";
   import { randomSample, node1MidY, node2MidY, sampleWidth, means, stddevs, zs, hoveringZ, ho} from "./stores";
+  import Gaussian2DSvg from "./Gaussian2DSvg.svelte";
 
   export let x = 0;
   export let y = 0;
@@ -32,9 +33,27 @@
 
 <svg {x} {y} {width} {height} style="overflow: visible;">
   <!-- <rect {width} {height} stroke="black" fill="none" />  -->
-  <TwoFunc x={nodeX} inputs={$zs} f={customNormalA} g={customNormalB} lineInput color="#6fc7ec" tex={String.raw`N({\color{orange}\mu}, {\color{lightseagreen}\sigma}^2)`} shiftTex={-35} opacity={ho($hoveringZ)} colorTex="grey"/>
+  <TwoFunc x={nodeX} inputs={$zs} f={customNormalA} g={customNormalB} lineInput color="#6fc7ec" tex={String.raw`N({\color{orange}\mu}, {\color{lightseagreen}\sigma}^2)`} shiftTex={-35} opacity={ho($hoveringZ)} colorTex="grey" curveColor="violet"/>
   <VectorShape x={vectorX} y={0} values={$zs} stroke="#6fc7ec" tex={String.raw`z`} opacity={ho($hoveringZ)}/>
   <line x1={nodeX + 40} y1={$node1MidY} x2={vectorX} y2={$node1MidY} {...connectStyle}opacity={ho($hoveringZ)}/>
   <line x1={nodeX + 40} y1={$node2MidY} x2={vectorX} y2={$node2MidY} {...connectStyle}opacity={ho($hoveringZ)}/>
+  <Gaussian2DSvg
+    override={[20, -40]}
+    means={$means}
+    stddevs={$stddevs}
+    scaleX={(x) => x}
+    scaleY={(y) => y}
+    numberOfDeviations={6}
+    exageration={20}
+    opacity={ho($hoveringZ)}
+  />
+  <circle
+    cx={vectorX + 20-5}
+    cy={-35}
+    r={3}
+    fill="var(--light-blue)"
+    stroke="black"
+    opacity={ho($hoveringZ)}
+  />
 </svg>
 

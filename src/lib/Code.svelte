@@ -74,7 +74,7 @@
           <span style="color: {colors.sigma};">std_dev</span> = ops.exp(0.5*<span style="color: {colors.logvar};">log_var</span>) 
           <span class="comment">
             #log var trick  <Katex {...k("sigma")} tex={String.raw`\sigma`} /> 
-            = <Katex tex={String.raw`e^{{\frac{1}{2}\color{seagreen}\log(\sigma^2)}}`} />
+            = <Katex tex={String.raw`e^{{\frac{1}{2}\color{seagreen}\log(\sigma^2)}}`} /> to keep <Katex tex={String.raw`{\color{lightseagreen}\sigma} > 0`} />
           </span>
       </div>
       <div class="line tab" class:hover={$hoveringSample} on:mouseenter={() => $hoveringSample = true} on:mouseleave={() => $hoveringSample = false}>
@@ -115,7 +115,7 @@
   .code::before {content: "Python"; font-size: 12px; color: rgb(255,255,255,0.15); margin-left:2px;}
   .code {
     font-family: menlo;
-    background: rgb(255,255,255,0.01);
+    background: rgb(255,255,255,0.05);
     padding: 10px;
     border-left: 5px solid rgb(255,255,255,0.1);;
   }
@@ -124,9 +124,9 @@
     color: grey;
   }
   .line {
-    opacity: 0.5;
+    opacity: 0.7;
   }
-  a { opacity: 0.5; }
+  a { opacity: 0.7; }
   a:hover {
     opacity: 1;
   }

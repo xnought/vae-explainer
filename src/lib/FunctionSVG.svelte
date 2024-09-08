@@ -14,6 +14,7 @@
   export let numPoints = 50;
   export let lineInput = false;
   export let color = "grey";
+  export let curveColor = "lightgrey";
 
   const scaleX = d3.scaleLinear().domain(domain).range([0, width]);
   const scaleY = d3.scaleLinear().domain(range).range([height, 0]);
@@ -46,7 +47,7 @@
   {#each points as p1, i}
     {#if i < (points.length - 1)}
       {@const p2 = points[i+1]}
-      <line x1={scaleX(p1.x)} y1={scaleY(p1.y)} x2={scaleX(p2.x)} y2={scaleY(p2.y)} stroke="lightgrey" stroke-width={1} />
+      <line x1={scaleX(p1.x)} y1={scaleY(p1.y)} x2={scaleX(p2.x)} y2={scaleY(p2.y)} stroke={curveColor} stroke-width={1} />
     {/if}
   {/each}
   <rect fill="none" stroke="grey" {width} {height} stroke-width={3}/>

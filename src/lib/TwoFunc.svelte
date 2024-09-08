@@ -23,6 +23,7 @@
   export let tex = undefined;
   export let shiftTex = 0;
   export let opacity = 0.4;
+  export let curveColor = "lightgrey";
   
   const nodeX = 0;
   const firstNodeY = 0;
@@ -43,8 +44,8 @@
     </foreignObject>
   {/if}
   {#if symbolInstead === undefined}
-      <FunctionSVG {lineInput} x={nodeX} y={firstNodeY} width={nodeSquare} height={nodeSquare} {f} input={inputs[0]} {domain} {range} {color}/>
-      <FunctionSVG {lineInput} x={nodeX} y={secondNodeY} width={nodeSquare} height={nodeSquare} f={g ?? f} input={inputs[1]} {domain} {range} {color} />
+      <FunctionSVG {lineInput} x={nodeX} y={firstNodeY} width={nodeSquare} height={nodeSquare} {f} input={inputs[0]} {domain} {range} {color} {curveColor}/>
+      <FunctionSVG {lineInput} x={nodeX} y={secondNodeY} width={nodeSquare} height={nodeSquare} f={g ?? f} input={inputs[1]} {domain} {range} {color} {curveColor}/>
     {:else}
       <rect x={nodeX} y={firstNodeY} width={nodeSquare} height={nodeSquare} fill={symbolFill.toString()} stroke={symbolColor} stroke-width={1.2}  />
       <rect x={nodeX} y={secondNodeY} width={nodeSquare} height={nodeSquare} fill={symbolFill.toString()} stroke={symbolColor} stroke-width={1.2}/>
