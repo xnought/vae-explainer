@@ -20,7 +20,6 @@ https://github.com/user-attachments/assets/3569bd6a-ad1a-4d09-9d17-618723ce70e9
 ## Development
 
 ```bash
-cd website
 pnpm install
 pnpm dev
 ```
