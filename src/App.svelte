@@ -105,7 +105,7 @@
   const width = 1200;
   const height = 500;
 
-  let expanded = false; 
+  let expanded = true; 
   const expandedSize = 275;
   const minimizedSize = 20;
   const cExpansion = tweened(expanded ? expandedSize : minimizedSize, {duration: 1000, easing: cubicOut});
@@ -258,7 +258,7 @@
 			></MnistDigit>
     </foreignObject>
 
-    {#if expanded}
+    {#if expanded && $stddevs && $means}
       <Popover x={popoverX} y={popoverY}/>
     {/if}
   </svg>

@@ -8,6 +8,7 @@
   import Output from "./Output.svelte";
   import Sankey from "./Sankey.svelte";
   import Box from "./Box.svelte";
+  import { ArrowRightOutline } from "flowbite-svelte-icons";
 
   import * as d3 from "d3";
   import { node1MidY, node2MidY, sampleWidth, logVarWidth, vectorHeight, means, stddevs, css, popoverWidth, popoverEncY, popoverEncHeight, popoverDecY, popoverDecHeight, hoveringInput, hoveringlogVarTrick, hoveringSample, hoveringZ, ho} from "./stores";
@@ -68,6 +69,15 @@
 </script>
 
 <svg class="fade-in" width={$popoverWidth} {height} {x} {y} style="overflow: visible;">
+  <foreignObject x={encodedVector[0] - 400} y={encodedVector[1]} width={390} height={100} class="label" style="outline: 1px solid transparent;" opacity={ho($hoveringInput)} >
+    <div class="flex gap-2 items-center" style="font-family: Geo; font-size: 22px;" >
+      <b>1. VAEs Encode a Probability Distribution</b> <ArrowRightOutline size="lg"/>
+    </div>
+    <div style="font-weight: 300; font-size: smaller;">
+      Instead of directly reconstructing the encoded vector, the encoding describes an nD continuous probability distribution (in this case 2D).
+    </div>
+  </foreignObject>  
+
   <!-- <rect x={0} y={0} {width} {height} fill="red" /> -->
   <rect x={encodedVector[0]} y={encodedVector[1]} width={30} height={encodedVectorHeight} stroke={encodedVectorStroke} stroke-width={1.5} fill={encodedVectorFill} opacity={ho($hoveringInput)}/>
   <Sankey p1={[encodedVector[0]+30, encodedVector[1]]} p1Height={$vectorHeight} p2={meanVector} p2Height={$vectorHeight}  fill="orange" opacity={0.2}/>
@@ -87,6 +97,15 @@
   <Sampler x={sampleVector[0]} y={sampleVector[1]}/>
   <Curve source={topSampleVector} target={inTopMul} opacity={ho($hoveringZ)}/>
   <Curve source={botSampleVector} target={inBotMul} opacity={ho($hoveringZ)}/>
+  <foreignObject x={sampleVector[0]-215} y={sampleVector[1] + 110} width={300} height={200} class="label" style="outline: 1px solid transparent;" opacity={ho($hoveringSample)}>
+    <div class="flex gap-2 items-center" style="font-family: Geo; font-size: 22px;" >
+      <b>2. VAEs randomly sample</b> 
+      <ArrowRightOutline size="lg" style="transform: rotate(-90deg)"/>
+    </div>
+    <div style="font-weight: 300; font-size: smaller;">
+      They sample from the encoded probability distirbutions. Here we decouple the random sample step since gradient can't flow backwards here.
+    </div>
+  </foreignObject>  
 
   <TwoFunc x={mulVector[0]} y={mulVector[1]} symbolInstead="*" symbolColor="lightgrey" symbolShift={16} opacity={ho($hoveringZ)}/>
   <Curve source={outTopMean} target={inTopAdd} opacity={ho($hoveringZ)} />
@@ -100,13 +119,23 @@
 
   <Output x={outputVector[0]} y={outputVector[1]} />
 
+  <foreignObject x={outputVector[0]-100} y={outputVector[1] + 100} width={375} height={100} class="label" style="outline: 1px solid transparent;" opacity={ho($hoveringZ)}>
+  <div class="flex gap-1 items-center" style="font-family: Geo; font-size: 22px;" >
+    <ArrowRightOutline size="lg" style="transform: rotate(-110deg)"/>
+    <b>3. VAEs reparameterize</b> 
+  </div>
+  <div style="font-weight: 300; font-size: smaller;">
+      They map the random sample to the encoded distribution. Gradients can flow backwards to the encoder with the reparameterization trick.
+  </div>
+  </foreignObject>  
+
   <!-- hovering boxes -->
   <Box bind:hovering={$hoveringZ} x={mulVector[0]-200} y={20} width={600} height={280}/>
-  <Box bind:hovering={$hoveringSample} x={sampleVector[0]} y={sampleVector[1]-30} width={100} height={50+$vectorHeight}/>
+  <Box bind:hovering={$hoveringSample} x={sampleVector[0]-200} y={sampleVector[1]-30} width={300} height={150+$vectorHeight}/>
   <Box bind:hovering={$hoveringlogVarTrick} x={logVarVector[0]} y={logVarVector[1]-30} width={200} height={50+$vectorHeight}/>
-  <Box bind:hovering={$hoveringInput} x={encodedVector[0]-100} y={meanVector[1]-50} width={meanVector[0] + 150} height={50+ logVarVector[1] + $vectorHeight}/>
+  <Box bind:hovering={$hoveringInput} x={encodedVector[0]-400} y={meanVector[1]- 25} width={meanVector[0] + 450} height={50+ logVarVector[1] + $vectorHeight}/>
 
-  <foreignObject x={mulVector[0]} y={outputVector[1]+200} width={900} height={500} style="overflow: visible;">
+  <foreignObject x={mulVector[0]} y={outputVector[1]+220} width={900} height={500} style="overflow: visible;">
     <Code /> 
   <foreignObject />
 </svg>

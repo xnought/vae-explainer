@@ -6,4 +6,4 @@
   export let height;
 </script>
 
-  <rect {x} {y} {width} {height} fill="transparent"   on:mouseenter={() => hovering=true} on:mouseleave={() => hovering=false}/>
+  <rect {x} {y} {width} {height} fill="transparent"   on:mouseenter={() => hovering=true} on:mouseleave={() => hovering=false} />
