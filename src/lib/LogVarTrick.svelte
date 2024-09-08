@@ -42,7 +42,7 @@
   <line x1={logVarVectorX + 30} y1={$node2MidY} x2={firstExpX} y2={$node2MidY} {...outConnectStroke} opacity={ho($hoveringlogVarTrick || $hoveringInput)}/>
 
   <!-- e^{0,5*log(var)} -->
-  <TwoFunc x={firstExpX} y={firstExpY} f={halfExp} domain={[-10, 0]} range={[-0.1, 1]} inputs={logVar} color="lightseagreen" colorTex="grey" tex={String.raw`e^{\frac{1}{2}{\color{seagreen} \log(\sigma^2)}}`} shiftTex={-25} opacity={ho($hoveringlogVarTrick || $hoveringInput)}/>
+  <TwoFunc x={firstExpX} y={firstExpY} f={halfExp} domain={[-10, Math.log(0.5)]} range={[-0.05, 0.5]} inputs={logVar} color="lightseagreen" colorTex="grey" tex={String.raw`e^{\frac{1}{2}{\color{seagreen} \log(\sigma^2)}}`} shiftTex={-25} opacity={ho($hoveringlogVarTrick || $hoveringInput)}/>
 
   <line x1={firstExpX + expSquare} y1={$node1MidY} x2={vectorX} y2={$node1MidY} {...outConnectStroke} opacity={ho($hoveringlogVarTrick || $hoveringInput)}/>
   <line x1={firstExpX + expSquare} y1={$node2MidY} x2={vectorX} y2={$node2MidY} {...outConnectStroke} opacity={ho($hoveringlogVarTrick || $hoveringInput)}/>
