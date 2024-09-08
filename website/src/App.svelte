@@ -167,7 +167,7 @@
           $cExpansion = expandedSize;
         }
         expanded = !expanded;
-      }}><span>{expanded ? "Close" : "Open Computational Graph"}</span></Button>
+      }}><span>{expanded ? "Close" : "Open Graph"}</span></Button>
     </foreignObject>
 
     {#if expanded}

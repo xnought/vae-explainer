@@ -23,14 +23,6 @@
 				>Code
 				<GithubSolid size="md" class="ml-1" />
 			</Button>
-			<Button
-				size="xs"
-				href="https://github.com/xnought/vae-explainer"
-        {color}
-        outline
-				>Paper
-				<FilePdfSolid size="md" class="ml-1" />
-			</Button>
 		</div>
 	</div>
 </nav>

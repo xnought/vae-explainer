@@ -2,6 +2,7 @@
 	import { onDestroy, onMount } from "svelte";
 	import { loadImage, loadModels, sample } from "./lib/load";
 	import { Button, Spinner } from "flowbite-svelte";
+	import { ExpandOutline, MinimizeOutline, TrashBinOutline  } from "flowbite-svelte-icons";
 	import * as tf from "@tensorflow/tfjs";
 	import MnistDigit from "./lib/digit/MnistDigit.svelte";
 	import NormalCurve from "./lib/NormalCurve.svelte";
@@ -153,7 +154,7 @@
         on:click={() => {
           selectedImage = "clear";
           rawImages = rawImages; // weirdly needed for UI to update;
-        }}>Clear Canvas</Button
+        }}><TrashBinOutline class="mr-1" size="sm"/> Clear</Button
       >
     </foreignObject>
 
@@ -167,7 +168,14 @@
           $cExpansion = expandedSize;
         }
         expanded = !expanded;
-      }}><span>{expanded ? "Close" : "Open Computational Graph"}</span></Button>
+      }}>
+
+        {#if expanded}
+            <MinimizeOutline class="mr-1" size="sm"/> Minimize Details
+          {:else}
+            <ExpandOutline class="mr-1" size="sm"/> Show VAE Details
+        {/if}
+      </Button>
     </foreignObject>
 
     {#if expanded}
@@ -266,7 +274,7 @@
 
 <style>
 	main {
-		padding: 10px;
+		padding: 20px;
 	}
 	#tool {
 		display: flex;
