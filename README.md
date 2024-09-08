@@ -2,9 +2,14 @@
 
 Learn how Variational Autoencoders (VAE) work by visualizing one running in your browser.
 
+
+
+https://github.com/user-attachments/assets/3569bd6a-ad1a-4d09-9d17-618723ce70e9
+
+
 ## TODO
 
-- [ ] Make the drawing better
+- [x] Make the drawing better
 - [ ] Final revisions on monday
 - [ ] Write mini paper
 - [ ] Create poster from mini paper contents
