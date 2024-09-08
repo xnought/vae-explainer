@@ -56,7 +56,7 @@
 			const y = scaleY(points[i][1]);
 
 			const c = d3.color(d3.schemeTableau10[labels[i]]);
-			c.opacity = 0.15;
+			c.opacity = 0.5;
 			ctx.fillStyle = c.rgb();
 			ctx.fillRect(x, y, 2, 2);
 		}
@@ -158,6 +158,6 @@
 
 <style>
 	canvas {
-		outline: lightgrey 1px solid;
+		outline: rgba(255,255,255,0.2) 1px solid;
 	}
 </style>

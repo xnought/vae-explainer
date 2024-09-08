@@ -52,6 +52,35 @@
 	let drawing = false;
 	let mousePos = [0, 0];
 
+  function drawBrush(cpy, i, j, dim, pixelSize) {
+    const brush = [[0.1, 0.2, 0.1], 
+                   [0.2, 0.4, 0.2],
+                   [0.1, 0.2, 0.1]];
+    // fuck I'm idiot
+    const brushLocations = [[[-1, -1], [0, -1], [1, -1]], 
+                            [[-1, 0], [0, 0], [1, 0]], 
+                            [[-1, 1], [0, 1], [1, 1]]];
+    // basically draws a pixel around the given i, j pixel given the brush
+    for(let bi = 0; bi < brush.length; bi++) {
+      inner: for(let bj = 0; bj < brush[0].length; bj++) {
+        const o = brush[bi][bj];
+        const [di, dj] = brushLocations[bi][bj];
+        const ic = i + di;
+        const jc = j + dj;
+
+        // if out of bounds, don't draw this pixel!
+        if(ic < 0 || jc < 0 || jc >= dim || ic >= dim) continue inner;
+
+				const x = ic * pixelSize;
+				const y = jc * pixelSize;
+        ctx.fillRect(x, y, pixelSize, pixelSize);
+        ctx.fillStyle = d3.color(`hsla(0, 0%, 255%, ${o})`);
+        cpy[ic * dim + jc] += o;
+        cpy[ic * dim + jc] = Math.min(1, cpy[ic * dim + jc]); // clamp
+      }
+    }
+    onChange(cpy);
+}
 	function drawBigPixel(ctx, width, dim, mousePos) {
 		const canvasBigPixelSize = width/dim;
 		// Take an x,y point and
@@ -65,11 +94,7 @@
 					mousePos[1] >= y && mousePos[1] <= y + canvasBigPixelSize;
 				const withinPixel = withinX && withinY;
 				if (withinPixel) {
-					const o = 0.9;
-					ctx.fillRect(x, y, canvasBigPixelSize, canvasBigPixelSize);
-					ctx.fillStyle = d3.color(`hsla(0, 0%, 255%, ${o})`);
-					cpy[i * dim + j] = o;
-					onChange(cpy);
+          drawBrush(cpy, i, j, dim, canvasBigPixelSize);
 					return;
 				}
 			}
