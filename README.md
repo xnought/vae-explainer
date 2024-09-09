@@ -2,20 +2,10 @@
 
 Learn how Variational Autoencoders (VAE) work by visualizing one running in your browser. 
 
-https://github.com/user-attachments/assets/3569bd6a-ad1a-4d09-9d17-618723ce70e9
+
+https://github.com/user-attachments/assets/fdc1ceb4-89e6-429c-a5b1-31ae4be57d9a
 
 
-## TODO
-
-- [x] Make the drawing better
-- [ ] Write small pargraph below on the tool
-    - [ ] What is a VAE?
-        - [ ] Input, latent, output
-        - [ ] Exact computations that make up forward pass
-    - [ ] Learning towards a distribution (loss function)
-    - [ ] References
-- [ ] Create poster from article contents
-- [ ] Print poster to hang up at lab
 
 ## Development
 
