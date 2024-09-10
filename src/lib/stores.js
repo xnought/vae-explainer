@@ -1,4 +1,4 @@
-import { writable } from "svelte/store";
+import { writable, derived, get } from "svelte/store";
 
 
 export const randomSample = writable([0, 0]);
@@ -21,6 +21,10 @@ export const hoveringInput = writable(false);
 export const hoveringlogVarTrick = writable(false);
 export const hoveringSample = writable(false);
 export const hoveringZ = writable(false);
+export const notHoveringAny = derived([hoveringInput, hoveringlogVarTrick, hoveringSample, hoveringZ], ([$input, $logvar, $sample, $z]) => {
+  const nha = !$input && !$logvar && !$sample && !$z;
+  return nha;
+});
 
 export function ho(hovering) {
   return hovering ? 1 : 0.6;

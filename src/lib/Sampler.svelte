@@ -3,7 +3,7 @@
   import VectorShape from "./VectorShape.svelte";
   import * as tf from "@tensorflow/tfjs";
   import { Button }from "flowbite-svelte";
-  import { randomSample, node1MidY, node2MidY, sampleWidth, hoveringSample, ho, hoveringZ } from "./stores";
+  import { randomSample, node1MidY, node2MidY, sampleWidth, hoveringSample, ho, hoveringZ, notHoveringAny } from "./stores";
 
   export let x = 0;
   export let y = 0;
@@ -35,14 +35,14 @@
 
 <svg {x} {y} {width} {height} style="overflow: visible;">
   <!-- <rect {width} {height} stroke="black" fill="none" />  -->
-  <TwoFunc x={nodeX} inputs={$randomSample} f={standardNormal} lineInput {color} tex={String.raw`N(0, I)`} shiftTex={-25} opacity={ho($hoveringSample)} colorTex="grey" />
+  <TwoFunc x={nodeX} inputs={$randomSample} f={standardNormal} lineInput {color} tex={String.raw`N(0, I)`} shiftTex={-25} opacity={ho($hoveringSample || $notHoveringAny)} colorTex="grey" />
   <!--
   <foreignObject class="node" x={-5} y={105} width={200} style="overflow: visible;">
     <Button on:click={() => $randomSample = sample()} size="xs" color="light">Resample 🎲</Button>
   </foreignObject>
   -->
-  <VectorShape x={vectorX} y={0} values={$randomSample} stroke={color} tex={String.raw`\epsilon`} opacity={ho($hoveringSample || $hoveringZ)}/>
-  <line x1={nodeX + 40} y1={$node1MidY} x2={vectorX} y2={$node1MidY} {...connectStyle} opacity={ho($hoveringSample)}/>
-  <line x1={nodeX + 40} y1={$node2MidY} x2={vectorX} y2={$node2MidY} {...connectStyle} opacity={ho($hoveringSample)}/>
+  <VectorShape x={vectorX} y={0} values={$randomSample} stroke={color} tex={String.raw`\epsilon`} opacity={ho($hoveringSample || $hoveringZ || $notHoveringAny)}/>
+  <line x1={nodeX + 40} y1={$node1MidY} x2={vectorX} y2={$node1MidY} {...connectStyle} opacity={ho($hoveringSample || $notHoveringAny)}/>
+  <line x1={nodeX + 40} y1={$node2MidY} x2={vectorX} y2={$node2MidY} {...connectStyle} opacity={ho($hoveringSample || $notHoveringAny)}/>
 </svg>
 

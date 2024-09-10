@@ -2,7 +2,7 @@
   import FunctionSVG from "./FunctionSVG.svelte";
   import VectorShape from "./VectorShape.svelte";
   import TwoFunc from "./TwoFunc.svelte";
-  import { node1MidY, node2MidY, logVarWidth, stddevs, hoveringInput, hoveringlogVarTrick, ho, hoveringZ} from "./stores";
+  import { node1MidY, node2MidY, logVarWidth, stddevs, hoveringInput, hoveringlogVarTrick, ho, hoveringZ, notHoveringAny} from "./stores";
 
   export let x = 0; 
   export let y = 0;
@@ -36,23 +36,23 @@
                stroke="seagreen"
                tex={String.raw`\log(\sigma^2)`}
                shiftTex={-25}
-               opacity={ho($hoveringInput || $hoveringlogVarTrick)}
+               opacity={ho($hoveringInput || $hoveringlogVarTrick || $notHoveringAny)}
   />
-  <line x1={logVarVectorX + 30} y1={$node1MidY} x2={firstExpX} y2={$node1MidY} {...outConnectStroke} opacity={ho($hoveringlogVarTrick || $hoveringInput)}/>
-  <line x1={logVarVectorX + 30} y1={$node2MidY} x2={firstExpX} y2={$node2MidY} {...outConnectStroke} opacity={ho($hoveringlogVarTrick || $hoveringInput)}/>
+  <line x1={logVarVectorX + 30} y1={$node1MidY} x2={firstExpX} y2={$node1MidY} {...outConnectStroke} opacity={ho($hoveringlogVarTrick || $hoveringInput || $notHoveringAny)}/>
+  <line x1={logVarVectorX + 30} y1={$node2MidY} x2={firstExpX} y2={$node2MidY} {...outConnectStroke} opacity={ho($hoveringlogVarTrick || $hoveringInput || $notHoveringAny)}/>
 
   <!-- e^{0,5*log(var)} -->
-  <TwoFunc x={firstExpX} y={firstExpY} f={halfExp} domain={[-10, Math.log(0.5)]} range={[-0.05, 0.5]} inputs={logVar} color="lightseagreen" colorTex="grey" tex={String.raw`e^{\frac{1}{2}{\color{seagreen} \log(\sigma^2)}}`} shiftTex={-25} opacity={ho($hoveringlogVarTrick || $hoveringInput)}/>
+  <TwoFunc x={firstExpX} y={firstExpY} f={halfExp} domain={[-10, Math.log(0.5)]} range={[-0.05, 0.5]} inputs={logVar} color="lightseagreen" colorTex="grey" tex={String.raw`e^{\frac{1}{2}{\color{seagreen} \log(\sigma^2)}}`} shiftTex={-25} opacity={ho($hoveringlogVarTrick || $hoveringInput || $notHoveringAny)}/>
 
-  <line x1={firstExpX + expSquare} y1={$node1MidY} x2={vectorX} y2={$node1MidY} {...outConnectStroke} opacity={ho($hoveringlogVarTrick || $hoveringInput)}/>
-  <line x1={firstExpX + expSquare} y1={$node2MidY} x2={vectorX} y2={$node2MidY} {...outConnectStroke} opacity={ho($hoveringlogVarTrick || $hoveringInput)}/>
+  <line x1={firstExpX + expSquare} y1={$node1MidY} x2={vectorX} y2={$node1MidY} {...outConnectStroke} opacity={ho($hoveringlogVarTrick || $hoveringInput || $notHoveringAny)}/>
+  <line x1={firstExpX + expSquare} y1={$node2MidY} x2={vectorX} y2={$node2MidY} {...outConnectStroke} opacity={ho($hoveringlogVarTrick || $hoveringInput || $notHoveringAny)}/>
   <!--sigma -->
   <VectorShape x={vectorX} 
                y={firstExpY} 
                values={$stddevs}
                stroke="lightseagreen"
                tex={String.raw`\sigma`}
-               opacity={ho($hoveringlogVarTrick  || $hoveringZ || $hoveringInput)}
+               opacity={ho($hoveringlogVarTrick  || $hoveringZ || $hoveringInput || $notHoveringAny)}
   />
 </svg>
 

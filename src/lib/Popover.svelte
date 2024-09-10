@@ -12,7 +12,7 @@
   import { ArrowRightOutline } from "flowbite-svelte-icons";
 
   import * as d3 from "d3";
-  import { node1MidY, node2MidY, sampleWidth, logVarWidth, vectorHeight, means, stddevs, css, popoverWidth, popoverEncY, popoverEncHeight, popoverDecY, popoverDecHeight, hoveringInput, hoveringlogVarTrick, hoveringSample, hoveringZ, ho, hto} from "./stores";
+  import { node1MidY, node2MidY, sampleWidth, logVarWidth, vectorHeight, means, stddevs, css, popoverWidth, popoverEncY, popoverEncHeight, popoverDecY, popoverDecHeight, hoveringInput, hoveringlogVarTrick, hoveringSample, hoveringZ, ho, hto, notHoveringAny} from "./stores";
   import { color } from "./util";
 
   export let height = 450;
@@ -70,7 +70,7 @@
 </script>
 
 <svg class="fade-in" width={$popoverWidth} {height} {x} {y} style="overflow: visible;">
-  <foreignObject x={encodedVector[0] - 410} y={encodedVector[1]+25} width={390} height={200} class="label" style="outline: 1px solid transparent;" opacity={hto($hoveringInput)} >
+  <foreignObject x={encodedVector[0] - 410} y={encodedVector[1]+25} width={390} height={200} class="label" style="outline: 1px solid transparent;" opacity={hto($hoveringInput || $notHoveringAny)} >
     <div class="flex gap-1 items-center" style="font-family: Geo; font-size: 22px;" >
       <b>1. VAEs Encode a Probability Distribution</b> <ArrowRightOutline size="lg"/>
     </div>
@@ -80,25 +80,25 @@
   </foreignObject>  
 
   <!-- <rect x={0} y={0} {width} {height} fill="red" /> -->
-  <rect x={encodedVector[0]} y={encodedVector[1]} width={30} height={encodedVectorHeight} stroke={encodedVectorStroke} stroke-width={1.5} fill={encodedVectorFill} opacity={ho($hoveringInput)}/>
+  <rect x={encodedVector[0]} y={encodedVector[1]} width={30} height={encodedVectorHeight} stroke={encodedVectorStroke} stroke-width={1.5} fill={encodedVectorFill} opacity={ho($hoveringInput || $notHoveringAny)}/>
   <Sankey p1={[encodedVector[0]+30, encodedVector[1]]} p1Height={$vectorHeight} p2={meanVector} p2Height={$vectorHeight}  fill="orange" opacity={0.2}/>
   <Sankey p1={[encodedVector[0]+30, encodedVector[1]]} p1Height={$vectorHeight} p2={logVarVector} p2Height={$vectorHeight} fill="seagreen" opacity={0.2} />
 
   <!-- <Curve source={[0, midBetweenMeanAndLogVar]} target={[width, midBetweenMeanAndLogVar]} /> -->
-  <VectorShape x={meanVector[0]} y={meanVector[1]} values={$means} stroke="orange" tex={String.raw`\mu`} opacity={ho($hoveringInput || $hoveringZ)}/>
+  <VectorShape x={meanVector[0]} y={meanVector[1]} values={$means} stroke="orange" tex={String.raw`\mu`} opacity={ho($hoveringInput || $hoveringZ || $notHoveringAny)}/>
   <!-- <VectorShape x={logVarVector[0]} y={logVarVector[1]} values={[0, 0]}/> -->
 
 
 
   <LogVarTrick x={logVarVector[0]} y={logVarVector[1]}/>
-  <Curve source={topNodeLogVar} target={inTopMul} opacity={ho($hoveringZ)}/>
-  <Curve source={botNodeLogVar} target={inBotMul} opacity={ho($hoveringZ)}/>
+  <Curve source={topNodeLogVar} target={inTopMul} opacity={ho($hoveringZ || $notHoveringAny)}/>
+  <Curve source={botNodeLogVar} target={inBotMul} opacity={ho($hoveringZ || $notHoveringAny)}/>
 
 
   <Sampler x={sampleVector[0]} y={sampleVector[1]}/>
-  <Curve source={topSampleVector} target={inTopMul} opacity={ho($hoveringZ)}/>
-  <Curve source={botSampleVector} target={inBotMul} opacity={ho($hoveringZ)}/>
-  <foreignObject x={sampleVector[0]-215} y={sampleVector[1] + 110} width={300} height={200} class="label" style="outline: 1px solid transparent;" opacity={hto($hoveringSample)}>
+  <Curve source={topSampleVector} target={inTopMul} opacity={ho($hoveringZ || $notHoveringAny)}/>
+  <Curve source={botSampleVector} target={inBotMul} opacity={ho($hoveringZ || $notHoveringAny)}/>
+  <foreignObject x={sampleVector[0]-215} y={sampleVector[1] + 110} width={300} height={200} class="label" style="outline: 1px solid transparent;" opacity={hto($hoveringSample || $notHoveringAny)}>
     <div class="flex gap-2 items-center" style="font-family: Geo; font-size: 22px;" >
       <b>2. VAEs randomly sample</b> 
       <ArrowRightOutline size="lg" style="transform: rotate(-90deg)"/>
@@ -108,19 +108,19 @@
     </div>
   </foreignObject>  
 
-  <TwoFunc x={mulVector[0]} y={mulVector[1]} symbolInstead="*" symbolColor="lightgrey" symbolShift={16} opacity={ho($hoveringZ)}/>
-  <Curve source={outTopMean} target={inTopAdd} opacity={ho($hoveringZ)} />
-  <Curve source={outBotMean} target={inBotAdd} opacity={ho($hoveringZ)} />
-  <Curve source={outTopMul} target={inTopAdd} opacity={ho($hoveringZ)} />
-  <Curve source={outBotMul} target={inBotAdd} opacity={ho($hoveringZ)} />
+  <TwoFunc x={mulVector[0]} y={mulVector[1]} symbolInstead="*" symbolColor="lightgrey" symbolShift={16} opacity={ho($hoveringZ || $notHoveringAny)}/>
+  <Curve source={outTopMean} target={inTopAdd} opacity={ho($hoveringZ|| $notHoveringAny)} />
+  <Curve source={outBotMean} target={inBotAdd} opacity={ho($hoveringZ|| $notHoveringAny)} />
+  <Curve source={outTopMul} target={inTopAdd} opacity={ho($hoveringZ|| $notHoveringAny)} />
+  <Curve source={outBotMul} target={inBotAdd} opacity={ho($hoveringZ|| $notHoveringAny)} />
 
-  <TwoFunc x={addVector[0]} y={addVector[1]} symbolInstead="+" symbolColor="lightgrey" opacity={ho($hoveringZ)}/>
-  <Curve source={outTopAdd} target={inTopOut} opacity={ho($hoveringZ)}/>
-  <Curve source={outBotAdd} target={inBotOut} opacity={ho($hoveringZ)}/>
+  <TwoFunc x={addVector[0]} y={addVector[1]} symbolInstead="+" symbolColor="lightgrey" opacity={ho($hoveringZ|| $notHoveringAny)}/>
+  <Curve source={outTopAdd} target={inTopOut} opacity={ho($hoveringZ|| $notHoveringAny)}/>
+  <Curve source={outBotAdd} target={inBotOut} opacity={ho($hoveringZ|| $notHoveringAny)}/>
 
   <Output x={outputVector[0]} y={outputVector[1]} />
 
-  <foreignObject x={outputVector[0]-100} y={outputVector[1] + 100} width={375} height={100} class="label" style="outline: 1px solid transparent;" opacity={hto($hoveringZ)}>
+  <foreignObject x={outputVector[0]-100} y={outputVector[1] + 100} width={375} height={100} class="label" style="outline: 1px solid transparent;" opacity={hto($hoveringZ||$notHoveringAny)}>
   <div class="flex gap-1 items-center" style="font-family: Geo; font-size: 22px;" >
     <ArrowRightOutline size="lg" style="transform: rotate(-135deg)"/>
     <b>3. VAEs reparameterize</b> 
