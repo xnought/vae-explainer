@@ -2,9 +2,8 @@
 
 Learn how Variational Autoencoders (VAE) work by visualizing one running in your browser. 
 
-
-https://github.com/user-attachments/assets/fdc1ceb4-89e6-429c-a5b1-31ae4be57d9a
-
+- Live Site: https://xnought.github.io/vae-explainer/
+- Paper: https://xnought.github.io/files/vae_explainer.pdf
 
 
 ## Development
@@ -15,7 +14,7 @@ pnpm dev
 ```
 which runs the hot-reloading dev server at http://localhost:5173
 
-## References
+## Code References
 
 - https://keras.io/examples/generative/vae/
 - https://www.ibm.com/think/topics/variational-autoencoder#:~:text=Variational%20autoencoders%20(VAEs)%20are%20generative,other%20autoencoders%2C%20such%20as%20denoising.

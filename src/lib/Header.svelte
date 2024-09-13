@@ -18,10 +18,20 @@
 			<Button
 				size="xs"
 				href="https://github.com/xnought/vae-explainer"
+        target="_blank"
         {color}
         outline
 				>Code
 				<GithubSolid size="md" class="ml-1" />
+			</Button>
+			<Button
+				size="xs"
+				href="https://xnought.github.io/files/vae_explainer.pdf"
+        target="_blank"
+        {color}
+        outline
+				>Paper
+				<FilePdfSolid size="md" class="ml-1" />
 			</Button>
 		</div>
 	</div>
