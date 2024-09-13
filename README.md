@@ -6,6 +6,10 @@ Learn how Variational Autoencoders (VAE) work by visualizing one running in your
 - Paper: https://xnought.github.io/files/vae_explainer.pdf
 
 
+https://github.com/user-attachments/assets/ef788f0a-9c66-48fb-99d9-f4feb62ca9cd
+
+
+
 ## Development
 
 ```bash
