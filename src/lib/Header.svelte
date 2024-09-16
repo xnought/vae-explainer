@@ -26,7 +26,7 @@
 			</Button>
 			<Button
 				size="xs"
-				href="https://xnought.github.io/files/vae_explainer.pdf"
+				href="https://arxiv.org/abs/2409.09011"
         target="_blank"
         {color}
         outline
