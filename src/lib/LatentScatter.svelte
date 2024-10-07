@@ -4,7 +4,7 @@
 	import NormalCurve from "./NormalCurve.svelte";
 	import Gaussian2DSvg from "./Gaussian2DSvg.svelte";
 	import Digits from "./Digits.svelte";
-  import { loadLatents } from "./load";
+	import { loadLatents } from "./load";
 
 	export let width = 200;
 	export let height = 200;
@@ -62,40 +62,98 @@
 		}
 	}
 
-  const legendHeight = 50;
+	const legendHeight = 50;
 </script>
 
 <div style="position: relative;">
-  <svg {width} height={legendHeight} style="position: absolute; left: 0; top: -{legendHeight + 5}px; overflow: visible;">
-      <text x={0} y={-5} style="font-size: 15px; font-family: Geo;" fill="grey" >Latent Space</text>
-      <svg id="left-side" x={0} y={0} height={legendHeight} width={width/2} style="overflow: visible;">
-        <Gaussian2DSvg
-          override={[10,legendHeight/2]}
-          means={[0,0]}
-          {stddevs}
-          {scaleX}
-          {scaleY}
-          numberOfDeviations={6}
-          exageration={20}
-        />
-        <text x={25} y={legendHeight/2 - 10} style="font-size: 10px;" fill="grey" class="geo">Means μ</text>
-        <text x={25} y={legendHeight/2} style="font-size: 8px; font-family: menlo;" fill="grey" >[{means[0].toFixed(2)}, {means[1].toFixed(2)}]</text>
+	<svg
+		{width}
+		height={legendHeight}
+		style="position: absolute; left: 0; top: -{legendHeight +
+			5}px; overflow: visible;"
+	>
+		<text
+			x={0}
+			y={-5}
+			style="font-size: 15px; font-family: Geo;"
+			fill="grey">Latent Space</text
+		>
+		<svg
+			id="left-side"
+			x={0}
+			y={0}
+			height={legendHeight}
+			width={width / 2}
+			style="overflow: visible;"
+		>
+			<Gaussian2DSvg
+				override={[10, legendHeight / 2]}
+				means={[0, 0]}
+				{stddevs}
+				{scaleX}
+				{scaleY}
+				numberOfDeviations={6}
+				exageration={20}
+			/>
+			<text
+				x={25}
+				y={legendHeight / 2 - 10}
+				style="font-size: 10px;"
+				fill="grey"
+				class="geo">Means μ</text
+			>
+			<text
+				x={25}
+				y={legendHeight / 2}
+				style="font-size: 8px; font-family: 'Fira Code';"
+				fill="grey">[{means[0].toFixed(2)}, {means[1].toFixed(2)}]</text
+			>
 
-        <text x={25} y={legendHeight/2 + 12} style="font-size: 10px;" fill="grey" class="geo">Std. Deviations σ</text>
-        <text x={25} y={legendHeight/2 + 22} style="font-size: 8px; font-family: menlo;" fill="grey" >[{stddevs[0].toFixed(2)}, {stddevs[1].toFixed(2)}]</text>
-      </svg>
-      <svg id="right-side" x={width/2} y={0} height={legendHeight} width={width/2} >
-        <text x={15} y={legendHeight - 15} style="font-size: 10px;" fill="grey" class="geo" >Sampled z</text>
-        <text x={15} y={legendHeight - 5} style="font-size: 8px; font-family: menlo;" fill="grey" >[{sampled[0].toFixed(2)}, {sampled[1].toFixed(2)}]</text>
-        <circle
-          cx={width/2 - 10}
-          cy={legendHeight-8}
-          r={4}
-          fill="var(--light-blue)"
-          stroke="black"
-        />
-      </svg>
-  </svg>
+			<text
+				x={25}
+				y={legendHeight / 2 + 12}
+				style="font-size: 10px;"
+				fill="grey"
+				class="geo">Std. Deviations σ</text
+			>
+			<text
+				x={25}
+				y={legendHeight / 2 + 22}
+				style="font-size: 8px; font-family: 'Fira Code';"
+				fill="grey"
+				>[{stddevs[0].toFixed(2)}, {stddevs[1].toFixed(2)}]</text
+			>
+		</svg>
+		<svg
+			id="right-side"
+			x={width / 2}
+			y={0}
+			height={legendHeight}
+			width={width / 2}
+		>
+			<text
+				x={15}
+				y={legendHeight - 15}
+				style="font-size: 10px;"
+				fill="grey"
+				class="geo">Sampled z</text
+			>
+			<text
+				x={15}
+				y={legendHeight - 5}
+				style="font-size: 8px; font-family: 'Fira Code';"
+				fill="grey"
+				>[{sampled[0].toFixed(2)}, {sampled[1].toFixed(2)}]</text
+			>
+			<circle
+				cx={width / 2 - 10}
+				cy={legendHeight - 8}
+				r={4}
+				fill="var(--light-blue)"
+				stroke="black"
+			/>
+		</svg>
+	</svg>
 
 	{#if scaleX && scaleY}
 		<svg
@@ -117,14 +175,14 @@
 				onChange(sampled);
 			}}
 		>
-      <Gaussian2DSvg
-        {means}
-        {stddevs}
-        {scaleX}
-        {scaleY}
-        numberOfDeviations={6}
-        exageration={35}
-      />
+			<Gaussian2DSvg
+				{means}
+				{stddevs}
+				{scaleX}
+				{scaleY}
+				numberOfDeviations={6}
+				exageration={35}
+			/>
 			<circle
 				cx={scaleX(sampled[0])}
 				cy={scaleY(sampled[1])}
@@ -151,13 +209,13 @@
 		</svg>
 	{/if}
 	<canvas bind:this={canvas} {width} {height} />
-  <svg {width} height={20} style="position: absolute; left: 0; botton: 0;">
-    <Digits x={0} y={18} />
-  </svg>
+	<svg {width} height={20} style="position: absolute; left: 0; botton: 0;">
+		<Digits x={0} y={18} />
+	</svg>
 </div>
 
 <style>
 	canvas {
-		outline: rgba(255,255,255,0.2) 1px solid;
+		outline: rgba(255, 255, 255, 0.2) 1px solid;
 	}
 </style>
