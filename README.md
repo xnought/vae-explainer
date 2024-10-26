@@ -4,6 +4,7 @@ Learn how Variational Autoencoders (VAE) work by visualizing one running in your
 
 - Live Site: https://xnought.github.io/vae-explainer/
 - Paper: https://arxiv.org/abs/2409.09011
+- Also interetested in VQ-VAEs? Check out https://xnought.github.io/vq-vae-explainer/
 
 
 https://github.com/user-attachments/assets/ef788f0a-9c66-48fb-99d9-f4feb62ca9cd
